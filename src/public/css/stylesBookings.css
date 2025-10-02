@@ -1,0 +1,95 @@
+/* Clases Existentes del Archivo de Css de Lucas */
+
+.main-heading{
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.main-heading .title-res{
+    width: 100%;
+}
+
+#reserva-timbre{
+    height: 115vh;
+}
+
+/**/
+
+.nc-error-block{
+    margin-top: 5px;
+    font-size: 12px;
+    color: rgb(248, 245, 53);
+    
+}
+
+.nc-booking-block{
+    width: 60%;
+    margin: 20px auto
+}
+
+.nc-button-block{
+    display:flex;
+    position:relative;
+    margin-top: 20px;
+}
+
+.nc-button-block i{
+    position:absolute;
+    left:11px;
+    top:14px
+}
+
+.nc-btn-extra{
+    font-size: 24px;
+    line-height: 32px;
+}
+
+.nc-form{
+    width: 90%;
+    margin: auto
+}
+
+.nc-form .nc-subtitle{
+    font-size: 28px;
+    line-height: 36px;
+    margin-bottom: 10px;
+}
+
+.nc-form .nc-rooms-list{
+    width: 100%;
+}
+
+.nc-form .nc-rooms-list .nc-room-block{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin:10px auto;
+    align-items: center;
+    font-size: 18px;
+    line-height: 26px;
+}
+
+.nc-form .nc-rooms-list .nc-room-block .nc-room-type{
+    width:80%
+}
+
+.nc-form .nc-rooms-list .nc-room-block .nc-room-q{
+    width:15%;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 5px;
+    border-radius: 10px;
+    margin-right: 5px;
+}
+
+@media (min-width: 680px){
+    .nc-booking-block{
+        width: 40%;
+    }
+}
+
+@media (min-width: 900px){
+    .nc-booking-block{
+        width: 30%;
+    }
+}

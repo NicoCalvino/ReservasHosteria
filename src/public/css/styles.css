@@ -1,0 +1,1086 @@
+/*Import the fonts used*/
+@import url('https://fonts.googleapis.com/css?family=Courgette|Open+Sans:400,800&display=swap');
+/*Basic reset*/
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/*Custom properties*/
+:root {
+    --dark-color: #2d2c2c;
+    --brown-solid: #6c4726;
+    --brown-transparent: rgba(107, 55, 14, .7);
+    --brown-transparent-alt: rgba(107, 54, 14, 0.5);
+    --brown-transparent-alt2: rgba(107, 54, 14, 0.3);
+    --brown-light: #ba5622;
+    --yellow-solid: #fa9e2c;
+    --gradient-color: linear-gradient(to right, var(--yellow-solid), var(--brown-light));
+    --gradient-color-alt: linear-gradient(to right, var(--brown-light), var(--yellow-solid));
+}
+
+/*Global Styles*/
+html{
+  font-size: 10px;
+}
+
+body{
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.6rem;
+  color: var(--dark-color);
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+section {
+    padding: 5rem 0;
+}
+
+
+/*Reusable styles*/
+.container {
+  width:100%;
+  max-width: 120rem;
+  padding: 0 1.5rem;
+  margin: 0 auto;
+}
+
+.container-hot {
+  width:100%;
+  max-width: 120rem;
+  padding: 0 1.5rem;
+  margin-left: 15%;
+  display: flex;
+  align-items:center;
+}
+
+
+.btn{
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: .5rem 3.5rem;
+  border: none;
+  border-radius: 10rem;
+  display: inline-flex;
+  align-items:center;
+
+}
+
+.form-btn{
+  margin-top: 2.5rem;
+  cursor: pointer;
+}
+
+.btn-gradient{
+  background-image: var(--gradient-color);
+}
+
+.btn-gradient:hover{
+  background-image: var(--gradient-color-alt);
+}
+
+
+.btn-purple{
+  background-color: var(--brown-solid);
+
+}
+
+.btn-purple:hover{
+  background-color: var(--brown-light);
+
+}
+
+.dots{
+  font-size:2.4rem;
+  margin-left: .5rem;
+  opacity: .75;
+}
+
+
+/*header Styles*/
+
+.header {
+    width: 100%;
+    height: 6rem;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--brown-transparent);
+    z-index: 999;
+    transition: background-color .5s, height .5s;
+}
+
+.header.active{
+  background-color: var(--brown-solid);
+}
+
+/*Header styles- NAV */
+.nav{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo img{
+  max-width:80%;
+}
+
+
+.hamburger-menu{
+  font-size: 2.6rem;
+  color: #fff;
+  cursor: pointer;
+  position: relative;
+  z-index: 1500;
+}
+
+.hamburger-menu .fa-times{
+  display: none;
+}
+
+.menu-open .hamburger-menu .fa-times{
+  display:block;
+}
+
+.menu-open .hamburger-menu .fa-bars{
+  display:none;
+}
+
+
+.nav-list {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--brown-solid);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1400;
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity .5s;
+}
+
+.menu-open .nav-list{
+  opacity: 1;
+  transform: scale(1);
+}
+
+.nav-item:not(:last-child) {
+  margin-bottom: .5rem;
+
+}
+
+.nav-link {
+  display: block;
+  color: #fff;
+  font-size: 3rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 1rem;
+}
+
+/*Hero section styles */
+
+.hero{
+  width: 100%;
+  height: 100vh;
+  background: url("../images/hero_background5.jpg") center no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 0;
+}
+
+#reserva-timbre{
+  width: 100%;
+  height: 100vh;
+  background: url("../images/reservas.jpg") center no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  position: relative;
+  z-index: 0;
+}
+
+#habita{
+  background: url("../images/habita-1.jpg") center no-repeat
+}
+
+#madryn-class{
+  background: url("../images/portada-mdy.jpg") center no-repeat;
+  height: 62vh;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: inherit;
+  height: inherit;
+  background-color: var(--brown-transparent-alt2);
+  z-index: -1;
+}
+
+.main-heading{
+  color: #fff;
+  line-height: 1;
+  text-shadow: 1px 1px 1rem rgba(0,0,0,.5);
+  margin-bottom: 2.5rem;
+}
+
+.title{
+  font-size: 4.8 rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.title-res{
+  font-size: 4.2rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.title-res1{
+  font-size: 3.6rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.subtitle{
+  font-size: 3.6rem;
+  font-weight: 300;
+  font-family: 'Courgette', cursive;
+}
+
+.subtitle-res{
+  font-size: 2.9rem;
+  font-weight: 300;
+  font-family: 'Courgette', cursive;
+}
+
+.subtitle-res1{
+  font-size: 2.5rem;
+  font-weight: 300;
+  font-family: 'Courgette', cursive;
+}
+
+
+
+
+
+
+/*Booking section styles */
+.booking{
+  background-image: var(--gradient-color);
+}
+
+.input-group {
+  margin-bottom: 1.5rem;
+}
+
+.input-label{
+  display:block;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  color: #fff;
+  font-weight:bold;
+  margin-bottom: 1rem;
+}
+
+
+.input, .options{
+  outline:none;
+  border: none;
+  width: 100%;
+  min-height: 4rem;
+  padding: 1rem;
+  font-weight:bold;
+  color: #a5a5a5;
+  letter-spacing: 2px;
+  font-family: "Open Sans", sans-serif;
+  /*resize: none;*/
+}
+
+/*Featured hotels (rooms in Bochas Case) and section styles*/
+
+.section-head{
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.heading{
+  display:block;
+  font-size: 4rem;
+  text-transform:uppercase;
+}
+
+.sub-heading{
+  font-size: 1.7rem;
+  font-family: 'Courgette', cursive;
+  font-weight:300;
+  color: #a5a5a5;
+}
+
+.grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  grid-gap: 2.5rem;
+}
+
+
+.grid-item{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.featured-hotels{
+  height: 35rem;
+  color: #fff;
+  padding: 1rem;
+  position: relative;
+  z-index:0;
+}
+
+.featured-hotels::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(107, 54, 14, 0.3);
+  z-index:-1;
+
+}
+
+.hotel-image{
+  width:100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -2;
+}
+
+.image-hab-hover img :hover {
+  background-color: none;
+  z-index: 1000;
+
+}
+
+.hotel-name{
+  font-size: 2.5rem;
+}
+
+.hotel-price{
+  font-size: 1.8rem;
+}
+
+.hotel-rating{
+  margin: 1rem 0 2.5rem;
+}
+
+.rating{
+  color: var(--yellow-solid)
+}
+
+/*Special offer section styles*/
+
+.offer{ 
+  background: linear-gradient(to right, rgba(250,150,44,0.8),rgba(221, 131, 119, 0.8)),
+  url("../images/hero_background2.png") bottom center no-repeat;
+  background-size: cover;
+
+}
+
+.offer-content{
+  background-color: #fff;
+  text-align: center;
+  padding: 5rem 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.discount{
+  background-color: var(--yellow-solid);
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  outline: 2px solid var(--brown-transparent-alt);
+  outline-offset: 0.5rem;
+
+}
+
+.paragraph{
+  color: #a5a5a5;
+  margin-bottom: 2.5rem;
+}
+
+/*Roooms section styles*/
+
+.rooms{
+  background-color: #f2f6f9;
+
+}
+
+.image-wrap{
+  position:relative;
+  height: 25rem;
+
+
+}
+
+.image-wrap::after{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background-color: rgba(107, 54, 14, 0.2);
+}
+
+.room-image{
+  width:100%;
+  height:100%;
+  object-fit: cover;
+}
+
+.room-name{
+  font-size: 2.6rem;
+  background-color: var(--yellow-solid);
+  color: #fff;
+  padding: .5rem 2rem;
+  position:absolute;
+  left:0;
+  bottom: 2.5rem;
+  z-index: 10;
+
+}
+
+.room-price{
+  display: block;
+  font-size: 2rem;
+  /*font-weight: bold;*/
+  color: var(--yellow-solid);
+
+}
+
+.per-night{
+  color: var(--gradient-color);
+  font-size: 2rem;
+  font-weight: bold;
+
+}
+
+.rooms-btn{
+  color: var(--dark-color);
+  padding: 0;
+  transition: color .5s;
+}
+
+.rooms-btn:hover{
+  color: var(--yellow-solid);
+}
+
+/*Contact section styles*/
+
+.contact-content{
+  display: flex;
+  justify-content: center;
+}
+
+.traveler-wrap{
+  display:none;
+}
+
+.contact-form{
+  width:100%;
+  background-image: var(--gradient-color);
+  padding: 2.5rem;
+}
+
+
+
+.contact-form .input {
+  display: block;
+  background-color: transparent;
+  color: #fff;
+  font-weight: normal;
+  border-bottom: 2px solid #fff;
+  padding-left: 0;
+}
+
+.contact-form .input-group-wrap {
+  background-color: transparent;
+  color: #fff;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #fff;
+  opacity: 1; /* Firefox */
+}
+
+.bar{
+  display:block;
+  position:relative;
+}
+
+.bar::after{
+  content:'';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--brown-light);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .5s;
+}
+
+.contact-form .input:focus + .bar::after{
+  transform: scaleX(1);
+}
+
+/*Footer section styles*/
+
+.footer{
+  padding: 5rem 0;
+  background-color: var(--brown-light);
+  color: #fff;
+}
+
+.footer-content-brand{
+  margin-bottom: 5rem;
+  margin-right: 5rem;
+}
+
+.footer .paragraph{
+  color: inherit;
+
+}
+
+.footer-heading{
+  text-transform: uppercase;
+  margin-bottom: 2.5rem;
+
+}
+
+
+
+.social-media{
+  display:flex;
+
+}
+
+.footer-heading .social-media{
+  margin-top: 2rem;
+}
+
+.sm-link{
+  width: 4rem;
+  height: 4rem;
+  font-size: 2rem;
+  border: 2px solid var(--yellow-solid);
+  border-radius: 50%;
+  display: flex;
+  margin-right: 1rem;
+  transition: background-color .5s;
+}
+
+.sm-link:hover{
+  background-color: var(var(--yellow-solid));
+  color: var(--dark-color);
+}
+
+.sm-link i{
+  margin: auto;
+}
+
+.ucs{
+  background-color: var(--yellow-solid);
+  text-align: center;
+  font-family: 'Trebuchet MS', cursive;
+  font-size: 1.4rem;
+  font-style: italic;
+}
+
+/*Media queries*/
+
+@media screen and (min-width: 768px) {
+  /*Header section styles*/
+  .header{
+    height: 8rem;
+  }
+  .header.active{
+    height: 6rem;
+  }
+
+  /*Hero section */
+  .title{
+    font-size: 8rem;
+  }
+
+  /*Contact section styles*/
+
+  .contact-content{
+    justify-content: space-between;
+  }
+
+  .traveler-wrap{
+    display: block;
+    flex: 0 0 35%;
+  }
+
+  .traveler-wrap img{
+    width: 100%;
+  }
+
+  .contact-form{
+    flex: 0 0 60%;
+    align-self: flex-start;
+  }
+
+  .input-group-wrap{
+    display: flex;
+  }
+
+  .input-group-wrap .input-group{
+    width: 50%;
+    margin-right: 2rem;
+  }
+
+  .input-group-wrap .input-group:last-child{
+    margin-right: 0;
+  }
+  
+  /*footer section styles*/
+
+  .footer{
+    overflow-x: hidden;
+  }
+  .footer-content{
+    display: flex;
+  }
+
+  .footer-content-brand{
+    margin-bottom: 0;
+    flex: 0 0 60%;
+  }
+
+  .footer .paragraph {
+    margin-top: 1rem;
+  }
+  
+  .footer-heading{
+    margin-bottom: 5rem;
+  }
+   
+  .social-media-wrap{
+    flex: 0 0 20%;
+    margin-left: 2.5rem;
+  }
+
+}
+
+@media screen and (min-width: 1000px){
+    section:not(.booking){
+    padding: 10rem 0;
+  }
+  
+  .hamburger-menu{
+    display:none;
+  }
+
+  .nav-list{
+    position: initial;
+    width: initial;
+    height: initial;
+    background-color: transparent;
+    flex-direction: row;
+    justify-content:initial;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .nav-item:not(:last-child){
+    margin-right: 3rem;
+    margin-bottom: 0;
+  }
+
+  .nav-link{
+    font-size: 1.5rem;
+    font-weight: normal;
+    transition: color .5s;
+  }
+
+  .nav-link:hover{
+    color: var(--yellow-solid)
+  }
+
+  /*Hero section styles*/
+
+  .title{
+    font-size: 11rem;
+  }
+  .subtitle{
+    font-size: 4.8rem;
+  }
+
+  /*Booking section styles*/
+
+  .booking .form{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .booking .form .input-group{
+    margin-bottom: 0;
+  }
+
+  .booking .form .input[type=date]{
+    flex: 0 0 20%;
+  }
+
+  .input, .options{
+    min-width:10rem;
+  }
+   
+  .booking .form{
+    margin-top:-1.5rem;
+  }
+
+  .booking {height:13rem}
+
+  /*Rooms section styles*/
+
+  .rooms-grid{
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  }
+
+  /*.featured-rooms{
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .room-info-wrap{
+    margin-left: 1.5rem;
+  }*/
+
+
+}
+
+
+
+/* Prueba de Galería */
+
+* {
+  box-sizing: border-box;
+}
+
+/* Position the image container (needed to position the left and right arrows) */
+.container2 {
+  position: relative;
+  width:80%;
+  margin: auto;
+}
+
+/* Hide the images by default */
+.mySlides {
+  display: none;
+  transform: scaley(0.9);
+}
+
+/* Add a pointer when hovering over the thumbnail images */
+.cursor {
+  cursor: pointer;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 40%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: var(--gradient-color);
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* Container for image text */
+.caption-container {
+  text-align: center;
+  background-color: var(--brown-light);
+  padding: 2px 16px;
+  color: white;
+  font-family: 'Open Sans', cursive;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Six columns side by side */
+.column {
+  float: left;
+  width: 16.66%;
+}
+
+
+/* Add a transparency effect for thumnbail images */
+.demo {
+  opacity: 0.6;
+}
+
+.active,
+.demo:hover {
+  opacity: 1;
+}
+
+
+
+/*2da galeria*/
+
+/* Hide the images by default */
+.mySlides2 {
+  display: none;
+  transform: scaley(0.9);
+}
+
+/* Add a pointer when hovering over the thumbnail images */
+.cursor2 {
+  cursor: pointer;
+}
+
+/* Next & previous buttons */
+.prev2,
+.next2 {
+  cursor: pointer;
+  position: absolute;
+  top: 40%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next2 {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev2:hover,
+.next2:hover {
+  background-color: var(--gradient-color);
+}
+
+/* Number text (1/3 etc) */
+.numbertext2 {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* Container for image text */
+.caption-container {
+  text-align: center;
+  background-color: var(--brown-light);
+  padding: 2px 16px;
+  color: white;
+  font-family: 'Open Sans', cursive;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Three columns side by side */
+
+
+.column2 {
+  float: left;
+  width: 16.66%;
+}
+
+/* Add a transparency effect for thumnbail images */
+.demo2 {
+  opacity: 0.6;
+}
+
+.active,
+.demo2:hover {
+  opacity: 1;
+}
+
+
+/* Style over image flag*/
+.nav-item .img{
+  border-radius: 5px;
+  margin-top: 1rem;
+
+}
+
+/*3ra galeria*/
+
+/* Hide the images by default */
+.mySlides3 {
+  display: none;
+  transform: scaley(0.9);
+}
+
+/* Add a pointer when hovering over the thumbnail images */
+.cursor3 {
+  cursor: pointer;
+}
+
+/* Next & previous buttons */
+.prev2,
+.next2 {
+  cursor: pointer;
+  position: absolute;
+  top: 40%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next2 {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev2:hover,
+.next2:hover {
+  background-color: var(--gradient-color);
+}
+
+/* Number text (1/3 etc) */
+.numbertext3 {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* Container for image text */
+.caption-container {
+  text-align: center;
+  background-color: var(--brown-light);
+  padding: 2px 16px;
+  color: white;
+  font-family: 'Open Sans', cursive;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Three columns side by side */
+
+
+.column2 {
+  float: left;
+  width: 16.66%;
+}
+
+/* Add a transparency effect for thumnbail images */
+.demo3 {
+  opacity: 0.6;
+}
+
+.active,
+.demo3:hover {
+  opacity: 1;
+}
+
+
+/* Style over image flag*/
+.nav-item .img{
+  border-radius: 5px;
+  margin-top: 1rem;
+
+}
+

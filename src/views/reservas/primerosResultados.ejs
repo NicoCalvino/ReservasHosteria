@@ -1,0 +1,58 @@
+<%- include('../partials/header',{hojaDeEstilo:"/css/stylesBookings.css"}) %>
+  <div class="hero" id="reserva-timbre">
+    <div class="container">
+        <div class="main-heading">
+            <h1 class="title-res">Reservá tu habitación</h1>
+            <form action="/consultaReserva/detallesReserva/<%= resTemp.id %>" class="nc-form" method="POST">
+                <h2 class="title-res nc-subtitle">ELEGIR HABITACIONES</h2>
+                <div class="nc-guest-block">
+                    <div class="nc-info-block">
+                        <div class="input-group">
+                            <label for="name" class="input-label">Nombre</label>
+                            <input type="text"  class="input" name="name" id="name">
+                            <% if(locals.errors && errors.name){ %>
+                                <label><%= errors.name.msg %></label>   
+                            <% } %> 
+                        </div>
+                        <div class="input-group">
+                            <label for="lastname" class="input-label">Apellido</label>
+                            <input type="text"  class="input" name="lastname" id="lastname">
+                            <% if(locals.errors && errors.lastname){ %>
+                                <label><%= errors.lastname.msg %></label>   
+                            <% } %> 
+                        </div>
+                        <div class="input-group">
+                            <label for="email" class="input-label">E-Mail</label>
+                            <input type="email"  class="input" name="email" id="email">
+                            <% if(locals.errors && errors.email){ %>
+                                <label><%= errors.email.msg %></label>   
+                            <% } %> 
+                        </div>
+                        <div class="input-group">
+                            <label for="emailBis" class="input-label">Repetir E-Mail</label>
+                            <input type="email"  class="input" name="emailBis" id="emailBis">
+                            <% if(locals.errors && errors.emailBis){ %>
+                                <label><%= errors.emailBis.msg %></label>   
+                            <% } %> 
+                        </div>
+                        <div class="input-group">
+                            <label for="phone" class="input-label">Telefono</label>
+                            <input type="number"  class="input" name="phone" id="phone">
+                            <% if(locals.errors && errors.phone){ %>
+                                <label><%= errors.phone.msg %></label>   
+                            <% } %> 
+                        </div>
+                    </div>
+                </div>
+                <div class="nc-button-block">
+                    <label><i class="fas fa-search"></i></label>
+                    <input class="btn btn-gradient nc-btn-extra" type="submit" value="CONSULTAR">
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+  <section class="booking">
+  </section>
+</main>
+<%- include('../partials/footer') %>
