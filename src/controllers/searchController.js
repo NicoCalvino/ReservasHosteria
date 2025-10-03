@@ -6,6 +6,9 @@ const {validationResult}=require('express-validator')
 const moment = require('moment')
 
 const controller = {
+    start: async(req,res)=>{
+        res.render("search/initialSearch")
+    },
     habitacionesLibres: async (checkIn, checkOut)=>{
         let habHotel = await db.Room.findAll({
             include:['room_types']
@@ -79,7 +82,7 @@ const controller = {
         let errors = validationResult(req)
 
         if (!errors.isEmpty()){
-            return res.render("reservas/busqueda",{errors:errors.mapped(),oldInfo:req.query})
+            return res.render("search/initialSearch",{errors:errors.mapped(),oldInfo:req.query})
         }
 
         let checkIn = req.query.check_in
@@ -87,54 +90,72 @@ const controller = {
         let personas = req.query.people
         let qHab = req.query.rooms
 
-        let resTemp = await db.Temp.create({
+        let infoTemp = await db.Temp.create({
                 check_in:checkIn,
                 check_out:checkOut,
                 occupancy:personas,
                 rooms:qHab
             })
 
+            infoTemp.check_in_s = checkIn
+            infoTemp.check_out_s = checkOut
+
         let tiposHab = await controller.habitacionesLibres(checkIn, checkOut)
 
-        res.render("reservas/busqueda",{tiposHab, qHab, resTemp, oldInfo:req.query})
+        res.render("search/roomSelection",{tiposHab, qHab, infoTemp, oldInfo:req.query})
     },
     detallesFinales: async(req,res)=>{
         let idTemp = req.params.idTemp
         let errors = validationResult(req)
 
         let infoTemp = await db.Temp.findByPk(idTemp)
+        infoTemp.check_in_s = infoTemp.check_in
+        infoTemp.check_out_s = infoTemp.check_out
 
         if (!errors.isEmpty()){
-            let tiposHab = await controller.habitacionesLibres(infoTemp.checkIn, infoTemp.checkOut)   
-            return res.render("reservas/busqueda",{tiposHab, qHab:infoTemp.occupancy, resTemp:infoTemp, errors:errors.mapped(),oldInfo:req.body})
+            let tiposHab = await controller.habitacionesLibres(infoTemp.checkIn, infoTemp.checkOut)
+            return res.render("search/roomSelection",{tiposHab, qHab:infoTemp.rooms, infoTemp, errors:errors.mapped(),oldInfo:req.body})
         }
-
+        
         let tiposHab = await db.Room_Type.findAll()
+
+        let selectedTypes = []
+        let rangoSessions = []
         for(const tipo of tiposHab){
             let cantTipo = Number(req.body[tipo.short_name]) || 0
-            if(cantTipo > 0){
-                await db.Temp_Room_Type.create({
-                    idTemp:idTemp,
-                    room_type_id:tipo.id,
-                    quantity:cantTipo
-                })
+            for(let i = 1 ; i<=cantTipo; i ++){
+                selectedTypes.push(tipo)
+                rangoSessions.push(tipo.short_name)
             }
         }
-
-        return res.redirect("/")
-
-        res.render("reservas")
-
+        req.session.tipos = rangoSessions.toString()
+    
+        res.render("search/finalInformation",{infoTemp, selectedTypes})
     },
     generarReservas: async(req,res)=>{
-let idTemp = req.params.idTemp
+        let idTemp = req.params.idTemp
         let errors = validationResult(req)
 
         let infoTemp = await db.Temp.findByPk(idTemp)
-
+        infoTemp.check_in_s = infoTemp.check_in
+        infoTemp.check_out_s = infoTemp.check_out
+        
         if (!errors.isEmpty()){
-            let tiposHab = await controller.habitacionesLibres(infoTemp.checkIn, infoTemp.checkOut)   
-            return res.render("resultados",{tiposHab, qHab:infoTemp.occupancy, resTemp:infoTemp, errors:errors.mapped(),oldInfo:req.body})
+            console.log(errors)
+            let tipos = req.session.tipos
+            console.log(req.session)
+            let rangoTipos = tipos.split(",")
+            let selectedTypes = []
+            for(const tipo of rangoTipos){
+                infoTipo = await db.Room_Type.findAll({
+                    where:{
+                        short_name:tipo
+                    }
+                })
+                selectedTypes.push(infoTipo[0])
+            }
+            
+            return res.render("search/finalInformation",{infoTemp, selectedTypes, errors:errors.mapped(),oldInfo:req.body})
         }
 
         let cantTrip = Number(req.body.trpvj) || 0

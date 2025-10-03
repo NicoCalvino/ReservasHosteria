@@ -1,13 +1,13 @@
 <%- include('../partials/header',{hojaDeEstilo:"/css/stylesBookings.css"}) %>
-  <div class="hero" id="reserva-timbre">
+<div class="hero nc-timbre-bis" id="reserva-timbre">
     <div class="container">
         <div class="main-heading">
             <h1 class="title-res">Reservá tu habitación</h1>
             <div class="nc-booking-block">
-                <form action="/consultaReserva" class="form" method="GET">
+                <form action="/roomSelection" class="form" method="GET">
                     <div class="input-group">
                         <label for="check-in" class="input-label">Entrada</label>
-                        <input type="date" class="input" id="check-in" name="check_in" <%=locals.oldInfo && oldInfo.check_in ? "value=" + oldInfo.check_in : '' %>>
+                        <input type="date" class="input" id="check-in" name="check_in" value="<%= infoTemp.check_in_s %>">
                         <% if(locals.errors && errors.check_in){ %>
                             <div class="nc-error-block">
                                 <label class="nc-error-message"><%= errors.check_in.msg %></label>   
@@ -16,7 +16,7 @@
                     </div>
                     <div class="input-group">
                         <label for="check-out" class="input-label">Salida</label>
-                        <input type="date" class="input" id="check-out"  name="check_out" <%=locals.oldInfo && oldInfo.check_out ? "value=" + oldInfo.check_out : '' %>>
+                        <input type="date" class="input" id="check-out"  name="check_out" value="<%= infoTemp.check_out_s %>">
                         <% if(locals.errors && errors.check_out){ %>
                             <div class="nc-error-block">
                                 <label class="nc-error-message"><%= errors.check_out.msg %></label>   
@@ -25,7 +25,7 @@
                     </div>
                     <div class="input-group">
                         <label for="people" class="input-label">Huespedes</label>
-                        <input type="number" class="input" id="people" name="people" <%=locals.oldInfo && oldInfo.people ? "value=" + oldInfo.people : '' %>>
+                        <input type="number" class="input" id="people" name="people"  value="<%= infoTemp.occupancy %>">
                         <% if(locals.errors && errors.people){ %>
                             <div class="nc-error-block">
                                 <label class="nc-error-message"><%= errors.people.msg %></label>   
@@ -34,7 +34,7 @@
                     </div>
                     <div class="input-group">
                         <label for="check-out" class="input-label">Habitaciones</label>
-                        <input type="number" class="input" id="rooms" name="rooms" <%=locals.oldInfo && oldInfo.rooms ? "value=" + oldInfo.rooms : '' %>>
+                        <input type="number" class="input" id="rooms" name="rooms"  value="<%= infoTemp.rooms %>">
                         <% if(locals.errors && errors.rooms){ %>
                             <div class="nc-error-block">
                                 <label class="nc-error-message"><%= errors.rooms.msg %></label>   
@@ -47,34 +47,32 @@
                     </div>
                 </form>
             </div>
-            <% if(locals.tiposHab){ %>
-                <form action="/consultaReserva/detallesReserva/<%= resTemp.id %>" class="nc-form" method="POST">
-                    <h2 class="title-res nc-subtitle">ELEGIR HABITACIONES</h2>
-                    <% if(locals.errors && errors.habitaciones){ %>
-                        <div class="nc-error-block">
-                            <label class="nc-error-message"><%= errors.habitaciones.msg %></label>   
-                        </div>
-                    <% } %>
-                    <div class="nc-rooms-list">
-                        <% tiposHab.forEach(tipo =>{ %>
-                            <% if(tipo.cantidad > 0) { %>
-                                <div class="nc-room-block">
-                                    <input type="number" class="nc-room-q" id="<%= tipo.short_name %>" name="<%= tipo.short_name %>" max="<%= tipo.cantidad > qHab ? qHab : tipo.cantidad %>" <%=locals.oldInfo && oldInfo[tipo.short_name] ? "value=" + oldInfo[tipo.short_name] : '' %>>
-                                    <label for="<%= tipo.short_name %>" class="nc-room-type"><%= tipo.description %></label>
-                                </div>  
-                            <% } %>  
-                        <% }) %>
+            <form action="/bookingDetails/<%= infoTemp.id %>" class="nc-form" method="POST">
+                <h2 class="title-res nc-subtitle">ELEGIR HABITACIONES</h2>
+                <% if(locals.errors && errors.habitaciones){ %>
+                    <div class="nc-error-block">
+                        <label class="nc-error-message"><%= errors.habitaciones.msg %></label>   
                     </div>
-                    <div class="nc-button-block">
-                        <input class="btn btn-gradient nc-btn-extra" type="submit" value="CONTINUAR">
-                        <label><i class="fas fa-arrow-right"></i></label>
-                    </div>
-                </form>
-            <% } %>
+                <% } %>
+                <div class="nc-rooms-list">
+                    <% tiposHab.forEach(tipo =>{ %>
+                        <% if(tipo.cantidad > 0) { %>
+                            <div class="nc-room-block">
+                                <input type="number" class="nc-room-q" id="<%= tipo.short_name %>" name="<%= tipo.short_name %>" min="0" max="<%= tipo.cantidad > qHab ? qHab : tipo.cantidad %>" <%=locals.oldInfo && oldInfo[tipo.short_name] ? "value=" + oldInfo[tipo.short_name] : '' %>>
+                                <label for="<%= tipo.short_name %>" class="nc-room-type"><%= tipo.description %></label>
+                            </div>  
+                        <% } %>  
+                    <% }) %>
+                </div>
+                <div class="nc-button-block">
+                    <input class="btn btn-gradient nc-btn-extra" type="submit" value="CONTINUAR">
+                    <label><i class="fas fa-arrow-right"></i></label>
+                </div>
+            </form>
         </div>
     </div>
-  </div>
-  <section class="booking">
-  </section>
+</div>
+<section class="booking">
+</section>
 </main>
 <%- include('../partials/footer') %>

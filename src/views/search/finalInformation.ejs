@@ -1,0 +1,91 @@
+<%- include('../partials/header',{hojaDeEstilo:"/css/stylesBookings.css"}) %>
+<div class="hero nc-timbre-tris" id="reserva-timbre">
+    <div class="container">
+        <div class="main-heading">
+            <h1 class="title-res nc-titulo-pagina">Complete la informacion para cada habitación</h1>
+            <form action="/bookingInformation/<%= infoTemp.id %>" class="nc-form" method="POST">
+                <div class="nc-room-detail-block">
+                    <% selectedTypes.forEach((roomType, index) =>{ %>
+                        <div class="nc-info-block">
+                            <h3 class="nc-room-number">HABITACIÓN <%= index + 1 %></h3>
+                            <h2 class="nc-room-title"><%= roomType.description %></h2>
+                            <ul class="nc-room-details">
+                                <li class="nc-room-people">
+                                    <input type="number" class="nc-room-q" id="mayores<%= index %>" min="0" max="<%= roomType.occupancy %>" name="mayores<%= index %>_<%= roomType.short_name %>" <%=locals.oldInfo && oldInfo['mayores' + index + '_' + roomType.short_name] ? "value=" + oldInfo['mayores' + index + '_' + roomType.short_name] : '' %>>
+                                    <label for="mayores<%= index %>" class="nc-room-type">MAYORES</label>
+                                </li>
+                                <li class="nc-room-people">
+                                    <input type="number" class="nc-room-q" id="menores<%= index %>" min="0" max="<%= roomType.occupancy %>" name="menores<%= index %>_<%= roomType.short_name %>" <%=locals.oldInfo && oldInfo['menores' + index + '_' + roomType.short_name] ? "value=" + oldInfo['menores' + index + '_' + roomType.short_name] : '' %>>
+                                    <label for="menores<%= index %>" class="nc-room-type">MENORES</label>
+                                </li>
+                            </ul>
+                            <% if(locals.errors && errors["mayores" + index + "_" + roomType.short_name]){ %>
+                                <div class="nc-error-block">
+                                    <label class="nc-error-message"><%= errors["mayores" + index + "_" + roomType.short_name].msg %></label>   
+                                </div>
+                            <% } %>
+                        </div>
+                    <% }) %>
+                </div>
+                <div class="nc-guest-block">
+                    <h2 class="title-res nc-subtitle">Complete su informacion personal</h2>
+                    <div class="nc-info-block">
+                        <div class="input-group">
+                            <label for="name" class="input-label">Nombre</label>
+                            <input type="text"  class="input" name="name" id="name">
+                            <% if(locals.errors && errors.name){ %>
+                                <div class="nc-error-block">
+                                    <label class="nc-error-message"><%= errors.name.msg %></label>   
+                                </div>
+                            <% } %>
+                        </div>
+                        <div class="input-group">
+                            <label for="lastname" class="input-label">Apellido</label>
+                            <input type="text"  class="input" name="lastname" id="lastname">
+                            <% if(locals.errors && errors.lastname){ %>
+                                <div class="nc-error-block">
+                                    <label class="nc-error-message"><%= errors.lastname.msg %></label>   
+                                </div>
+                            <% } %>
+                        </div>
+                        <div class="input-group">
+                            <label for="email" class="input-label">E-Mail</label>
+                            <input type="email"  class="input" name="email" id="email">
+                            <% if(locals.errors && errors.email){ %>
+                                <div class="nc-error-block">
+                                    <label class="nc-error-message"><%= errors.email.msg %></label>   
+                                </div>
+                            <% } %>
+                        </div>
+                        <div class="input-group">
+                            <label for="emailBis" class="input-label">Repetir E-Mail</label>
+                            <input type="email"  class="input" name="emailBis" id="emailBis">
+                            <% if(locals.errors && errors.emailBis){ %>
+                                <div class="nc-error-block">
+                                    <label class="nc-error-message"><%= errors.emailBis.msg %></label>   
+                                </div>
+                            <% } %>
+                        </div>
+                        <div class="input-group">
+                            <label for="phone" class="input-label">Telefono</label>
+                            <input type="number"  class="input" name="phone" id="phone">
+                            <% if(locals.errors && errors.phone){ %>
+                                <div class="nc-error-block">
+                                    <label class="nc-error-message"><%= errors.phone.msg %></label>   
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+                <div class="nc-button-block">
+                    <input class="btn btn-gradient nc-btn-extra" type="submit" value="CONFIRMAR">
+                    <label><i class="fas fa-arrow-right"></i></label>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+  <section class="booking">
+  </section>
+</main>
+<%- include('../partials/footer') %>

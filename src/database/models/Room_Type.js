@@ -31,6 +31,10 @@ module.exports=function(sequelize, DataTypes){
         Room_Type.hasMany(models.Room, {
             as:'rooms',
             foreignKey:'room_type_id'
+        }),
+        Room_Type.hasMany(models.Temp_Room_Type, {
+            as:'temp_rooms',
+            foreignKey:'room_type_id'
         })
     }
 

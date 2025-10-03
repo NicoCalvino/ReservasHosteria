@@ -23,5 +23,12 @@ module.exports=function(sequelize, DataTypes){
         timestamps:false,
     })
 
+    Temp_Room_Type.associate = function(models){
+        Temp_Room_Type.belongsTo(models.Room_Type, {
+            as:'room_types',
+            foreignKey:'room_type_id'
+        })
+    }
+
     return Temp_Room_Type
 }
