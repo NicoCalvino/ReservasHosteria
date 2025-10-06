@@ -3,6 +3,11 @@
     <div class="container">
         <div class="main-heading">
             <h1 class="title-res nc-titulo-pagina">Complete la informacion para cada habitación</h1>
+            <% if(locals.errors && errors.habitaciones){ %>
+                <div class="nc-error-block">
+                    <label class="nc-error-message"><%= errors.habitaciones.msg %></label>   
+                </div>
+            <% } %>
             <form action="/bookingInformation/<%= infoTemp.id %>" class="nc-form" method="POST">
                 <div class="nc-room-detail-block">
                     <% selectedTypes.forEach((roomType, index) =>{ %>
@@ -32,7 +37,7 @@
                     <div class="nc-info-block">
                         <div class="input-group">
                             <label for="name" class="input-label">Nombre</label>
-                            <input type="text"  class="input" name="name" id="name">
+                            <input type="text"  class="input" name="name" id="name" <%=locals.oldInfo && oldInfo.name ? "value=" + oldInfo.name : '' %>>
                             <% if(locals.errors && errors.name){ %>
                                 <div class="nc-error-block">
                                     <label class="nc-error-message"><%= errors.name.msg %></label>   
@@ -41,7 +46,7 @@
                         </div>
                         <div class="input-group">
                             <label for="lastname" class="input-label">Apellido</label>
-                            <input type="text"  class="input" name="lastname" id="lastname">
+                            <input type="text"  class="input" name="lastname" id="lastname" <%=locals.oldInfo && oldInfo.lastname ? "value=" + oldInfo.lastname : '' %>>
                             <% if(locals.errors && errors.lastname){ %>
                                 <div class="nc-error-block">
                                     <label class="nc-error-message"><%= errors.lastname.msg %></label>   
@@ -50,7 +55,7 @@
                         </div>
                         <div class="input-group">
                             <label for="email" class="input-label">E-Mail</label>
-                            <input type="email"  class="input" name="email" id="email">
+                            <input type="email"  class="input" name="email" id="email" <%=locals.oldInfo && oldInfo.email ? "value=" + oldInfo.email : '' %>>
                             <% if(locals.errors && errors.email){ %>
                                 <div class="nc-error-block">
                                     <label class="nc-error-message"><%= errors.email.msg %></label>   
@@ -59,7 +64,7 @@
                         </div>
                         <div class="input-group">
                             <label for="emailBis" class="input-label">Repetir E-Mail</label>
-                            <input type="email"  class="input" name="emailBis" id="emailBis">
+                            <input type="email"  class="input" name="emailBis" id="emailBis" autocomplete="off">
                             <% if(locals.errors && errors.emailBis){ %>
                                 <div class="nc-error-block">
                                     <label class="nc-error-message"><%= errors.emailBis.msg %></label>   
@@ -68,7 +73,7 @@
                         </div>
                         <div class="input-group">
                             <label for="phone" class="input-label">Telefono</label>
-                            <input type="number"  class="input" name="phone" id="phone">
+                            <input type="number"  class="input" name="phone" id="phone" <%=locals.oldInfo && oldInfo.phone ? "value=" + oldInfo.phone : '' %>>
                             <% if(locals.errors && errors.phone){ %>
                                 <div class="nc-error-block">
                                     <label class="nc-error-message"><%= errors.phone.msg %></label>   

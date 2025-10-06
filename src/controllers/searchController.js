@@ -91,14 +91,14 @@ const controller = {
         let qHab = req.query.rooms
 
         let infoTemp = await db.Temp.create({
-                check_in:checkIn,
-                check_out:checkOut,
-                occupancy:personas,
-                rooms:qHab
-            })
+            check_in:checkIn,
+            check_out:checkOut,
+            occupancy:personas,
+            rooms:qHab
+        })
 
-            infoTemp.check_in_s = checkIn
-            infoTemp.check_out_s = checkOut
+        infoTemp.check_in_s = checkIn
+        infoTemp.check_out_s = checkOut
 
         let tiposHab = await controller.habitacionesLibres(checkIn, checkOut)
 
@@ -141,9 +141,7 @@ const controller = {
         infoTemp.check_out_s = infoTemp.check_out
         
         if (!errors.isEmpty()){
-            console.log(errors)
             let tipos = req.session.tipos
-            console.log(req.session)
             let rangoTipos = tipos.split(",")
             let selectedTypes = []
             for(const tipo of rangoTipos){
@@ -158,12 +156,33 @@ const controller = {
             return res.render("search/finalInformation",{infoTemp, selectedTypes, errors:errors.mapped(),oldInfo:req.body})
         }
 
-        let cantTrip = Number(req.body.trpvj) || 0
-        let cantDblvm = Number(req.body.dblvm) || 0
-        let cantDblvj = Number(req.body.dblvj) || 0
-        let cantHab4 = Number(req.body.hab4) || 0
-        let cantSuite = Number(req.body.suite) || 0
+        let tiposHab = await db.Room_Type.findAll()
+        let roomDetails = []
+        for(let i = 0 ; i < 13 ; i++){
+            tiposHab.forEach(tipo =>{
+                let cantMayores = req.body['mayores' + i + "_" + tipo.short_name]
+                let cantMenores = req.body['menores' + i + "_" + tipo.short_name]
 
+                if(cantMayores == undefined){cantMayores=0}
+                if(cantMenores == undefined){cantMenores=0}
+
+                let cantTotal = Number(cantMayores) + Number(cantMenores)
+                console.log("****************************")
+                console.log('mayores' + i + "_" + tipo.short_name)
+                console.log('menores' + i + "_" + tipo.short_name)
+                console.log(cantTotal)
+                console.log("****************************")
+                if(cantTotal > 0){
+                    roomDetails.push({
+                        type:tipo.short_name,
+                        adults:cantMayores,
+                        children:cantMenores
+                    })
+                }
+            })
+
+        }
+        
         let nombre = req.body.name
         let lastname = req.body.lastname
         let email = req.body.email
@@ -182,28 +201,16 @@ const controller = {
                 guest_id:guest.id,
                 state_id:1
             }).then(async booking =>{
-                for(let i = 1; i<= cantTrip;i++){
-                    await controller.guardadoReserva(booking.id, "trpvj", infoTemp.check_in, infoTemp.check_out)
-                }
-                for(let i = 1; i<= cantDblvm;i++){
-                    await controller.guardadoReserva(booking.id, "dblvm", infoTemp.check_in, infoTemp.check_out)
-                }
-                for(let i = 1; i<= cantDblvj;i++){
-                    await controller.guardadoReserva(booking.id, "dblvj", infoTemp.check_in, infoTemp.check_out)
-                }
-                for(let i = 1; i<= cantHab4;i++){
-                    await controller.guardadoReserva(booking.id, "hab4", infoTemp.check_in, infoTemp.check_out)
-                }
-                for(let i = 1; i<= cantSuite;i++){
-                    await controller.guardadoReserva(booking.id, "suite", infoTemp.check_in, infoTemp.check_out)
+                for(const room of roomDetails){
+                    await controller.guardadoReserva(booking.id, room.type, room.adults, room.children, infoTemp.check_in, infoTemp.check_out)
                 }
             })
         })
 
-        res.render("reservas")
+        res.redirect("/")
 
     },
-    guardadoReserva: async(bookingId, tipo, checkIn, checkOut)=>{
+    guardadoReserva: async(bookingId, tipo, adults, children, checkIn, checkOut)=>{
         let infoTipo = await db.Room_Type.findAll({
             where:{
                 short_name:tipo
@@ -223,6 +230,8 @@ const controller = {
                 await db.Booking_Room.create({
                     check_in:checkIn,
                     check_out:checkOut,
+                    adults:adults,
+                    children:children,
                     booking_id:bookingId,
                     room_id:habitacion.id,
                 })

@@ -135,6 +135,37 @@ for(let i = 0 ; i < 13 ; i++){
     })
 }
 
+roomSelectionValidation.push(body('habitaciones').custom(async (value,{req})=>{
+        let idTemp = req.params.idTemp
+        let initialPeople = await db.Temp.findByPk(idTemp)
+        let totalPeople = 0
+
+        for(let i = 0 ; i < 13 ; i++){
+            tiposHabitacion.forEach(tipo =>{
+                    let cantMayores = req.body['mayores' + i + "_" + tipo]
+                    let cantMenores = req.body['menores' + i + "_" + tipo]
+
+                    if(cantMayores == undefined){cantMayores=0}
+                    if(cantMenores == undefined){cantMenores=0}
+
+                    let cantTotal = Number(cantMayores) + Number(cantMenores)
+                    totalPeople += cantTotal
+                })
+            }
+
+        if(initialPeople.occupancy < totalPeople){
+            throw new Error ('Se asignaron mas personas de las reservadas inicialmente')     
+        }
+        
+        if(initialPeople.occupancy > totalPeople){
+            throw new Error ('Se asignaron menos personas de las reservadas inicialmente')     
+        }
+
+        return true
+    })
+)
+
+
 const personalInfoValidation = [
     body('name').notEmpty().withMessage('Completar el nombre'),
     body('lastname').notEmpty().withMessage('Completar el apellido'),
@@ -160,13 +191,6 @@ const personalInfoValidation = [
     }),
     body('phone').notEmpty().withMessage('Completar el telefono')
 ]
-
-/* 
-VALIDACIONES
-Si la cantidad de personas supera la cantidad de habitaciones
-Si la cantidad de personas supera la ocupacion disponible
-Si la fecha de check in es menor a la de check out
-*/
 
 router.get("/", searchController.start)
 router.get("/roomSelection", searchValidation, searchController.selectorHabitaciones)

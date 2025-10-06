@@ -25,7 +25,7 @@
                     </div>
                     <div class="input-group">
                         <label for="people" class="input-label">Huespedes</label>
-                        <input type="number" class="input" id="people" name="people" <%=locals.oldInfo && oldInfo.people ? "value=" + oldInfo.people : '' %>>
+                        <input type="number" class="input" id="people" name="people" min="0" <%=locals.oldInfo && oldInfo.people ? "value=" + oldInfo.people : '' %>>
                         <% if(locals.errors && errors.people){ %>
                             <div class="nc-error-block">
                                 <label class="nc-error-message"><%= errors.people.msg %></label>   
@@ -34,7 +34,7 @@
                     </div>
                     <div class="input-group">
                         <label for="check-out" class="input-label">Habitaciones</label>
-                        <input type="number" class="input" id="rooms" name="rooms" <%=locals.oldInfo && oldInfo.rooms ? "value=" + oldInfo.rooms : '' %>>
+                        <input type="number" class="input" id="rooms" name="rooms" min="0" max="14" <%=locals.oldInfo && oldInfo.rooms ? "value=" + oldInfo.rooms : '' %>>
                         <% if(locals.errors && errors.rooms){ %>
                             <div class="nc-error-block">
                                 <label class="nc-error-message"><%= errors.rooms.msg %></label>   

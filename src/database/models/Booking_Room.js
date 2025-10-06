@@ -14,6 +14,14 @@ module.exports=function(sequelize, DataTypes){
             type:DataTypes.DATE,
             default:null
         },
+        adults:{
+            type:DataTypes.INTEGER.UNSIGNED, 
+            allowNull:false
+        },
+        children:{
+            type:DataTypes.INTEGER.UNSIGNED,
+            allowNull:false
+        },
         booking_id:{
             type:DataTypes.INTEGER.UNSIGNED,
             allowNull:false,
