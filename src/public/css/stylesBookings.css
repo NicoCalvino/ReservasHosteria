@@ -75,17 +75,32 @@
     line-height: 26px;
 }
 
-.nc-form .nc-rooms-list .nc-room-block .nc-room-type{
-    width:80%
+.nc-form .nc-rooms-list .nc-room-block .nc-room-quantity-block{
+    width:15%;
+    margin-right: 5px;
 }
 
 .nc-form .nc-rooms-list .nc-room-block .nc-room-q{
-    width:15%;
+    width:100%;
     font-size: 16px;
     line-height: 24px;
     padding: 5px;
     border-radius: 10px;
-    margin-right: 5px;
+}
+
+.nc-form .nc-rooms-list .nc-room-block .nc-room-info-block{
+    width:80%;
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.nc-form .nc-rooms-list .nc-room-block .nc-room-info-block .nc-room-type{
+    width:100%
+}
+
+.nc-form .nc-rooms-list .nc-room-block .nc-room-info-block .nc-room-price{
+    font-size: 20px;
+    line-height: 28px;
 }
 
 /* Estilos de la informacion de las habitaciones */

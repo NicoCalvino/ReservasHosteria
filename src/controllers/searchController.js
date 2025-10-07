@@ -2,6 +2,7 @@ const path = require("path")
 const fs = require("fs")
 const db = require('../database/models')
 const Op = db.Sequelize.Op
+const func = require('../functions/funciones')
 const {validationResult}=require('express-validator')
 const moment = require('moment')
 
@@ -32,6 +33,7 @@ const controller = {
                 }
             }
             tipo.cantidad = cantidad
+            tipo.precioForm = func.conversorNumero(tipo.price)
         }
 
         return tiposHab

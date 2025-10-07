@@ -4,6 +4,7 @@ const db = require('../database/models')
 const moment = require('moment')
 const router = express.Router()
 
+
 const searchController = require("../controllers/searchController")
 
 const {body} = require('express-validator')
@@ -81,6 +82,146 @@ const initialValidation = [
         }
         if(totalHabitaciones < infoTemp.rooms){
             throw new Error ('Se eligieron menos habitaciones de las solicitadas') 
+        }
+
+        return true
+    }),
+    body('trpvj').optional().custom(async (value,{req})=>{
+        let idTemp = req.params.idTemp
+        let infoTemp = await db.Temp.findByPk(idTemp)
+
+        let cant = Number(req.body.trpvj) || 0
+
+        let habHotel = await db.Room.findAll({
+            where:{
+                room_type_id:3
+            },
+            include:['room_types']
+        })
+
+        let habLibres =[]
+        for(const habitacion of habHotel){
+            let diasAlquilados = await searchController.disponibilidadHabitacion(infoTemp.check_in, infoTemp.check_out, habitacion.id)
+
+            if(diasAlquilados==0){
+                habLibres.push(habitacion)
+            }
+        }
+
+        if(habLibres.length < cant){
+            throw new Error ('No hay ' + cant + ' habitaciones triples disponibles') 
+        }
+
+        return true
+    }),
+    body('dblvm').optional().custom(async (value,{req})=>{
+        let idTemp = req.params.idTemp
+        let infoTemp = await db.Temp.findByPk(idTemp)
+
+        let cant = Number(req.body.dblvm) || 0
+
+        let habHotel = await db.Room.findAll({
+            where:{
+                room_type_id:3
+            },
+            include:['room_types']
+        })
+
+        let habLibres =[]
+        for(const habitacion of habHotel){
+            let diasAlquilados = await searchController.disponibilidadHabitacion(infoTemp.check_in, infoTemp.check_out, habitacion.id)
+
+            if(diasAlquilados==0){
+                habLibres.push(habitacion)
+            }
+        }
+
+        if(habLibres.length < cant){
+            throw new Error ('No hay ' + cant + ' habitaciones dobles vista al mar disponibles') 
+        }
+
+        return true
+    }),
+    body('dblvj').optional().custom(async (value,{req})=>{
+        let idTemp = req.params.idTemp
+        let infoTemp = await db.Temp.findByPk(idTemp)
+
+        let cant = Number(req.body.dblvj) || 0
+
+        let habHotel = await db.Room.findAll({
+            where:{
+                room_type_id:3
+            },
+            include:['room_types']
+        })
+
+        let habLibres =[]
+        for(const habitacion of habHotel){
+            let diasAlquilados = await searchController.disponibilidadHabitacion(infoTemp.check_in, infoTemp.check_out, habitacion.id)
+
+            if(diasAlquilados==0){
+                habLibres.push(habitacion)
+            }
+        }
+
+        if(habLibres.length < cant){
+            throw new Error ('No hay ' + cant + ' habitaciones dobles vista al jardin disponibles') 
+        }
+
+        return true
+    }),
+    body('hab4').optional().custom(async (value,{req})=>{
+        let idTemp = req.params.idTemp
+        let infoTemp = await db.Temp.findByPk(idTemp)
+
+        let cant = Number(req.body.hab4) || 0
+
+        let habHotel = await db.Room.findAll({
+            where:{
+                room_type_id:3
+            },
+            include:['room_types']
+        })
+
+        let habLibres =[]
+        for(const habitacion of habHotel){
+            let diasAlquilados = await searchController.disponibilidadHabitacion(infoTemp.check_in, infoTemp.check_out, habitacion.id)
+
+            if(diasAlquilados==0){
+                habLibres.push(habitacion)
+            }
+        }
+
+        if(habLibres.length < cant){
+            throw new Error ('No hay ' + cant + ' habitaciones de 4 personas disponibles') 
+        }
+
+        return true
+    }),
+    body('suite').optional().custom(async (value,{req})=>{
+        let idTemp = req.params.idTemp
+        let infoTemp = await db.Temp.findByPk(idTemp)
+
+        let cant = Number(req.body.suite) || 0
+
+        let habHotel = await db.Room.findAll({
+            where:{
+                room_type_id:3
+            },
+            include:['room_types']
+        })
+
+        let habLibres =[]
+        for(const habitacion of habHotel){
+            let diasAlquilados = await searchController.disponibilidadHabitacion(infoTemp.check_in, infoTemp.check_out, habitacion.id)
+
+            if(diasAlquilados==0){
+                habLibres.push(habitacion)
+            }
+        }
+
+        if(habLibres.length < cant){
+            throw new Error ('No hay ' + cant + ' suites disponibles') 
         }
 
         return true
