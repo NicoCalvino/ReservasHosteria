@@ -159,6 +159,53 @@
     margin-top: 5px;
 }
 
+.nc-confirmation-block{
+    margin: 10px auto
+}
+
+.nc-confirmation-block .nc-booking-code-block{
+    margin: 5px auto
+}
+
+.nc-confirmation-block .nc-booking-code-block .nc-booking-message{
+    font-size: 24px;
+    line-height: 32px;
+}
+
+.nc-confirmation-block .nc-booking-code-block .nc-booking-code{
+    font-size: 40px;
+    line-height: 48px;
+    margin: 10px auto;
+    color: rgb(252, 176, 64);
+}
+
+.nc-confirmation-block .nc-payment-block{
+    margin: 20px auto;
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.nc-confirmation-block .nc-payment-block .nc-payment-message{
+    font-size: 20px;
+    line-height: 28px;
+    margin: 5px auto;
+    width: 100%;
+}
+
+.nc-confirmation-block .nc-payment-block .nc-bank-information{
+    width:90%;
+    margin: 20px auto;
+    font-size: 22px;
+    line-height: 30px;
+}
+
+.nc-confirmation-block .nc-payment-block .nc-bank-information .nc-bankinfo-info{
+    font-weight: bold;
+}
+
+.nc-block{
+    margin:30px 0px
+}
 
 @media (min-width: 680px){
     .nc-booking-block{

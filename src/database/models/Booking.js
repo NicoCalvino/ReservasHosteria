@@ -18,12 +18,31 @@ module.exports=function(sequelize, DataTypes){
             type:DataTypes.INTEGER.UNSIGNED,
             allowNull:false,  
         },
+        room_count:{
+            type:DataTypes.INTEGER.UNSIGNED,
+            allowNull:false,  
+        },
+        booking_code:{
+            type:DataTypes.STRING(8),
+        },
+        amount:{
+            type:DataTypes.DECIMAL(10,2).UNSIGNED,
+            allowNull:false
+        },
+        payment:{
+            type:DataTypes.STRING(100),
+        },
         guest_id:{
             type:DataTypes.INTEGER.UNSIGNED,
             allowNull:false,
             foreignkey:true,    
         },
         state_id:{
+            type:DataTypes.INTEGER.UNSIGNED,
+            allowNull:false,
+            foreignkey:true,    
+        },
+        temp_id:{
             type:DataTypes.INTEGER.UNSIGNED,
             allowNull:false,
             foreignkey:true,    

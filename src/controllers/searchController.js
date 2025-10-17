@@ -98,16 +98,17 @@ const controller = {
             occupancy:personas,
             rooms:qHab
         })
+            req.session.idTemp = infoTemp.id
 
-        infoTemp.check_in_s = checkIn
-        infoTemp.check_out_s = checkOut
+            infoTemp.check_in_s = checkIn
+            infoTemp.check_out_s = checkOut
 
         let tiposHab = await controller.habitacionesLibres(checkIn, checkOut)
 
         res.render("search/roomSelection",{tiposHab, qHab, infoTemp, oldInfo:req.query})
     },
     detallesFinales: async(req,res)=>{
-        let idTemp = req.params.idTemp
+        let idTemp = req.session.idTemp
         let errors = validationResult(req)
 
         let infoTemp = await db.Temp.findByPk(idTemp)
@@ -135,7 +136,7 @@ const controller = {
         res.render("search/finalInformation",{infoTemp, selectedTypes})
     },
     generarReservas: async(req,res)=>{
-        let idTemp = req.params.idTemp
+        let idTemp = req.session.idTemp
         let errors = validationResult(req)
 
         let infoTemp = await db.Temp.findByPk(idTemp)
@@ -160,6 +161,7 @@ const controller = {
 
         let tiposHab = await db.Room_Type.findAll()
         let roomDetails = []
+        let totalAmount = 0
         for(let i = 0 ; i < 13 ; i++){
             tiposHab.forEach(tipo =>{
                 let cantMayores = req.body['mayores' + i + "_" + tipo.short_name]
@@ -169,12 +171,8 @@ const controller = {
                 if(cantMenores == undefined){cantMenores=0}
 
                 let cantTotal = Number(cantMayores) + Number(cantMenores)
-                console.log("****************************")
-                console.log('mayores' + i + "_" + tipo.short_name)
-                console.log('menores' + i + "_" + tipo.short_name)
-                console.log(cantTotal)
-                console.log("****************************")
                 if(cantTotal > 0){
+                    totalAmount += Number(tipo.price)
                     roomDetails.push({
                         type:tipo.short_name,
                         adults:cantMayores,
@@ -196,20 +194,32 @@ const controller = {
             email:email,
             phone:phone,
         }).then(async guest =>{
-            await db.Booking.create({
-                check_in:infoTemp.check_in,
-                check_out:infoTemp.check_out,
-                occupancy:infoTemp.occupancy,
-                guest_id:guest.id,
-                state_id:1
-            }).then(async booking =>{
-                for(const room of roomDetails){
-                    await controller.guardadoReserva(booking.id, room.type, room.adults, room.children, infoTemp.check_in, infoTemp.check_out)
+            let booking = await db.Booking.create({
+                    check_in:infoTemp.check_in,
+                    check_out:infoTemp.check_out,
+                    occupancy:infoTemp.occupancy,
+                    room_count:infoTemp.rooms,
+                    amount: totalAmount,
+                    guest_id:guest.id,
+                    temp_id:idTemp,
+                    state_id:1
+            })
+            
+            await db.Booking.update({
+                booking_code:"HSC" + String(booking.id).padStart(5,"0")
+            },{
+                where:{
+                    id:booking.id
                 }
             })
-        })
+            
+            for(const room of roomDetails){
+                await controller.guardadoReserva(booking.id, room.type, room.adults, room.children, infoTemp.check_in, infoTemp.check_out)
+            }
 
-        res.redirect("/")
+            req.session.booking = booking.id
+            res.redirect("/bookingConfirmed")
+        })
 
     },
     guardadoReserva: async(bookingId, tipo, adults, children, checkIn, checkOut)=>{
@@ -241,6 +251,45 @@ const controller = {
                 return
             }
         }
+    },
+    reservaConfirmada: async(req, res)=>{
+        let idBooking =1
+
+        let infoBooking = await db.Booking.findByPk(idBooking)
+        let infoBanco = await db.Bank_Information.findAll()
+
+        let bookedRooms = await db.Booking_Room.findAll({
+            where:{
+                booking_id:idBooking
+            }
+        })
+
+        if(bookedRooms.length != infoBooking.room_count){
+            await db.Booking.destroy({
+                where:{
+                    id:idBooking
+                }
+            })
+
+            await db.Booking_room.destroy({
+                where:{
+                    booking_id:idBooking
+                }
+            })
+            
+            return res.render("search/bookingError")
+        }
+
+        infoBooking.montoFormateado = func.conversorNumero(infoBooking.amount)
+        let montoReserva = Number(infoBooking.amount)*0.10
+        infoBooking.montoReservaFormateado = func.conversorNumero(montoReserva)
+
+        res.render("search/bookingConfirmed",{infoBooking, infoBcaria:infoBanco[0]})
+        
+
+    },
+    cargarPago: async(req, res)=>{
+        res.render("search/paymentUpload")
     }
 }
 

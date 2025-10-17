@@ -41,15 +41,15 @@ const searchValidation = [
         return true
     }),
     query('rooms').notEmpty().withMessage('Completar la cantidad de habitaciones deseadas').custom((value,{req})=>{
-        let cantidad = req.query.rooms
-        let huespedes = req.query.people
+        let cantidad = Number(req.query.rooms)
+        let huespedes = Number(req.query.people)
 
         if(cantidad <= 0){
            throw new Error ('Las Habitaciones no puede ser 0')  
         }
-
+        
         if(cantidad > huespedes){
-           throw new Error ('La cantidad de Huespedes no puede ser mayor a la cantidad de habitaciones')  
+           throw new Error ('La cantidad de Huespedes no puede ser menor a la cantidad de habitaciones')  
         }
 
         return true
@@ -58,7 +58,7 @@ const searchValidation = [
 
 const initialValidation = [
     body('habitaciones').custom(async (value,{req})=>{
-        let idTemp = req.params.idTemp
+        let idTemp = req.session.idTemp
         let cantTrip = Number(req.body.trpvj) || 0
         let cantDblvm = Number(req.body.dblvm) || 0
         let cantDblvj = Number(req.body.dblvj) || 0
@@ -87,20 +87,27 @@ const initialValidation = [
         return true
     }),
     body('trpvj').optional().custom(async (value,{req})=>{
-        let idTemp = req.params.idTemp
+        let idTemp = req.session.idTemp
         let infoTemp = await db.Temp.findByPk(idTemp)
 
         let cant = Number(req.body.trpvj) || 0
 
+        let roomType = await db.Room_Type.findAll({
+            where:{
+                short_name:'trpvj'
+            }
+        })
+
         let habHotel = await db.Room.findAll({
             where:{
-                room_type_id:3
+                room_type_id:roomType[0].id
             },
             include:['room_types']
         })
 
         let habLibres =[]
         for(const habitacion of habHotel){
+
             let diasAlquilados = await searchController.disponibilidadHabitacion(infoTemp.check_in, infoTemp.check_out, habitacion.id)
 
             if(diasAlquilados==0){
@@ -115,14 +122,20 @@ const initialValidation = [
         return true
     }),
     body('dblvm').optional().custom(async (value,{req})=>{
-        let idTemp = req.params.idTemp
+        let idTemp = req.session.idTemp
         let infoTemp = await db.Temp.findByPk(idTemp)
 
         let cant = Number(req.body.dblvm) || 0
 
+        let roomType = await db.Room_Type.findAll({
+            where:{
+                short_name:'dblvm'
+            }
+        })
+
         let habHotel = await db.Room.findAll({
             where:{
-                room_type_id:3
+                room_type_id:roomType[0].id
             },
             include:['room_types']
         })
@@ -143,14 +156,20 @@ const initialValidation = [
         return true
     }),
     body('dblvj').optional().custom(async (value,{req})=>{
-        let idTemp = req.params.idTemp
+        let idTemp = req.session.idTemp
         let infoTemp = await db.Temp.findByPk(idTemp)
 
         let cant = Number(req.body.dblvj) || 0
 
+        let roomType = await db.Room_Type.findAll({
+            where:{
+                short_name:'dblvj'
+            }
+        })
+
         let habHotel = await db.Room.findAll({
             where:{
-                room_type_id:3
+                room_type_id:roomType[0].id
             },
             include:['room_types']
         })
@@ -171,14 +190,20 @@ const initialValidation = [
         return true
     }),
     body('hab4').optional().custom(async (value,{req})=>{
-        let idTemp = req.params.idTemp
+        let idTemp = req.session.idTemp
         let infoTemp = await db.Temp.findByPk(idTemp)
 
         let cant = Number(req.body.hab4) || 0
 
+        let roomType = await db.Room_Type.findAll({
+            where:{
+                short_name:'hab4'
+            }
+        })
+
         let habHotel = await db.Room.findAll({
             where:{
-                room_type_id:3
+                room_type_id:roomType[0].id
             },
             include:['room_types']
         })
@@ -199,14 +224,20 @@ const initialValidation = [
         return true
     }),
     body('suite').optional().custom(async (value,{req})=>{
-        let idTemp = req.params.idTemp
+        let idTemp = req.session.idTemp
         let infoTemp = await db.Temp.findByPk(idTemp)
 
         let cant = Number(req.body.suite) || 0
 
+        let roomType = await db.Room_Type.findAll({
+            where:{
+                short_name:'suite'
+            }
+        })
+
         let habHotel = await db.Room.findAll({
             where:{
-                room_type_id:3
+                room_type_id:roomType[0].id
             },
             include:['room_types']
         })
@@ -277,7 +308,7 @@ for(let i = 0 ; i < 13 ; i++){
 }
 
 roomSelectionValidation.push(body('habitaciones').custom(async (value,{req})=>{
-        let idTemp = req.params.idTemp
+        let idTemp = req.session.idTemp
         let initialPeople = await db.Temp.findByPk(idTemp)
         let totalPeople = 0
 
@@ -306,7 +337,6 @@ roomSelectionValidation.push(body('habitaciones').custom(async (value,{req})=>{
     })
 )
 
-
 const personalInfoValidation = [
     body('name').notEmpty().withMessage('Completar el nombre'),
     body('lastname').notEmpty().withMessage('Completar el apellido'),
@@ -333,10 +363,31 @@ const personalInfoValidation = [
     body('phone').notEmpty().withMessage('Completar el telefono')
 ]
 
+const duplicatedBookingValidation = [
+    body('reserva').custom(async (value,{req})=>{
+        let idTemp = req.session.idTemp
+
+        let reservaExistente = await db.Booking.findAll({
+            where:{
+                temp_id: idTemp
+            }
+        })
+
+        if(reservaExistente.length > 0){
+            throw new Error ('Ya se ha registrado su reserva, si quiere volver a reservar es necesario volver a comenzar el proceso') 
+        }
+        
+        return true
+    })   
+]
+
+
 router.get("/", searchController.start)
 router.get("/roomSelection", searchValidation, searchController.selectorHabitaciones)
-router.post("/bookingDetails/:idTemp", initialValidation, searchController.detallesFinales)
-router.post("/bookingInformation/:idTemp", roomSelectionValidation, personalInfoValidation, searchController.generarReservas)
+router.post("/bookingDetails", initialValidation, searchController.detallesFinales)
+router.post("/bookingInformation", duplicatedBookingValidation, roomSelectionValidation, personalInfoValidation, searchController.generarReservas)
+router.get("/bookingConfirmed", searchController.reservaConfirmada)
+router.get("/paymentUpload", searchController.cargarPago)
 
 
 module.exports=router
