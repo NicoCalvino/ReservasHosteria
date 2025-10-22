@@ -290,6 +290,49 @@ const controller = {
     },
     cargarPago: async(req, res)=>{
         res.render("search/paymentUpload")
+    },
+    pagoCargado:async(req, res)=>{
+        let errors = validationResult(req)
+
+        if (!errors.isEmpty()){
+            return res.render("search/paymentUpload",{errors:errors.mapped(),oldInfo:req.body})
+        }
+
+        let codigoReserva = req.body.booking_code
+        let emailReserva = req.body.email
+
+        let guestBooking = await db.Booking.findAll({
+            where:{
+                booking_code:codigoReserva,
+                state_id:1
+            },
+            include: [{
+                model: db.Guest, 
+                as: 'guests',
+                required: true, 
+                where: {
+                    email: emailReserva
+                }
+            }]
+        })
+        console.log("***********************")
+        console.log(guestBooking)
+        console.log("***********************")
+
+        if(guestBooking.length == 0){
+            return res.render("search/paymentUpload",{mensajePagina:"No se encontro reserva con los datos indicados",oldInfo:req.body})   
+        }
+
+        await db.Booking.update({
+            payment:req.file.filename,
+            state_id:2
+        },{
+            where:{
+                id:guestBooking[0].id
+            }
+        })
+
+        res.render("search/paymentUpload",{mensajePagina:"Muchas Gracias, Recibirá una notificacion cuando su pago sea confirmado"})   
     }
 }
 
