@@ -93,6 +93,15 @@ const model = {
         let diasSemana = ["LUNES","MARTES","MIERCOLES","JUEVES","VIERNES"]
         return diasSemana
     },
+    cantNoches:function(checkIn, checkOut){
+        console.log("\n" + checkIn)
+        console.log("\n" + checkOut)
+        let fechaIngreso = this.formateoFecha(checkIn)
+        let fechaSalida = this.formateoFecha(checkOut)
+
+        let dias = (fechaSalida - fechaIngreso)/ (1000 * 3600 * 24)
+        return dias
+    },
     conversorNumero: function(monto){
         let cero = String(monto)
         let primera = cero.split(".")

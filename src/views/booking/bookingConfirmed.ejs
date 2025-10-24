@@ -10,7 +10,7 @@
                 </div>
                 <div class="nc-payment-block">
                     <span class="nc-payment-message">El total de su estadía será de $ <%= infoBooking.montoFormateado %></span>
-                    <span class="nc-payment-message">Para confirmar su reserva será necesario abonar una seña de $ <%= infoBooking.montoReservaFormateado %></span>
+                    <span class="nc-payment-message">Para confirmar su reserva, será necesario abonar una seña de $ <%= infoBooking.montoReservaFormateado %></span>
                     <span class="nc-payment-message">Puede hacerlo por transferencia bancaria con la siguiente informacion:</span>
                     <div class="nc-bank-information">
                         <div class="nc-bankinfo-block">
@@ -34,7 +34,9 @@
                             <label class="nc-bankinfo-info"><%= infoBcaria.cuit %></label>
                         </div>
                     </div>
-                    <span class="nc-payment-message">Para informar un pago hacer click <a href="/paymentUpload">AQUI</a></span>
+                    <div class="nc-payment-link-block">
+                        <span class="nc-payment-message">Para informar un pago hacer click <a href="/paymentUpload">AQUI</a></span>
+                    </div>
                 </div>
             </div>
         </div>

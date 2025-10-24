@@ -21,6 +21,10 @@ module.exports=function(sequelize, DataTypes){
         price:{
             type:DataTypes.DECIMAL(10,2).UNSIGNED,
             allowNull:false
+        },
+        picture:{
+            type:DataTypes.STRING(100),
+            allowNull:false
         }
     },{
         timestamps:false,

@@ -8,7 +8,7 @@
                     <label class="nc-error-message"><%= errors.habitaciones.msg %></label>   
                 </div>
             <% } %>
-            <form action="/bookingInformation" class="nc-form" method="POST">
+            <form action="/booking/information" class="nc-form" method="POST">
                 <div class="nc-room-detail-block">
                     <% selectedTypes.forEach((roomType, index) =>{ %>
                         <div class="nc-info-block">

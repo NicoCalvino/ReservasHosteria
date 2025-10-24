@@ -14,6 +14,10 @@ module.exports=function(sequelize, DataTypes){
             type:DataTypes.INTEGER.UNSIGNED,
             allowNull:false,   
         },
+        available:{
+            type:DataTypes.BOOLEAN,
+            allowNull:false,
+        },
         room_type_id:{
             type:DataTypes.INTEGER.UNSIGNED,
             allowNull:false,

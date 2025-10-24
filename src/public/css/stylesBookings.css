@@ -101,7 +101,41 @@
 .nc-form .nc-rooms-list .nc-room-block .nc-room-info-block .nc-room-price{
     font-size: 20px;
     line-height: 28px;
+    width: 50%;
 }
+
+.nc-form .nc-rooms-list .nc-room-block .nc-room-info-block .image-link{
+    color: rgb(252, 176, 64);
+    text-decoration: underline;
+}
+
+.nc-form .nc-rooms-list .nc-room-block .nc-room-info-block .image-link i{
+    margin-right: 5px;
+    font-size: 20px;
+}
+
+.nc-form .nc-rooms-list .nc-room-block .nc-room-info-block .hover-container{
+    position: relative;
+    display: block;
+    width: 30%;
+}
+
+.nc-form .nc-rooms-list .nc-room-block .nc-room-info-block .hover-container .hover-image {
+    display: none;
+    position: absolute;
+    top: -160px; /* Position the image above the link */
+    left: -100px; /* Center the image horizontally */
+    transform: translateX(-50%); /* Fine-tune the horizontal centering */
+    border: 2px solid #333;
+    border-radius: 5px;
+    z-index: 10;
+    width: 300%;
+}
+
+.nc-form .nc-rooms-list .nc-room-block .nc-room-info-block .hover-container:hover .hover-image {
+    display: block;
+}
+
 
 /* Estilos de la informacion de las habitaciones */
 
@@ -262,14 +296,27 @@
 
 
 
+
+
 @media (min-width: 680px){
     .nc-booking-block{
         width: 40%;
     }
 }
 
-@media (min-width: 900px){
+@media (min-width: 1200px){
     .nc-booking-block{
         width: 30%;
     }
+
+    .nc-form .nc-rooms-list .nc-room-block .nc-room-info-block .hover-container .hover-image {
+        left: -10px; /* Center the image horizontally */
+        transform: translateX(10%); /* Fine-tune the horizontal centering */
+        width: 200%;
+    }
+
+    .nc-form .nc-rooms-list .nc-room-block .nc-room-info-block .hover-container:hover .hover-image {
+        display: block;
+    }
+
 }

@@ -14,6 +14,10 @@ module.exports=function(sequelize, DataTypes){
             type:DataTypes.DATE,
             default:null
         },
+        nights:{
+            type:DataTypes.INTEGER.UNSIGNED,
+            allowNull:false,  
+        },
         occupancy:{
             type:DataTypes.INTEGER.UNSIGNED,
             allowNull:false,  
@@ -26,6 +30,10 @@ module.exports=function(sequelize, DataTypes){
             type:DataTypes.STRING(8),
         },
         amount:{
+            type:DataTypes.DECIMAL(10,2).UNSIGNED,
+            allowNull:false
+        },
+        downpayment:{
             type:DataTypes.DECIMAL(10,2).UNSIGNED,
             allowNull:false
         },

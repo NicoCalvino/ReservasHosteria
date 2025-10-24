@@ -27,9 +27,13 @@ module.exports=function(sequelize, DataTypes){
             allowNull:false,
             foreignkey:true,    
         },
-        room_id:{
+        room_type_id:{
             type:DataTypes.INTEGER.UNSIGNED,
             allowNull:false,
+            foreignkey:true,    
+        },
+        room_id:{
+            type:DataTypes.INTEGER.UNSIGNED,
             foreignkey:true,    
         }
     },{

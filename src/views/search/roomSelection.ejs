@@ -47,7 +47,7 @@
                     </div>
                 </form>
             </div>
-            <form action="/bookingDetails" class="nc-form" method="POST">
+            <form action="/booking/details" class="nc-form" method="POST">
                 <h2 class="title-res nc-subtitle">ELEGIR HABITACIONES</h2>
                 <% if(locals.errors && errors.habitaciones){ %>
                     <div class="nc-error-block">
@@ -64,7 +64,13 @@
                                 <div class="nc-room-info-block">
                                     <label for="<%= tipo.short_name %>" class="nc-room-type"><%= tipo.description %></label>
                                     <label for="<%= tipo.short_name %>" class="nc-room-price">$ <%= tipo.precioForm %></label>
+                                    <div class="hover-container">
+                                        <a class="image-link" href="images/<%= tipo.picture %>" target="_blank"><i class="fas fa-image"></i>Foto</a>
+                                        <img src="images/<%= tipo.picture %>" alt="Foto Habitacion" class="hover-image">
+                                    </div>
                                 </div>
+
+                                
                             </div>
                             <% if(locals.errors && errors[tipo.short_name]){ %>
                                 <div class="nc-error-block">
