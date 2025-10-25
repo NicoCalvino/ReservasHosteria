@@ -139,10 +139,11 @@ const controller = {
                     room_type_id:room.type,
                 })
             }
-
+            console.log("\n" + booking + "\n")
+            req.session.idTemp = false
             req.session.booking = booking.id
             res.redirect("/booking/confirmed")
-        })
+        }).then()
     },
     reservaConfirmada: async(req, res)=>{
         let idBooking = req.session.booking 
@@ -169,7 +170,7 @@ const controller = {
                 }
             })
             
-            return res.render("booking/bookingError")
+            return res.redirect("error/booking")
         }
 
         infoBooking.montoFormateado = func.conversorNumero(infoBooking.amount)
@@ -177,6 +178,60 @@ const controller = {
 
         res.render("booking/bookingConfirmed",{infoBooking, infoBcaria:infoBanco[0]})
     
+    },
+    buscarReserva: async(req, res)=>{
+        res.render("booking/bookingSearch")
+    },
+    resultadosReserva: async(req, res)=>{
+        let errors = validationResult(req)
+        
+        if (!errors.isEmpty()){
+            return res.render("booking/bookingSearch",{errors:errors.mapped(),oldInfo:req.body})
+        }
+
+        let codigoReserva = req.body.booking_code
+        let emailReserva = req.body.email
+
+        let guestBooking = await db.Booking.findAll({
+            where:{
+                booking_code:codigoReserva,
+                state_id:1
+            },
+            include: [{
+                model: db.Guest, 
+                as: 'guests',
+                required: true, 
+                where: {
+                    email: emailReserva
+                }
+            }]
+        })
+
+        if(guestBooking.length == 0){
+            return res.render("booking/bookingSearch",{mensajePagina:"No se encontro reserva con los datos indicados",oldInfo:req.body})   
+        }
+
+        guestBooking[0].montoFormateado = func.conversorNumero(guestBooking[0].amount)
+        guestBooking[0].montoReservaFormateado = func.conversorNumero(guestBooking[0].downpayment)
+        guestBooking[0].check_in_txt = func.fechaATexto(guestBooking[0].check_in)
+        guestBooking[0].check_out_txt = func.fechaATexto(guestBooking[0].check_out)
+
+        switch(guestBooking[0].state_id){
+            case 1:
+                guestBooking[0].estado = "Pendiente"
+                guestBooking[0].explicacion = "La seña correspondiente a su reserva no ha sido recibida"
+                break
+            case 2:
+                guestBooking[0].estado = "Procesando"
+                guestBooking[0].explicacion = "Su pago ha sido recibido y esta siendo revisado por el hotel"
+                break
+            case 3:
+                guestBooking[0].estado = "Confirmada"
+                guestBooking[0].explicacion = "Su pago ha sido confirmado y su reserva está confirmada. ¡Lo esperamos!"
+                break
+        }
+
+        res.render("booking/bookingStatus",{bookingInfo:guestBooking[0]})   
     }
 }
 

@@ -2,14 +2,15 @@ const path = require("path")
 const express = require ("express")
 const app = express()
 const db = require('../database/models')
-const moment = require('moment')
+//const moment = require('moment')//
 const router = express.Router()
+const activeSessionMiddleware = require ("../middlewares/activeSessionMiddleware")
 
 const searchController = require("../controllers/searchController")
 const bookingController = require("../controllers/bookingController")
 
 const {body} = require('express-validator')
-const {query} = require('express-validator')
+//const {query} = require('express-validator')//
 
 const initialValidation = [
     body('habitaciones').custom(async (value,{req})=>{
@@ -265,9 +266,25 @@ const duplicatedBookingValidation = [
     })   
 ]
 
-router.post("/details", initialValidation, bookingController.detallesFinales)
-router.post("/information", duplicatedBookingValidation, roomSelectionValidation, personalInfoValidation, bookingController.generarReservas)
-router.get("/confirmed", bookingController.reservaConfirmada)
+const bookingSearchValidation = [
+    body('booking_code').notEmpty().withMessage('Completar el código de reserva'),
+    body('email').notEmpty().withMessage('Completar el mail de reserva').custom(async (value,{req})=>{
+        let email = req.body.email
+
+        if(email.indexOf("@")==-1){
+           throw new Error ('Completar con un mail valido')  
+        }
+
+        return true 
+    })
+]
+
+
+router.post("/details", activeSessionMiddleware, initialValidation, bookingController.detallesFinales)
+router.post("/information", activeSessionMiddleware, duplicatedBookingValidation, roomSelectionValidation, personalInfoValidation, bookingController.generarReservas)
+router.get("/confirmed", activeSessionMiddleware, bookingController.reservaConfirmada)
+router.get("/search",  bookingController.buscarReserva)
+router.post("/search", bookingSearchValidation, bookingController.resultadosReserva)
 
 
 module.exports=router

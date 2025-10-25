@@ -4,7 +4,7 @@
         <div class="main-heading">
             <h1 class="title-res">Reservá tu habitación</h1>
             <div class="nc-booking-block">
-                <form action="/roomSelection" class="form" method="GET">
+                <form action="/search/roomSelection" class="form" method="GET">
                     <div class="input-group">
                         <label for="check-in" class="input-label">Entrada</label>
                         <input type="date" class="input" id="check-in" name="check_in" value="<%= infoTemp.check_in_s %>">
@@ -69,8 +69,6 @@
                                         <img src="images/<%= tipo.picture %>" alt="Foto Habitacion" class="hover-image">
                                     </div>
                                 </div>
-
-                                
                             </div>
                             <% if(locals.errors && errors[tipo.short_name]){ %>
                                 <div class="nc-error-block">

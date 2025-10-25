@@ -2,14 +2,14 @@
 <div class="hero nc-timbre-tris" id="reserva-timbre">
     <div class="container">
         <div class="main-heading">
-            <h1 class="title-res nc-titulo-pagina">Informar Seña</h1>
+            <h1 class="title-res nc-titulo-pagina">Buscar Reserva</h1>
             <% if(locals.mensajePagina ){ %>
                 <div class="nc-error-block">
                     <label class="nc-error-message"><%= mensajePagina %></label>   
                 </div>
             <% } %>
             <div class="nc-block">
-                <form action="/payment/upload" class="form" method="POST" enctype="multipart/form-data">
+                <form action="/booking/search" class="form" method="POST">
                     <div class="nc-file-info-div">
                         <label class="nc-file-info-label" for="booking_code">Código de Reserva</label>
                         <input class="nc-file-input" type="text" id="booking_code" name="booking_code" <%=locals.oldInfo && oldInfo.booking_code ? "value=" + oldInfo.booking_code : '' %>>
@@ -28,17 +28,8 @@
                             </div>
                         <% } %>
                     </div>
-                    <div class="nc-file-info-div">
-                        <label class="nc-file-info-label" for="receipt">Comprobante</label>
-                        <input class="nc-file-input" type="file" id="receipt" name="receipt">
-                        <% if(locals.errors && errors.receipt){ %>
-                            <div class="nc-error-block">
-                                <label class="nc-error-message"><%= errors.receipt.msg %></label>   
-                            </div>
-                        <% } %>
-                    </div>
                     <div class="nc-button-block nc-payment-button">
-                        <input class="btn btn-gradient nc-btn-extra" type="submit" value="INFORMAR">
+                        <input class="btn btn-gradient nc-btn-extra" type="submit" value="BUSCAR">
                     </div>
                 </form>
                 <div class="nc-comunication-block">

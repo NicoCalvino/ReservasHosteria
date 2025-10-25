@@ -248,8 +248,9 @@
 }
 
 .nc-block{
-    margin:30px 0px
+    margin:auto
 }
+
 
 .nc-block form .nc-file-info-div{
     margin:20px auto;
@@ -282,7 +283,6 @@
     justify-content: center;
 }
 
-
 .nc-comunication-block{ 
     width: 90%;
     margin: 30px auto;
@@ -291,12 +291,83 @@
     background-color: rgba(0, 0, 0, 0.3);
     padding: 5px;
     border-radius: 10px;
-
 }
 
+.nc-booking-info-block{
+    display:flex;
+    flex-wrap: wrap;
+}
 
+.nc-booking-info-block .nc-titulo-info{
+    font-weight: bold;
+    margin-right:10px;
+    text-transform: uppercase;
+}
 
+.nc-booking-info-block .nc-booking-status-block{
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
 
+.nc-booking-info-block .nc-booking-status-block .nc-booking-status-title{
+    font-size: 32px;
+    line-height: 40px;
+    margin-bottom: 10px;
+}
+
+.nc-booking-info-block .nc-booking-status-block .nc-booking-status-explanation{
+    font-size: 24px;
+    line-height: 32px;
+}
+
+.nc-booking-info-block .nc-booking-info{
+    width: 100%;
+    font-size: 22px;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.nc-booking-info-block .nc-booking-info i{
+    margin-right:10px;
+}
+
+.nc-booking-info-block .nc-payment-link-block{
+    margin:20px 0px
+}
+
+.nc-error-container{
+    width: 80%;
+    margin:auto;
+    margin-top: 30px;
+    margin-bottom: 500px;
+    font-size: 28px;
+    line-height: 36px;
+}
+
+.nc-error-container a{
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+footer .nc-admin-loggin-container{
+    width: 80%;
+    margin:auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+footer .nc-admin-loggin-container a{
+    display: flex;
+    align-items: center;
+}
+
+footer .nc-admin-loggin-container a i{
+    margin-right:5px ;
+    font-size: 20px;
+}
 
 @media (min-width: 680px){
     .nc-booking-block{

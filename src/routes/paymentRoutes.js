@@ -35,7 +35,7 @@ const paymentValidation = [
     }),
 ]
 
-router.get("/paymentUpload", paymentController.cargarPago)
-router.post("/paymentUpload", fileUpload.single("receipt"), paymentValidation, paymentController.pagoCargado)
+router.get("/upload", paymentController.cargarPago)
+router.post("/upload", fileUpload.single("receipt"), paymentValidation, paymentController.pagoCargado)
 
 module.exports=router

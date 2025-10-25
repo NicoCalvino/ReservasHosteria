@@ -2,7 +2,7 @@ module.exports=function(sequelize, DataTypes){
     const Room = sequelize.define("Room",{
         id: {
             type:DataTypes.INTEGER.UNSIGNED,
-            autoincrement: true,
+            autoIncrement: true,
             primaryKey: true,
             allowNull: false
         },

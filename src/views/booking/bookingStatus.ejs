@@ -1,0 +1,36 @@
+<%- include('../partials/header',{hojaDeEstilo:"/css/stylesBookings.css"}) %>
+<div class="hero nc-timbre-tris" id="reserva-timbre">
+    <div class="container">
+        <div class="main-heading">
+            <h1 class="title-res nc-titulo-pagina">Estado de Reserva</h1>
+            <div class="nc-confirmation-block">
+                <div class="nc-booking-code-block">
+                    <h2 class="nc-booking-message"><%= bookingInfo.guests.name %> <%= bookingInfo.guests.lastname %></h2>
+                    <h2 class="nc-booking-message">Su codigo de Reserva es</h2>
+                    <h2 class="nc-booking-code"><%= bookingInfo.booking_code %></h2>
+                </div>
+                <div class="nc-booking-info-block">
+                    <div class="nc-booking-status-block">
+                        <h2 class="nc-booking-status-title"><label class="nc-titulo-info">Estado:</label><%= bookingInfo.estado %></h2>
+                        <label class="nc-booking-status-explanation"><%= bookingInfo.explicacion %></label>
+                    </div>
+                    <span class="nc-booking-info"><i class="fas fa-calendar-alt"></i><label class="nc-titulo-info">Entrada:</label><%= bookingInfo.check_in_txt %></span>
+                    <span class="nc-booking-info"><i class="fas fa-calendar-alt"></i><label class="nc-titulo-info">Salida:</label><%= bookingInfo.check_out_txt %></span>
+                    <span class="nc-booking-info"><i class="fas fa-user-friends"></i><label class="nc-titulo-info">Huespedes:</label><%= bookingInfo.occupancy %></span>
+                    <span class="nc-booking-info"><i class="fas fa-bed"></i><label class="nc-titulo-info">Habitaciones:</label><%= bookingInfo.room_count %></span>
+                    <span class="nc-booking-info"><i class="fas fa-money-bill"></i><label class="nc-titulo-info">Monto Total:</label>$ <%= bookingInfo.montoFormateado %></span>
+                    <span class="nc-booking-info"><i class="fas fa-money-bill-alt"></i><label class="nc-titulo-info">Monto Seña:</label>$ <%= bookingInfo.montoReservaFormateado %></span>
+                    <% if(bookingInfo.state_id == 1){ %>
+                        <div class="nc-payment-link-block">
+                            <span class="nc-payment-message">Para informar su pago haga click <a href="/payment/upload">AQUI</a></span>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  <section class="booking">
+  </section>
+</main>
+<%- include('../partials/footer') %>

@@ -12,56 +12,56 @@ const model = {
     nombreMes: function(nro){
         switch (nro){
             case 1:
-                return "ENERO"
+                return "Enero"
             case 2:
-                return "FEBRERO"
+                return "Febrero"
             case 3:
-                return "MARZO"
+                return "Marzo"
             case 4:
-                return "ABRIL"
+                return "Abril"
             case 5:
-                return "MAYO"
+                return "Mayo"
             case 6:
-                return "JUNIO"
+                return "Junio"
             case 7:
-                return "JULIO"
+                return "Julio"
             case 8:
-                return "AGOSTO"
+                return "Agosto"
             case 9:
-                return "SEPTIEMBRE"
+                return "Septiembre"
             case 10:
-                return "OCTUBRE"
+                return "Octubre"
             case 11:
-                return "NOVIEMBRE"
+                return "Noviembre"
             case 12:
-                return "DICIEMBRE"
+                return "Diciembre"
             }
     },
     nroMes: function(nombre){
         switch (nombre){
-            case "ENERO":
+            case "Enero":
                 return 1
-            case "FEBRERO":
+            case "Febrero":
                 return 2
-            case "MARZO":
+            case "Marzo":
                 return 3
-            case "ABRIL":
+            case "Abril":
                 return 4
-            case "MAYO":
+            case "Mayo":
                 return 5
-            case "JUNIO":
+            case "Junio":
                 return 6
-            case "JULIO":
+            case "Julio":
                 return 7
-            case "AGOSTO":
+            case "Agosto":
                 return 8
-            case "SEPTIEMBRE":
+            case "Septiembre":
                 return 9
-            case "OCTUBRE":
+            case "Octubre":
                 return 10
-            case "NOVIEMBRE":
+            case "Noviembre":
                 return 11
-            case "DICIEMBRE":
+            case "Diciembre":
                 return 12
             }
     },
@@ -71,13 +71,13 @@ const model = {
     },
     fechaATexto: function(fechaString){
         let infoSeccionada = fechaString.split("-")
-        let cadena = Number(infoSeccionada[2]) + " DE " + this.nombreMes(Number(infoSeccionada[1])) + " DE " + infoSeccionada[0]
+        let cadena = Number(infoSeccionada[2]) + " de " + this.nombreMes(Number(infoSeccionada[1])) + " de " + infoSeccionada[0]
 
         return cadena
     },
     fechaATextoCorto: function(fechaString){
         let infoSeccionada = fechaString.split("-")
-        let cadena = Number(infoSeccionada[2]) + " DE " + this.nombreMes(Number(infoSeccionada[1]))
+        let cadena = Number(infoSeccionada[2]) + " de " + this.nombreMes(Number(infoSeccionada[1]))
 
         return cadena
     },

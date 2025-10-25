@@ -1,0 +1,42 @@
+<%- include('../partials/header',{hojaDeEstilo:"/css/stylesBookings.css"}) %>
+<div class="hero nc-timbre-tris" id="reserva-timbre">
+    <div class="container">
+        <div class="main-heading">
+            <h1 class="title-res nc-titulo-pagina">INGRESO ADMIN</h1>
+            <div class="nc-block">
+                <form action="/admin/login" class="form" method="POST">
+                    <div class="nc-file-info-div">
+                        <label class="nc-file-info-label" for="user_name">Usuario</label>
+                        <input class="nc-file-input" type="text" id="user_name" name="user_name" <%=locals.oldInfo && oldInfo.user_name ? "value=" + oldInfo.user_name : '' %>>
+                        <% if(locals.errors && errors.user_name){ %>
+                            <div class="nc-error-block">
+                                <label class="nc-error-message"><%= errors.user_name.msg %></label>   
+                            </div>
+                        <% } %>
+                    </div>
+                    <div class="nc-file-info-div">
+                        <label class="nc-file-info-label" for="password">Constraseña</label>
+                        <input class="nc-file-input" type="password" id="password" name="password">
+                        <% if(locals.errors && errors.password){ %>
+                            <div class="nc-error-block">
+                                <label class="nc-error-message"><%= errors.password.msg %></label>   
+                            </div>
+                        <% } %>
+                        <% if(locals.errors && errors.login){ %>
+                            <div class="nc-error-block">
+                                <label class="nc-error-message"><%= errors.login.msg %></label>   
+                            </div>
+                        <% } %>                 
+                    </div>
+                    <div class="nc-button-block nc-payment-button">
+                        <input class="btn btn-gradient nc-btn-extra" type="submit" value="INGRESAR">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+  <section class="booking">
+  </section>
+</main>
+<%- include('../partials/footer') %>

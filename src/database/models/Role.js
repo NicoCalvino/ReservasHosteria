@@ -1,26 +1,26 @@
 module.exports=function(sequelize, DataTypes){
-    const State = sequelize.define("State",{
+    const Role = sequelize.define("Role",{
         id: {
             type:DataTypes.INTEGER.UNSIGNED,
             autoIncrement: true,
             primaryKey: true,
             allowNull: false
         },
-        state:{
-            type:DataTypes.STRING(100),
+        role_name:{
+            type:DataTypes.STRING(10),
             allowNull:false
         }
     },{
         timestamps:false,
-        tableName:"states"
+        tableName:"roles"
     })
 
-    State.associate = function(models){
-        State.hasMany(models.Booking,{
-            as:'bookings',
-            foreignKey:'state_id'
+    Role.associate = function(models){
+        Role.hasMany(models.User,{
+            as:'users',
+            foreignKey:'role_id'
         })    
     }
 
-    return State
+    return Role
 }
