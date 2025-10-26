@@ -2,20 +2,19 @@ const path = require("path")
 const express = require ("express")
 const app = express()
 const db = require('../database/models')
-const moment = require('moment')
 const router = express.Router()
+const func = require('../functions/funciones')
 
 const searchController = require("../controllers/searchController")
 
-const {body} = require('express-validator')
 const {query} = require('express-validator')
 
 const searchValidation = [
     query('check_in').notEmpty().withMessage('Completar fecha de Entrada').custom((value,{req})=>{
         let check_in = req.query.check_in
-        let fechaHoy = moment(new Date).format('L')
+        let fechaHoy = new Date
 
-        if(fechaHoy > moment(check_in)){
+        if(fechaHoy > func.formateoFecha(check_in)){
            throw new Error ('La fecha de Entrada no puede ser en el pasado')  
         }
 

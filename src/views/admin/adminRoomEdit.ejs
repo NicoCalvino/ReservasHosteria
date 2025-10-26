@@ -1,0 +1,53 @@
+<%- include('../partials/header',{hojaDeEstilo:"/css/stylesAdmin.css"}) %>
+<div class="hero nc-timbre-tris" id="sector-admin">
+    <div class="container">
+        <div class="main-heading">
+            <h1 class="title-res nc-titulo-pagina">Editar Habitaciones</h1>
+            <div class="nc-back-container">
+                <a href="/admin/menu"><i class="fas fa-long-arrow-alt-left"></i>Volver</a>
+            </div>
+            <div class="nc-block">
+                <form action="/admin/roomEdit?_method=PUT" class="room-edit-form" method="POST">
+                    <% tipos.forEach(tipo => { %>
+                        <div class="adm-roomtype-container">
+                            <div class="adm-roomtype-info">
+                                <h2><%= tipo.room_name %></h2>
+                                <label for="precio<%=tipo.short_name %>">$</label>
+                                <input id="precio<%=tipo.short_name %>" name="precio<%=tipo.short_name %>" type="number" value="<%= locals.oldInfo && oldInfo['precio' + tipo.short_name] ? oldInfo['precio' + tipo.short_name] : tipo.price %>">
+                                <% if(locals.errors && errors['precio' + tipo.short_name]){ %>
+                                    <div class="nc-error-block">
+                                        <label class="nc-error-message"><%= errors['precio' + tipo.short_name].msg %></label>   
+                                    </div>
+                                <% } %>
+                            </div>
+                            <div class="adm-roomtype-rooms">
+                                <% tipo.rooms.forEach(room =>{ %>
+                                    <div class="adm-room-info">
+                                        <label for="disp<%=room.id %>"><%= room.number %></label>
+                                        <select name="disp<%=room.id %>" id="disp<%=room.id %>">
+                                            <option value="1" <%= room.available == 1 ? 'selected' : '' %>>DISPONIBLE</option>
+                                            <option value="0" <%= room.available == 0 ? 'selected' : '' %>>NO DISPONIBLE</option>
+                                        </select>
+                                        <% if(locals.errors && errors['disp' + room.id]){ %>
+                                            <div class="nc-error-block">
+                                                <label class="nc-error-message"><%= errors['disp' + room.id].msg %></label>   
+                                            </div>
+                                        <% } %>
+                                    </div>
+
+                                <% }) %>
+                            </div>
+                        </div>                    
+                    <% }) %>
+                    <div class="nc-button-block admin-room-edit-button">
+                        <input class="btn btn-gradient nc-btn-extra" type="submit" value="CONFIRMAR">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+  <section class="booking">
+  </section>
+</main>
+<%- include('../partials/footer') %>

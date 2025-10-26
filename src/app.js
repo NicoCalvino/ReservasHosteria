@@ -2,7 +2,7 @@ const path = require('path')
 const express = require('express')
 const app = express()
 const session = require('express-session')
-const userCreationMiddleware = require('./middlewares/userCreationMiddleware')
+const methodOverride = require("method-override")
 
 const PORT = process.env.PORT || 3040
 
@@ -15,12 +15,11 @@ const adminRoutes = require("./routes/adminRoutes")
 app.set("view engine","ejs")
 app.set("views", path.join(__dirname,"views"))
 
-app.use(userCreationMiddleware)
-
 app.use(express.static(path.join(__dirname,"public")))
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 app.use(session({secret:'Esto Es Secreto',resave:false, saveUninitialized:false}))
+app.use(methodOverride("_method")) 
 
 app.use("/search", searchRoutes)
 app.use("/booking", bookingRoutes)

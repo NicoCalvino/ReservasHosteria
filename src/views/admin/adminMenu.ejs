@@ -1,0 +1,38 @@
+<%- include('../partials/header',{hojaDeEstilo:"/css/stylesAdmin.css"}) %>
+<div class="hero nc-timbre-tris" id="sector-admin">
+    <div class="container">
+        <div class="main-heading">
+            <h1 class="title-res nc-titulo-pagina">Menu Administración</h1>
+            <div class="nc-block">
+                <div class="nc-button-block">
+                    <label><i class="fas fa-question-circle"></i></label>
+                    <a href="/admin/disponibilidad" class="btn btn-gradient nc-btn-extra" type="submit">VER DISPONIBILIDAD</a>
+                </div>
+                <div class="nc-button-block">
+                    <label><i class="fas fa-search"></i></label>
+                    <a href="#" class="btn btn-gradient nc-btn-extra" type="submit">BUSCAR RESERVAS</a>
+                </div>
+                <div class="nc-button-block">
+                    <label><i class="fas fa-suitcase-rolling"></i></label>
+                    <a href="#" class="btn btn-gradient nc-btn-extra" type="submit">CONFIRMAR RESERVAS</a>
+                </div>
+                <div class="nc-button-block">
+                    <label><i class="fas fa-hotel"></i></label>
+                    <a href="#" class="btn btn-gradient nc-btn-extra" type="submit">CARGAR RESERVA</a>
+                </div>
+                <div class="nc-button-block">
+                    <label><i class="fas fa-bed"></i></label>
+                    <a href="/admin/roomEdit" class="btn btn-gradient nc-btn-extra" type="submit">EDITAR HABITACIONES</a>
+                </div>
+                <div class="nc-button-block">
+                    <label><i class="fas fa-university"></i></label>
+                    <a href="/admin/bankEdit" class="btn btn-gradient nc-btn-extra" type="submit">EDITAR INFO BANCO</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  <section class="booking">
+  </section>
+</main>
+<%- include('../partials/footer') %>

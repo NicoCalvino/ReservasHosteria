@@ -1,0 +1,67 @@
+<%- include('../partials/header',{hojaDeEstilo:"/css/stylesAdmin.css"}) %>
+<div class="hero nc-timbre-tris" id="sector-admin">
+    <div class="container">
+        <div class="main-heading">
+            <h1 class="title-res nc-titulo-pagina">Informacion Bancaria</h1>
+            <div class="nc-back-container">
+                <a href="/admin/menu"><i class="fas fa-long-arrow-alt-left"></i>Volver</a>
+            </div>
+            <div class="nc-block">
+                <form action="/admin/bankEdit?_method=PUT" class="bank-edit-form" method="POST">
+                    <div class="nc-bank-info">
+                        <label for="cbu">CBU</label>
+                        <input id="cbu" name="cbu" type="text" value="<%= locals.oldInfo && oldInfo.cbu ? oldInfo.cbu : info.cbu %>">
+                        <% if(locals.errors && errors.cbu){ %>
+                            <div class="nc-error-block">
+                                <label class="nc-error-message"><%= errors.cbu.msg %></label>   
+                            </div>
+                        <% } %>
+                    </div>
+                    <div class="nc-bank-info">
+                        <label for="alias">Alias</label>
+                        <input id="alias" name="alias" type="text" value="<%= locals.oldInfo && oldInfo.alias ? oldInfo.alias : info.alias %>">
+                        <% if(locals.errors && errors.alias){ %>
+                            <div class="nc-error-block">
+                                <label class="nc-error-message"><%= errors.alias.msg %></label>   
+                            </div>
+                        <% } %>
+                    </div>
+                    <div class="nc-bank-info">
+                        <label for="cuit">CUIT</label>
+                        <input id="cuit" name="cuit" type="text" value="<%= locals.oldInfo && oldInfo.cuit ? oldInfo.cuit : info.cuit %>">
+                        <% if(locals.errors && errors.cuit){ %>
+                            <div class="nc-error-block">
+                                <label class="nc-error-message"><%= errors.cuit.msg %></label>   
+                            </div>
+                        <% } %>
+                    </div>
+                    <div class="nc-bank-info">
+                        <label for="nombre">Nombre</label>
+                        <input id="nombre" name="nombre" type="text" value="<%= locals.oldInfo && oldInfo.nombre ? oldInfo.nombre : info.nombre %>">
+                        <% if(locals.errors && errors.nombre){ %>
+                            <div class="nc-error-block">
+                                <label class="nc-error-message"><%= errors.nombre.msg %></label>   
+                            </div>
+                        <% } %>
+                    </div>
+                    <div class="nc-bank-info">
+                        <label for="banco">Banco</label>
+                        <input id="banco" name="banco" type="text" value="<%= locals.oldInfo && oldInfo.banco ? oldInfo.banco : info.banco %>">
+                        <% if(locals.errors && errors.banco){ %>
+                            <div class="nc-error-block">
+                                <label class="nc-error-message"><%= errors.banco.msg %></label>   
+                            </div>
+                        <% } %>
+                    </div>
+                    <div class="nc-button-block admin-bank-edit-button">
+                        <input class="btn btn-gradient nc-btn-extra" type="submit" value="CONFIRMAR">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+  <section class="booking">
+  </section>
+</main>
+<%- include('../partials/footer') %>

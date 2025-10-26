@@ -1,0 +1,260 @@
+#sector-admin{
+  width: 100%;
+  height: 100vh;
+  background: url("../images/hero_background5.jpg") center no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  position: relative;
+  z-index: 0;
+}
+
+.main-heading{
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.main-heading .title-res{
+    width: 100%;
+}
+
+.main-heading .nc-back-container{
+    width: 100%;
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.nc-block{
+    margin:auto
+}
+
+.nc-timbre-tris{
+    height: 100% !important;
+}
+
+.nc-button-block{
+    display:flex;
+    position:relative;
+    margin-top: 20px;
+}
+
+.nc-button-block i{
+    position:absolute;
+    left:11px;
+    top:14px
+}
+
+.nc-btn-extra{
+    font-size: 24px;
+    line-height: 32px;
+    width: 100%;
+}
+
+.nc-titulo-pagina{
+    margin-top: 80px;
+}
+
+footer .nc-admin-loggin-container{
+    display:none
+}
+
+/* Estilos Edicion Habitaciones */
+.nc-block .room-edit-form{
+    width: 100%;
+    margin:20px auto;
+    background-color: RGBA(0,0,0,0.5);
+    padding: 10px 15px;
+    border-radius: 15px;
+}
+
+.nc-block .room-edit-form .adm-roomtype-container{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.nc-block .room-edit-form .adm-roomtype-container .adm-roomtype-info{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 5px 0px
+}
+
+.nc-block .room-edit-form .adm-roomtype-container .adm-roomtype-info h2{
+    width: 100%;
+    margin: 5px auto;
+    font-size: 30px;
+    line-height: 38px;
+    color: rgb(252, 176, 64);
+}
+
+.nc-block .room-edit-form .adm-roomtype-container .adm-roomtype-info label{
+    font-size: 26px;
+    line-height: 34px;
+    margin-right: 5px;
+    text-transform: uppercase;
+}
+
+.nc-block .room-edit-form .adm-roomtype-container .adm-roomtype-info input{
+    width:30%;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.nc-block .room-edit-form .adm-roomtype-container .adm-roomtype-info .nc-error-block{
+    width:30%;
+}
+
+.nc-block .room-edit-form .adm-roomtype-container .adm-roomtype-info .nc-error-block .nc-error-message{
+    display: block;
+    width: 90%;
+    font-size: 12px;
+    margin-left: 10px;;
+    color: rgb(248, 245, 53);
+}
+
+.nc-block .room-edit-form .adm-roomtype-container .adm-roomtype-rooms{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.nc-block .room-edit-form .adm-roomtype-container .adm-roomtype-rooms .adm-room-info{
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-right: 5px;
+    margin-bottom: 10px;
+}
+
+.nc-block .room-edit-form .adm-roomtype-container .adm-roomtype-rooms .adm-room-info label{
+    width:10%;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+}
+
+.nc-block .room-edit-form .adm-roomtype-container .adm-roomtype-rooms .adm-room-info select{
+    width:35%;
+    font-size: 14px;
+    line-height: 22px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.nc-block .room-edit-form .adm-roomtype-container .adm-roomtype-rooms .adm-room-info .nc-error-block{
+    width: 35%;
+}
+
+.nc-block .room-edit-form .adm-roomtype-container .adm-roomtype-rooms .adm-room-info .nc-error-block .nc-error-message{
+    display: block;
+    width: 90%;
+    font-size: 12px;
+    margin-left: 10px;
+    color: rgb(248, 245, 53);
+}
+
+.admin-room-edit-button{
+    margin: 30px 0px
+}
+
+/* Estilos Edicion Bancos */
+.nc-block .bank-edit-form{
+    width: 100%;
+    margin:20px auto;
+    background-color: RGBA(0,0,0,0.5);
+    padding: 10px 15px;
+    border-radius: 15px;
+}
+
+.nc-block .bank-edit-form .nc-bank-info{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.nc-block .bank-edit-form .nc-bank-info label{
+    width:100%;
+    font-size: 26px;
+    line-height: 34px;
+    margin-right: 5px;
+    text-transform: uppercase;
+    color: rgb(252, 176, 64);
+    font-weight: bold;
+}
+
+.nc-block .bank-edit-form .nc-bank-info input{
+    width:100%;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.nc-block .bank-edit-form .nc-bank-info .nc-error-block{
+    width: 100%;
+}
+
+.nc-block .bank-edit-form .nc-bank-info .nc-error-block .nc-error-message{
+    display: block;
+    width: 90%;
+    font-size: 12px;
+    margin-left: 10px;
+    color: rgb(248, 245, 53);
+}
+
+/* Estilos de Disponibilidad */
+
+.nc-block .available-form{
+    width: 80%;
+    margin:20px auto;
+    background-color: RGBA(0,0,0,0.5);
+    padding: 10px 15px;
+    border-radius: 15px;
+}
+
+.nc-block .available-form .nc-available-info{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+
+.nc-block .available-form .nc-available-info label{
+    width:100%;
+    font-size: 26px;
+    line-height: 34px;
+    margin-right: 5px;
+    text-transform: uppercase;
+    color: rgb(252, 176, 64);
+    font-weight: bold;
+}
+
+.nc-block .available-form .nc-available-info input{
+    width:100%;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.nc-block .available-form .nc-available-info .nc-error-block{
+    width: 100%;
+}
+
+.nc-block .available-form .nc-available-info .nc-error-block .nc-error-message{
+    display: block;
+    width: 100%;
+    font-size: 12px;
+    margin-left: 10px;
+    color: rgb(248, 245, 53);
+}

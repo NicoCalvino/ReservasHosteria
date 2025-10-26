@@ -6,6 +6,10 @@ module.exports=function(sequelize, DataTypes){
             primaryKey: true,
             allowNull: false
         },
+        room_name:{
+            type:DataTypes.STRING(100),
+            allowNull:false
+        },
         short_name:{
             type:DataTypes.STRING(100),
             allowNull:false

@@ -5,11 +5,11 @@ async function userCreationMiddleware(req,res,next){
 
     let usuarios = [{
         user_name:'hosteriaSolar',
-        password:bcryptjs.hashSync('costaLaDeSolarHosteria',10),
+        password:'123',
         role_id:1
     },{
         user_name:'superSolar',
-        password:bcryptjs.hashSync('milito2014Lisandro2019',10),
+        password:'1234',
         role_id:2
     }]
 
