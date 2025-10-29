@@ -258,3 +258,144 @@ footer .nc-admin-loggin-container{
     margin-left: 10px;
     color: rgb(248, 245, 53);
 }
+
+.nc-block .adm-room-avlb-textosFecha{
+    font-size: 24px;
+    line-height: 32px;
+    margin:10px 0px
+}
+
+.nc-block .adm-room-avlb-textosFecha .adm-room-avlb-tituloFecha{
+    font-weight: bold;
+    color: rgb(252, 176, 64);
+}
+
+.nc-block .adm-room-avlb-textosFecha .adm-room-avlb-tituloFecha{
+    font-weight: bold;
+    color: rgb(252, 176, 64);
+}
+
+.nc-block .room-avlb-info{
+    width: 100%;
+    margin:20px auto;
+    background-color: RGBA(0,0,0,0.5);
+    padding: 10px 15px;
+    border-radius: 15px;
+}
+
+.nc-block .room-avlb-info .adm-roomtype-container{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.nc-block .room-avlb-info .adm-roomtype-container .adm-roomtype-info{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 5px 0px
+}
+
+.nc-block .room-avlb-info .adm-roomtype-container .adm-roomtype-info h2{
+    width: 100%;
+    font-size: 30px;
+    line-height: 38px;
+    color: rgb(252, 176, 64);
+}
+
+.nc-block .room-avlb-info .adm-roomtype-container .adm-roomtype-info .adm-roompending-msg{
+    width: 100%;
+    font-size: 15px;
+    line-height: 23px;
+    color: rgb(248, 245, 53);
+}
+
+.nc-block .room-avlb-info .adm-roomtype-container .adm-roomtype-info .adm-roomtype-info-price{
+    display: block;
+    width: 100%;
+    font-size: 22px;
+    line-height: 30px;
+    margin-right: 5px;
+    text-transform: uppercase;
+}
+
+.nc-block .room-avlb-info .adm-roomtype-container .adm-roomtype-info .adm-roomtype-info-quantity{
+    display: block;
+    width: 100%;
+    font-size: 26px;
+    line-height: 34px;
+    margin-right: 5px;
+    text-transform: uppercase;
+}
+
+.nc-block .room-avlb-info .adm-roomtype-container .adm-roomtype-rooms{
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+    margin-top: 10px;
+}
+
+.nc-block .room-avlb-info .adm-roomtype-container .adm-roomtype-rooms .adm-room-number{
+    width: 10%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-right: 5px;
+    margin-bottom: 10px;
+}
+
+.nc-block .room-avlb-info .adm-roomtype-container .adm-roomtype-rooms .adm-room-number label{
+    width:10%;
+    font-size: 20px;
+    line-height: 28px;
+    text-align: center;
+}
+
+.nc-block .room-booking-form{
+    width: 80%;
+    margin:20px auto;
+    background-color: RGBA(0,0,0,0.5);
+    padding: 10px 15px;
+    border-radius: 15px;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.nc-block .room-booking-form .adm-booking-input{
+    width: 45%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.nc-block .room-booking-form .adm-booking-input label{
+    width:100%;
+    font-size: 18px;
+    line-height: 26px;
+    margin-right: 5px;
+    text-transform: uppercase;
+    color: rgb(252, 176, 64);
+    font-weight: bold;
+}
+
+.nc-block .room-booking-form .adm-booking-input input{
+    width:100%;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.nc-block .room-booking-form .admin-booking-button{
+    width: 100%;
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+.nc-block .room-booking-form .admin-booking-button input{
+    width: 60%;
+}

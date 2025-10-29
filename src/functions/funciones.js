@@ -94,8 +94,6 @@ const model = {
         return diasSemana
     },
     cantNoches:function(checkIn, checkOut){
-        console.log("\n" + checkIn)
-        console.log("\n" + checkOut)
         let fechaIngreso = this.formateoFecha(checkIn)
         let fechaSalida = this.formateoFecha(checkOut)
 
@@ -124,7 +122,149 @@ const model = {
         /* let nroFinal = numeroConvertido + "," + primera[1] */
         let nroFinal = numeroConvertido
         return nroFinal
-    }
+    },
+    habitacionesLibres: async (checkIn, checkOut)=>{
+        let habHotel = await db.Room_Type.findAll()
+        
+        let tiposHab =[]
+        for(const tipo of habHotel){
+            let disponibles = await model.disponibilidadTipo(checkIn, checkOut, tipo)
+
+            if(disponibles > 0){
+                tipo.cantidad = disponibles
+                tipo.precioForm = model.conversorNumero(tipo.price)
+                tiposHab.push(tipo)
+            }
+        }
+
+        return tiposHab
+    },
+    habitacionesLibresExt: async (checkIn, checkOut)=>{
+        let habHotel = await db.Room_Type.findAll()
+
+        let tiposHab =[]
+        for(const tipo of habHotel){
+            let disponibles = await model.disponibilidadTipo(checkIn, checkOut, tipo)
+            
+            if(disponibles > 0){
+                tipo.cantidad = disponibles
+                tipo.precioForm = model.conversorNumero(tipo.price)
+                tipo.habDisp = await model.disponiblesPorTipo(checkIn, checkOut, tipo)
+                tipo.pendientesAsignacion = await model.sinAsignarPorTipo(checkIn, checkOut, tipo)
+                tiposHab.push(tipo)
+            }
+        }
+
+        return tiposHab
+    },
+    disponibilidadTipo: async(checkIn, checkOut, tipo)=>{
+        quantity = await db.Room.count({
+            where:{
+                available:true,
+                room_type_id:tipo.id
+            }
+        })
+
+        /*Bookings que empiezan antes*/
+        let bookingsAntes = await db.Booking_Room.count({
+            where:{
+                check_in:{
+                    [Op.lte]:checkIn,
+                },
+                check_out:{
+                    [Op.between]:[checkIn, checkOut]
+                },
+                room_type_id:tipo.id
+            }
+        })
+
+        /*Bookings que empiezan despues*/
+        let bookingsDespues = await db.Booking_Room.count({
+            where:{
+                check_in:{
+                    [Op.between]:[checkIn, checkOut]
+                },
+                room_type_id:tipo.id
+            }
+        })
+
+        let disponibles = quantity - bookingsAntes - bookingsDespues
+
+        return disponibles
+
+    },
+    disponiblesPorTipo: async(checkIn, checkOut, tipo)=>{
+        let cuartosTipo = await db.Room.findAll({
+            where:{
+                available:true,
+                room_type_id:tipo.id
+            }
+        })
+
+        let cuartosDisponibles = []
+
+        for(const cuarto of cuartosTipo){
+            /*Bookings que empiezan antes*/
+            let bookingsAntes = await db.Booking_Room.count({
+                where:{
+                    check_in:{
+                        [Op.lte]:checkIn,
+                    },
+                    check_out:{
+                        [Op.between]:[checkIn, checkOut]
+                    },
+                    room_id:cuarto.id
+                }
+            })
+
+            /*Bookings que empiezan despues*/
+            let bookingsDespues = await db.Booking_Room.count({
+                where:{
+                    check_in:{
+                        [Op.between]:[checkIn, checkOut]
+                    },
+                    room_id:cuarto.id
+                }
+            })
+
+            if((bookingsAntes + bookingsDespues) == 0){cuartosDisponibles.push(cuarto)}
+        }
+        
+        return cuartosDisponibles
+
+    },
+    sinAsignarPorTipo: async(checkIn, checkOut, tipo)=>{
+        
+        /*Bookings que empiezan antes*/
+        let bookingsAntes = await db.Booking_Room.count({
+            where:{
+                check_in:{
+                    [Op.lte]:checkIn,
+                },
+                check_out:{
+                    [Op.between]:[checkIn, checkOut]
+                },
+                room_type_id:tipo.id,
+                room_id:null
+            }
+        })
+
+        /*Bookings que empiezan despues*/
+        let bookingsDespues = await db.Booking_Room.count({
+            where:{
+                check_in:{
+                    [Op.between]:[checkIn, checkOut]
+                },
+                room_type_id:tipo.id,
+                room_id:null
+            }
+        })
+
+        let pendientes = bookingsAntes + bookingsDespues
+
+        return pendientes
+
+    },
 }
 
 module.exports = model

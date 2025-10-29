@@ -1,0 +1,69 @@
+<%- include('../partials/header',{hojaDeEstilo:"/css/stylesAdmin.css"}) %>
+<div class="hero nc-timbre-tris" id="sector-admin">
+    <div class="container">
+        <div class="main-heading">
+            <h1 class="title-res nc-titulo-pagina">Habitaciones Disponibles</h1>
+            <div class="nc-back-container">
+                <a href="/admin/menu"><i class="fas fa-long-arrow-alt-left"></i>Volver</a>
+            </div>
+            <div class="nc-block">
+                <div class="adm-room-avlb-textosFecha">
+                    <div>
+                        <label class="adm-room-avlb-tituloFecha">Check In:</label>
+                        <label class="adm-room-avlb-datoFecha"><%= infoBusqueda.textoCheckIn %></label>
+                    </div>
+                    <div>
+                        <label class="adm-room-avlb-tituloFecha">Check Out:</label>
+                        <label class="adm-room-avlb-datoFecha"><%= infoBusqueda.textoCheckOut %></label>
+                    </div>
+                </div>
+                <div class="room-avlb-info">
+                    <% tipos.forEach(tipo => { %>
+                        <div class="adm-roomtype-container">
+                            <div class="adm-roomtype-info">
+                                <h2><%= tipo.room_name %></h2>
+                                <label class="adm-roomtype-info-price">Precio: $ <%= tipo.precioForm %></label>
+                                <label class="adm-roomtype-info-quantity">Disponibles: <%= tipo.cantidad %></label>
+                                <% if(tipo.pendientesAsignacion > 0){ %>
+                                    <label class="adm-roompending-msg"><%= tipo.pendientesAsignacion %> reserva(s) pendientes de confirmar</label>    
+                                <% } %>
+                            </div>
+                            <div class="adm-roomtype-rooms">
+                                <% tipo.habDisp.forEach(room =>{ %>
+                                    <div class="adm-room-number">
+                                        <label><%= room.number %></label>
+                                    </div>
+                                <% }) %>
+                            </div>
+                        </div>                    
+                    <% }) %>
+                </div>
+                <form action="/search/roomSelection" class="room-booking-form" method="GET" target="_blank">
+                    <div class="adm-booking-input">
+                        <label for="check_in">Check In</label>
+                        <input id="check_in" name="check_in" type="date"  value="<%= infoBusqueda.checkIn %>">
+                    </div>
+                    <div class="adm-booking-input">
+                        <label for="check_out">Check Out</label>
+                        <input id="check_out" name="check_out" type="date"  value="<%= infoBusqueda.checkOut %>">
+                    </div>
+                    <div class="adm-booking-input">
+                        <label for="people">Huespedes</label>
+                        <input id="people" name="people" type="number">
+                    </div>
+                    <div class="adm-booking-input">
+                        <label for="rooms">Habitaciones</label>
+                        <input id="rooms" name="rooms" type="number">
+                    </div>
+                    <div class="nc-button-block admin-booking-button">
+                        <input class="btn btn-gradient nc-btn-extra" type="submit" value="BUSCAR">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+  <section class="booking">
+  </section>
+</main>
+<%- include('../partials/footer') %>

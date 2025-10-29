@@ -2,11 +2,10 @@ const path = require("path")
 const express = require ("express")
 const app = express()
 const db = require('../database/models')
-//const moment = require('moment')//
+const func = require('../functions/funciones')
 const router = express.Router()
 const activeSessionMiddleware = require ("../middlewares/activeSessionMiddleware")
 
-const searchController = require("../controllers/searchController")
 const bookingController = require("../controllers/bookingController")
 
 const {body} = require('express-validator')
@@ -54,7 +53,7 @@ const initialValidation = [
             }
         })
 
-        let habLibres = searchController.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
+        let habLibres = func.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
 
         if(habLibres < cant){
             throw new Error ('No hay ' + cant + ' habitaciones triples disponibles') 
@@ -74,7 +73,7 @@ const initialValidation = [
             }
         })
 
-        let habLibres = searchController.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
+        let habLibres = func.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
 
         if(habLibres < cant){
             throw new Error ('No hay ' + cant + ' habitaciones dobles vista al mar disponibles') 
@@ -94,7 +93,7 @@ const initialValidation = [
             }
         })
 
-        let habLibres = searchController.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
+        let habLibres = func.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
 
         if(habLibres < cant){
             throw new Error ('No hay ' + cant + ' habitaciones dobles vista al jardin disponibles') 
@@ -114,7 +113,7 @@ const initialValidation = [
             }
         })
 
-        let habLibres = searchController.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
+        let habLibres = func.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
 
         if(habLibres < cant){
             throw new Error ('No hay ' + cant + ' habitaciones de 4 personas disponibles') 
@@ -134,7 +133,7 @@ const initialValidation = [
             }
         })
 
-        let habLibres = searchController.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
+        let habLibres = func.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
 
         if(habLibres < cant){
             throw new Error ('No hay ' + cant + ' suites disponibles') 
@@ -227,7 +226,6 @@ const personalInfoValidation = [
     body('lastname').notEmpty().withMessage('Completar el apellido'),
     body('email').notEmpty().withMessage('Completar el mail').custom(async (value,{req})=>{
         let email = req.body.email
-        let emailBis = req.body.emailBis
 
         if(email.indexOf("@")==-1){
            throw new Error ('Completar con un mail valido')  

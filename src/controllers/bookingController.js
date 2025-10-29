@@ -6,8 +6,6 @@ const func = require('../functions/funciones')
 const {validationResult}=require('express-validator')
 const moment = require('moment')
 
-const searchController = require("./searchController")
-
 const controller = {
     detallesFinales: async(req,res)=>{
         let idTemp = req.session.idTemp
@@ -18,7 +16,7 @@ const controller = {
         infoTemp.check_out_s = infoTemp.check_out
 
         if (!errors.isEmpty()){
-            let tiposHab = await searchController.habitacionesLibres(infoTemp.checkIn, infoTemp.checkOut)
+            let tiposHab = await func.habitacionesLibres(infoTemp.checkIn, infoTemp.checkOut)
             return res.render("search/roomSelection",{tiposHab, qHab:infoTemp.rooms, infoTemp, errors:errors.mapped(),oldInfo:req.body})
         }
         

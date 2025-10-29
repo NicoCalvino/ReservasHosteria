@@ -4,6 +4,7 @@ const db = require('../database/models')
 const Op = db.Sequelize.Op
 const {validationResult}=require('express-validator')
 const func = require('../functions/funciones')
+const searchController = require("./searchController")
 
 const controller = {
     cargaLogIn: async(req,res)=>{
@@ -16,7 +17,7 @@ const controller = {
             return res.render("admin/adminLogin",{errors:errors.mapped(),oldInfo:req.query})
         }
 
-        return res.redirect("admin/menu")
+        return res.redirect("/admin/menu")
     },
     cargaMenu: async(req,res)=>{
         return res.render("admin/adminMenu")
@@ -105,6 +106,24 @@ const controller = {
         if (!errors.isEmpty()){
             return res.render("admin/adminDisponibilidad",{errors:errors.mapped(),oldInfo:req.query})
         }
+
+        let infoBusqueda ={
+            checkIn: req.query.check_in,
+            checkOut: req.query.check_out,
+            textoCheckIn: func.fechaATextoCorto(req.query.check_in),
+            textoCheckOut: func.fechaATextoCorto(req.query.check_out)
+        }
+        let checkIn = req.query.check_in
+        let checkOut = req.query.check_out
+        
+        let tipos = await func.habitacionesLibresExt(checkIn, checkOut)
+        
+        if (tipos.length==0){
+            return res.render("booking/bookingError")
+        }
+
+        res.render("admin/adminResultadosDisp",{tipos, infoBusqueda})
+
     }
 }
 
