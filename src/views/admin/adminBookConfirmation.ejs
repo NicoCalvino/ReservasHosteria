@@ -1,0 +1,33 @@
+<%- include('../partials/header',{hojaDeEstilo:"/css/stylesAdmin.css"}) %>
+<div class="hero nc-timbre-tris" id="sector-admin">
+    <div class="container">
+        <div class="main-heading">
+            <h1 class="title-res nc-titulo-pagina">Disponibilidad</h1>
+            <div class="nc-back-container">
+                <a href="/admin/menu"><i class="fas fa-long-arrow-alt-left"></i>Volver</a>
+            </div>
+            <div class="nc-block">
+                <% bookingsPendientes.forEach(booking =>{ %>
+                    <h2><%= booking.boking_code %></h2>
+                    <div>
+                        <label>Noches: <%= booking.nights %></label>
+                        <label><%= booking.check_in %></label>
+                        <label><%= booking.check_out %></label>
+                    </div>
+                    <div>
+                        <label><%= booking.occupancy %></label>
+                        <label><%= booking.room_count %></label>
+                    </div>
+                    <div>
+                        <label><%= booking.amount %></label>
+                        <label><%= booking.down_payment %></label>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</div>
+  <section class="booking">
+  </section>
+</main>
+<%- include('../partials/footer') %>

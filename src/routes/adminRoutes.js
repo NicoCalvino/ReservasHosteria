@@ -125,4 +125,6 @@ router.put("/bankEdit", bankInfoValidation, adminController.procesarBanco)
 router.get("/disponibilidad", adminController.cargaDisponibilidad)
 router.get("/resultados", searchValidation, adminController.resultadosDisponibilidad)
 
+router.get("/confirmar", adminController.cargaConfirmarReservas)
+
 module.exports=router

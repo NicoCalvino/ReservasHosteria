@@ -20,7 +20,13 @@ const controller = {
         return res.redirect("/admin/menu")
     },
     cargaMenu: async(req,res)=>{
-        return res.render("admin/adminMenu")
+        let bookingsPendientes = await db.Booking.count({
+            where:{
+                state_id:2
+            }
+        })
+
+        return res.render("admin/adminMenu",{bookingsPendientes})
     },
     cargaEdicion: async(req,res)=>{
         
@@ -124,7 +130,18 @@ const controller = {
 
         res.render("admin/adminResultadosDisp",{tipos, infoBusqueda})
 
-    }
+    },
+    cargaConfirmarReservas: async(req,res)=>{
+        let bookingsPendientes = await db.Booking.findAll({
+            where:{
+                state_id:2
+            },
+            include:['rooms']
+        })
+
+        console.log("\n" + bookingsPendientes)
+        res.render("admin/adminBookConfirmation",{bookingsPendientes})
+    },
 }
 
 module.exports = controller
