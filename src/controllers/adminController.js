@@ -136,12 +136,118 @@ const controller = {
             where:{
                 state_id:2
             },
+            include:['guests','states']
+        })
+
+        for(const booking of bookingsPendientes){
+            booking.totalFormateado = func.conversorNumero(booking.amount)
+            booking.senaFormateado = func.conversorNumero(booking.downpayment)
+            booking.checkInFormateado = func.fechaATextoCorto(booking.check_in)
+            booking.checkOutFormateado = func.fechaATextoCorto(booking.check_out)
+        }
+
+        res.render("admin/adminBookConfirmation",{bookingsPendientes})
+
+    },
+    infoReserva: async(req,res)=>{
+        let idBooking = req.params.idBooking
+        let bookingInstance  = await db.Booking.findByPk(idBooking,{
+            include:['guests','types_booked','rooms']
+        })
+
+        if(bookingInstance){
+            let booking = bookingInstance.toJSON()
+        
+            booking.totalFormateado = func.conversorNumero(booking.amount)
+            booking.senaFormateado = func.conversorNumero(booking.downpayment)
+            booking.checkInFormateado = func.fechaATextoCorto(booking.check_in)
+            booking.checkOutFormateado = func.fechaATextoCorto(booking.check_out)
+            booking.formatoArchivo = booking.payment.split(".")[1]
+
+            for(const room of booking.types_booked){
+                room.opciones = await func.disponiblesPorTipo(booking.checkIn, booking.checkOut, room)
+            }
+
+            res.render("admin/adminBookingInfo",{booking})
+        } else {
+            res.send("HOY UN ERROR")
+        }
+    },
+    confirmarReserva: async(req,res)=>{
+        let idBooking = req.params.idBooking
+        let errors = validationResult(req)
+
+        if (!errors.isEmpty()){
+            let bookingInstance  = await db.Booking.findByPk(idBooking,{
+                include:['guests','types_booked','rooms']
+            })
+
+            if(bookingInstance){
+                let booking = bookingInstance.toJSON()
+            
+                booking.totalFormateado = func.conversorNumero(booking.amount)
+                booking.senaFormateado = func.conversorNumero(booking.downpayment)
+                booking.checkInFormateado = func.fechaATextoCorto(booking.check_in)
+                booking.checkOutFormateado = func.fechaATextoCorto(booking.check_out)
+                booking.formatoArchivo = booking.payment.split(".")[1]
+
+                for(const room of booking.types_booked){
+                    room.opciones = await func.disponiblesPorTipo(booking.checkIn, booking.checkOut, room)
+                }
+
+                return res.render("admin/adminBookingInfo",{booking,errors:errors.mapped(),oldInfo:req.body})
+            } else {
+                res.send("HOY UN ERROR")
+            }
+        }
+
+        let bookingInstance  = await db.Booking.findByPk(idBooking,{
             include:['rooms']
         })
 
-        console.log("\n" + bookingsPendientes)
-        res.render("admin/adminBookConfirmation",{bookingsPendientes})
+        if(bookingInstance){
+            let booking = bookingInstance.toJSON()
+            
+            for(const room of booking.rooms){    
+                console.log
+                let habitacionAsignada = req.body['habitacion_' + room.id]
+                await db.Booking_Room.update({
+                    room_id:habitacionAsignada
+                },{
+                    where:{
+                        id:room.id
+                    }
+                })
+            }
+
+            await db.Booking.update({
+                state_id:3
+            },{
+                where:{
+                    id:idBooking
+                }
+            })
+
+            res.redirect("/admin/confirmar")
+        }
     },
-}
+    eliminarReserva: async(req,res)=>{
+        let idBooking = req.params.idBooking
+
+        await db.Booking.destroy({
+            where:{
+                id:idBooking
+            }
+        })
+
+        await db.Booking_Room.destroy({
+            where:{
+                booking_id:idBooking
+            }
+        })
+
+        res.redirect("/admin/confirmar")
+    }
+}   
 
 module.exports = controller

@@ -113,6 +113,7 @@ const controller = {
                     occupancy:infoTemp.occupancy,
                     room_count:infoTemp.rooms,
                     downpayment: downAmount,
+                    payment:"noPayment.png",
                     amount: totalAmount,
                     guest_id:guest.id,
                     temp_id:idTemp,

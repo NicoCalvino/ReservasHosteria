@@ -41,5 +41,14 @@ module.exports=function(sequelize, DataTypes){
         timestamps:false,
     })
 
+    Booking_Room.associate = function(models){
+        Booking_Room.belongsTo(models.Booking,{
+            as:'bookings',
+            foreignKey:'booking_id'
+        })
+    }
+
+
+
     return Booking_Room
 }

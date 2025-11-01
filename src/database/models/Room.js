@@ -32,13 +32,6 @@ module.exports=function(sequelize, DataTypes){
         Room.belongsTo(models.Room_Type, {
             as:'room_types',
             foreignKey:'room_type_id'
-        }),
-        Room.belongsToMany(models.Booking,{
-            as:'bookings',
-            through:'booking_rooms',
-            foreignKey:'room_id',
-            otherKey:'booking_id',
-            timestamps:false
         })
     }
 

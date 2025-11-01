@@ -111,6 +111,24 @@ const searchValidation = [
     }),
 ]
 
+const roomSelectionValidation = [
+  (req, res, next) => {
+    const habitaciones = [];
+    for (const key in req.body) {
+      if (key.startsWith('habitacion_')) {
+        habitaciones.push(
+          body(key)
+            .notEmpty()
+            .withMessage("Indicar la Habitacion a Reservar")
+        );
+      }
+    }
+    Promise.all(habitaciones.map(validation => validation.run(req))).then(() => {
+      next();
+    });
+  },
+];
+
 router.get("/login", userCreationMiddleware, adminController.cargaLogIn)
 router.post("/login", logInDataValidation, adminController.procesoLogIn)
 
@@ -126,5 +144,10 @@ router.get("/disponibilidad", adminController.cargaDisponibilidad)
 router.get("/resultados", searchValidation, adminController.resultadosDisponibilidad)
 
 router.get("/confirmar", adminController.cargaConfirmarReservas)
+router.post("/confirmarReserva/:idBooking", roomSelectionValidation, adminController.confirmarReserva)
+
+router.delete("/eliminarReserva/:idBooking", adminController.eliminarReserva)
+
+router.get("/verReserva/:idBooking", adminController.infoReserva)
 
 module.exports=router

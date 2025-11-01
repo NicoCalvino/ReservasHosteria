@@ -43,6 +43,13 @@ module.exports=function(sequelize, DataTypes){
         Room_Type.hasMany(models.Temp_Room_Type, {
             as:'temp_rooms',
             foreignKey:'room_type_id'
+        }),
+        Room_Type.belongsToMany(models.Booking,{
+            as:'bookings',
+            through:'booking_rooms',
+            foreignKey:'room_type_id',
+            otherKey:'booking_id',
+            timestamps:false
         })
     }
 
