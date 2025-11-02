@@ -23,6 +23,18 @@
     width: 100%;
     margin-top: 10px;
     font-size: 18px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.main-heading .nc-back-container a{
+    display: flex;
+    flex-wrap: wrap;
+    width: 20%;
+}
+
+.main-heading .nc-back-container a i{
+    margin-right: 5px;
 }
 
 .nc-block{
@@ -55,10 +67,6 @@
     margin-top: 80px;
 }
 
-footer .nc-admin-loggin-container{
-    display:none
-}
-
 .nc-pending-booking-msg{
     width: 80%;
     margin: 10px auto;
@@ -72,6 +80,24 @@ footer .nc-admin-loggin-container{
     line-height: 28px;
     color: rgb(252, 176, 64);
     font-weight: bold;
+}
+
+footer .nc-admin-loggin-container{
+    width: 80%;
+    margin:20px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+footer .nc-admin-loggin-container a{
+    display: flex;
+    align-items: center;
+}
+
+footer .nc-admin-loggin-container a i{
+    margin-right:5px ;
+    font-size: 20px;
 }
 
 /* Estilos Edicion Habitaciones */
@@ -716,7 +742,6 @@ footer .nc-admin-loggin-container{
 .nc-block .nc-booking-info .admin-booking-delete-button .nc-btn-extra{
     font-size: 14px;
     line-height: 22px;
-    
 }
 
 .nc-block .nc-booking-info .nc-booking-rooms-container .nc-error-block{
@@ -730,4 +755,8 @@ footer .nc-admin-loggin-container{
     font-size: 12px;
     margin: 5px 0px 5px 5px;
     color: rgb(248, 245, 53);
+}
+
+.nc-block .room-booking-form .nc-booking-search{
+    margin:auto;
 }

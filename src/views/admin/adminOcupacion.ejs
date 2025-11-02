@@ -2,14 +2,14 @@
 <div class="hero nc-timbre-tris" id="sector-admin">
     <div class="container">
         <div class="main-heading">
-            <h1 class="title-res nc-titulo-pagina">Disponibilidad</h1>
+            <h1 class="title-res nc-titulo-pagina">Ocupación</h1>
             <div class="nc-back-container">
                 <a href="/admin/menu"><i class="fas fa-bars"></i>Menu</a>
             </div>
             <div class="nc-block">
-                <form action="/admin/resultados" class="available-form" method="GET">
+                <form action="/admin/reporteOcupacion" class="available-form" method="GET">
                     <div class="nc-available-info">
-                        <label for="check_in">Check In</label>
+                        <label for="check_in">Desde</label>
                         <input id="check_in" name="check_in" type="date" value="<%= locals.oldInfo && oldInfo.check_in ? oldInfo.check_in : '' %>">
                         <% if(locals.errors && errors.check_in){ %>
                             <div class="nc-error-block">
@@ -18,7 +18,7 @@
                         <% } %>
                     </div>
                     <div class="nc-available-info">
-                        <label for="check_out">Check Out</label>
+                        <label for="check_out">Hasta</label>
                         <input id="check_out" name="check_out" type="date" value="<%= locals.oldInfo && oldInfo.check_out ? oldInfo.check_out : '' %>">
                         <% if(locals.errors && errors.check_out){ %>
                             <div class="nc-error-block">
@@ -27,7 +27,7 @@
                         <% } %>
                     </div>
                     <div class="nc-button-block admin-bank-edit-button">
-                        <input class="btn btn-gradient nc-btn-extra" type="submit" value="BUSCAR">
+                        <input class="btn btn-gradient nc-btn-extra" type="submit" value="GENERAR REPORTE">
                     </div>
                 </form>
             </div>

@@ -10,25 +10,31 @@
             <% } %>
             <div class="nc-block">
                 <div class="nc-button-block">
+                    <label><i class="fas fa-bed"></i></label>
+                    <a href="/admin/ocupacion" class="btn btn-gradient nc-btn-extra" type="submit">VER OCUPACION</a>
+                </div>
+                <div class="nc-button-block">
                     <label><i class="fas fa-hotel"></i></label>
                     <a href="/admin/disponibilidad" class="btn btn-gradient nc-btn-extra" type="submit">VER DISPONIBILIDAD</a>
                 </div>
                 <div class="nc-button-block">
                     <label><i class="fas fa-search"></i></label>
-                    <a href="#" class="btn btn-gradient nc-btn-extra" type="submit">BUSCAR RESERVAS</a>
+                    <a href="/admin/buscarReservas" class="btn btn-gradient nc-btn-extra" type="submit">BUSCAR RESERVAS</a>
                 </div>
                 <div class="nc-button-block">
                     <label><i class="fas fa-suitcase-rolling"></i></label>
                     <a href="/admin/confirmar" class="btn btn-gradient nc-btn-extra" type="submit">CONFIRMAR RESERVAS</a>
                 </div>
                 <div class="nc-button-block">
-                    <label><i class="fas fa-bed"></i></label>
+                    <label><i class="fas fa-door-closed"></i></label>
                     <a href="/admin/roomEdit" class="btn btn-gradient nc-btn-extra" type="submit">EDITAR HABITACIONES</a>
                 </div>
-                <div class="nc-button-block">
-                    <label><i class="fas fa-university"></i></label>
-                    <a href="/admin/bankEdit" class="btn btn-gradient nc-btn-extra" type="submit">EDITAR INFO BANCO</a>
-                </div>
+                <% if(locals.superAdmin){ %>
+                    <div class="nc-button-block">
+                        <label><i class="fas fa-university"></i></label>
+                        <a href="/admin/bankEdit" class="btn btn-gradient nc-btn-extra" type="submit">EDITAR INFO BANCO</a>
+                    </div>
+                <% } %>
             </div>
         </div>
     </div>

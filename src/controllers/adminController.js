@@ -17,7 +17,19 @@ const controller = {
             return res.render("admin/adminLogin",{errors:errors.mapped(),oldInfo:req.query})
         }
 
+        req.session.user_logged = req.body.user_name
+
+        if(req.body.recordar){
+            res.cookie('user_logged',req.body.user_name,{maxAge:1250000000})
+        }
+
         return res.redirect("/admin/menu")
+    },
+    procesoLogOut: async(req,res)=>{
+        req.session.destroy()
+        res.clearCookie('user_logged')
+
+        return res.redirect("/admin/login")
     },
     cargaMenu: async(req,res)=>{
         let bookingsPendientes = await db.Booking.count({
@@ -146,7 +158,7 @@ const controller = {
             booking.checkOutFormateado = func.fechaATextoCorto(booking.check_out)
         }
 
-        res.render("admin/adminBookConfirmation",{bookingsPendientes})
+        res.render("admin/adminBookingsList",{bookingsLista:bookingsPendientes, linkVuelta:"/admin/menu"})
 
     },
     infoReserva: async(req,res)=>{
@@ -234,6 +246,14 @@ const controller = {
     eliminarReserva: async(req,res)=>{
         let idBooking = req.params.idBooking
 
+        await db.Booking.update({
+            state_id:4
+        },{
+            where:{
+                id:idBooking
+            }
+        })
+
         await db.Booking.destroy({
             where:{
                 id:idBooking
@@ -247,6 +267,86 @@ const controller = {
         })
 
         res.redirect("/admin/confirmar")
+    },
+    cargarBusquedaReservas: async(req,res)=>{
+        res.render("admin/adminBusquedaReservas")
+    },
+    resultadosBusqueda: async(req,res)=>{
+        let codigo = req.query.codigo
+        let apellido = req.query.apellido
+        let mail = req.query.mail
+        let tel = req.query.tel
+        let checkIn = req.query.check_in
+        let checkOut = req.query.check_out
+        let personas = req.query.people
+        let qHab = req.query.rooms
+        
+        if(!checkIn){checkIn = new Date(1900,1,1)}
+        if(!checkOut){checkOut = new Date(2099,1,1)}
+
+        let resultados = await db.Booking.findAll({
+            include:['guests','states'],
+            where:{
+                booking_code:{[Op.like]: '%' + codigo + '%'},
+                booking_code:{[Op.like]: '%' + codigo + '%'},
+                check_in:{[Op.gte]: checkIn},
+                check_out:{[Op.lte]: checkOut},
+                occupancy:{[Op.like]: '%' + personas + '%'},
+                room_count:{[Op.like]: '%' + qHab + '%'},
+                '$guests.lastname$':{[Op.like]: '%' + apellido + '%'},
+                '$guests.email$':{[Op.like]: '%' + mail + '%'},
+                '$guests.phone$':{[Op.like]: '%' + tel + '%'},
+            },
+            paranoid: false
+        })
+
+        console.log(resultados)
+
+        for(const booking of resultados){
+            booking.totalFormateado = func.conversorNumero(booking.amount)
+            booking.senaFormateado = func.conversorNumero(booking.downpayment)
+            booking.checkInFormateado = func.fechaATextoCorto(booking.check_in)
+            booking.checkOutFormateado = func.fechaATextoCorto(booking.check_out)
+        }
+
+        res.render("admin/adminBookingsList", {bookingsLista:resultados, linkVuelta:"/admin/buscarReservas"})
+    },
+    cargarOcupacion: async(req,res)=>{ 
+        res.render("admin/adminOcupacion")
+    },
+    resultadosDisponibilidad: async(req,res)=>{ 
+        let errors = validationResult(req)
+
+        if (!errors.isEmpty()){
+            return res.render("admin/adminOcupacion",{errors:errors.mapped(),oldInfo:req.query})
+        }
+
+        let desde = func.formateoFecha(req.query.check_in)
+        let hasta = func.formateoFecha(req.query.check_out)
+
+        for (let i = desde; i<= hasta; i++){
+            let ocupacion
+        }
+
+
+        let infoBusqueda ={
+            checkIn: req.query.check_in,
+            checkOut: req.query.check_out,
+            textoCheckIn: func.fechaATextoCorto(req.query.check_in),
+            textoCheckOut: func.fechaATextoCorto(req.query.check_out)
+        }
+    
+        let habitaciones = await db.Room.findAll()
+
+        
+        let tipos = await func.habitacionesLibresExt(checkIn, checkOut)
+        
+        if (tipos.length==0){
+            return res.render("booking/bookingError")
+        }
+
+        res.render("admin/adminResultadosDisp",{tipos, infoBusqueda})
+
     }
 }   
 

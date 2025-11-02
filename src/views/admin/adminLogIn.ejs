@@ -2,7 +2,7 @@
 <div class="hero nc-timbre-tris" id="reserva-timbre">
     <div class="container">
         <div class="main-heading">
-            <h1 class="title-res nc-titulo-pagina">INGRESO ADMIN</h1>
+            <h1 class="title-res nc-titulo-pagina">ADMINISTRACION</h1>
             <div class="nc-block">
                 <form action="/admin/login" class="form" method="POST">
                     <div class="nc-file-info-div">
@@ -27,6 +27,10 @@
                                 <label class="nc-error-message"><%= errors.login.msg %></label>   
                             </div>
                         <% } %>                 
+                    </div>
+                    <div class="nc-remember-container">
+                        <input class="nc-file-input" type="checkbox" id="recordar" name="recordar">
+                        <label class="nc-file-info-label" for="recordar">No cerrar sesión</label>
                     </div>
                     <div class="nc-button-block nc-payment-button">
                         <input class="btn btn-gradient nc-btn-extra" type="submit" value="INGRESAR">

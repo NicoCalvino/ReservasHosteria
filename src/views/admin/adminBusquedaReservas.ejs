@@ -1,0 +1,55 @@
+<%- include('../partials/header',{hojaDeEstilo:"/css/stylesAdmin.css"}) %>
+<div class="hero nc-timbre-tris" id="sector-admin">
+    <div class="container">
+        <div class="main-heading">
+            <h1 class="title-res nc-titulo-pagina">BUSCAR RESERVAS</h1>
+            <div class="nc-back-container">
+                <a href="/admin/menu"><i class="fas fa-bars"></i>Menu</a>
+            </div>
+            <div class="nc-block">
+                <form action="/admin/resultadosBusqueda" class="room-booking-form" method="GET">
+                    <div class="adm-booking-input">
+                        <label for="codigo">Codigo</label>
+                        <input id="codigo" name="codigo" type="text">
+                    </div>
+                    <div class="adm-booking-input">
+                        <label for="apellido">Apellido</label>
+                        <input id="apellido" name="apellido" type="text">
+                    </div>
+                    <div class="adm-booking-input">
+                        <label for="mail">mail</label>
+                        <input id="mail" name="mail" type="text">
+                    </div>
+                    <div class="adm-booking-input">
+                        <label for="tel">tel</label>
+                        <input id="tel" name="tel" type="text">
+                    </div>
+                    <div class="adm-booking-input">
+                        <label for="check_in">Check In</label>
+                        <input id="check_in" name="check_in" type="date">
+                    </div>
+                    <div class="adm-booking-input">
+                        <label for="check_out">Check Out</label>
+                        <input id="check_out" name="check_out" type="date">
+                    </div>
+                    <div class="adm-booking-input">
+                        <label for="people">Huespedes</label>
+                        <input id="people" name="people" type="number">
+                    </div>
+                    <div class="adm-booking-input">
+                        <label for="rooms">Habitaciones</label>
+                        <input id="rooms" name="rooms" type="number">
+                    </div>
+                    <div class="nc-button-block nc-booking-search">
+                        <label><i class="fas fa-search"></i></label>
+                        <input class="btn btn-gradient nc-btn-extra" type="submit" value="BUSCAR">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+  <section class="booking">
+  </section>
+</main>
+<%- include('../partials/footer') %>

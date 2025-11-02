@@ -1,0 +1,60 @@
+<%- include('../partials/header',{hojaDeEstilo:"/css/stylesAdmin.css"}) %>
+<div class="hero nc-timbre-tris" id="sector-admin">
+    <div class="container">
+        <div class="main-heading">
+            <h1 class="title-res nc-titulo-pagina">RESERVAS</h1>
+            <div class="nc-back-container">
+                <a href="/admin/menu"><i class="fas fa-bars"></i>Menu</a>
+            </div>
+            <div class="nc-block">
+                <% if(bookingsLista.length == 0){ %>
+                    <h2>NO SE ENCONTRARON RESERVAS</h2>
+                <% } else { %>
+                    <% bookingsLista.forEach(booking =>{ %>
+                        <div class="nc-booking-confirm-booking">
+                            <div class="nc-booking-confirm-booking-header">
+                                <h2 class="nc-booking-confirm-code"><%= booking.booking_code %></h2>
+                                <label>(<%= booking.states.state %>)</label>
+                                <% if(booking.states.id == 3){ %>
+                                    <a href="/admin/verReserva/<%= booking.id %>" class="btn btn-gradient" type="submit">MODIFICAR</a>
+                                <% } else { %>
+                                    <a href="/admin/verReserva/<%= booking.id %>" class="btn btn-gradient" type="submit">CONFIRMAR</a>
+                                <% } %>
+                            </div>
+                            <div class="nc-booking-confirm-info">
+                                <div class="nc-booking-confirm-guest">
+                                    <label class="nc-booking-confirm-guest-main"><%= booking.guests.name %> <%= booking.guests.lastname %></label>
+                                    <label class="nc-booking-confirm-guest-secondary"><%= booking.guests.phone %></label>
+                                    <label class="nc-booking-confirm-guest-secondary"><%= booking.guests.email %></label>
+                                </div>
+                                <div class="nc-booking-confirm-people">
+                                    <div class="nc-booking-confirm-people-main">
+                                        <i class="fas fa-male"></i>
+                                        <label><%= booking.occupancy %></label>
+                                    </div>
+                                    <div class="nc-booking-confirm-people-main">
+                                        <i class="fas fa-door-closed"></i>
+                                        <label><%= booking.room_count %></label>
+                                    </div>
+                                </div>
+                                <div class="nc-booking-confirm-dates">
+                                    <label class="nc-booking-confirm-dates-main"><i class="fas fa-plane-arrival"></i><%= booking.checkInFormateado %></label>
+                                    <label class="nc-booking-confirm-dates-main"><i class="fas fa-plane-departure"></i><%= booking.checkOutFormateado %></label>
+                                    <label class="nc-booking-confirm-dates-secondary"><%= booking.nights %> Noches</label>
+                                </div>
+                                <div class="nc-booking-confirm-amounts">
+                                    <label class="nc-booking-confirm-amounts-main">Total: $ <%= booking.totalFormateado %></label>
+                                    <label class="nc-booking-confirm-amounts-secondary">Seña: $ <%= booking.senaFormateado %></label>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+  <section class="booking">
+  </section>
+</main>
+<%- include('../partials/footer') %>

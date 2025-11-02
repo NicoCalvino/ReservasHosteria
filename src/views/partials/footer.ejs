@@ -28,11 +28,25 @@
       </div>
     </div>
   </div>
-  <div class="nc-admin-loggin-container">
-    <a href="/admin/login" class="nc-login-link">
-      <i class="fas fa-sign-in-alt"></i>Ingreso Admin
-    </a>
-  </div>
+  <% if(locals.adminLogged){ %>
+    <div class="nc-admin-loggin-container">
+      <a href="/admin/menu" class="nc-login-link">
+        <i class="fas fa-bars"></i>Menu Administracion
+      </a>
+    </div>
+    <div class="nc-admin-loggin-container">
+      <a href="/admin/logOut" class="nc-login-link">
+        <i class="fas fa-sign-out-alt"></i>Cerrar Sesión
+      </a>
+    </div>
+  <% } else { %>
+    <div class="nc-admin-loggin-container">
+      <a href="/admin/login" class="nc-login-link">
+        <i class="fas fa-sign-in-alt"></i>Ingreso Admin
+      </a>
+    </div>
+   <% } %>
+  
 </footer>
 
 <div class="ucs">Copyright 2025 - Nicolás Calviño - </div>

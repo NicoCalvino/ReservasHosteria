@@ -11,6 +11,8 @@ const {body} = require('express-validator')
 const {query} = require('express-validator')
 
 const userCreationMiddleware = require('../middlewares/userCreationMiddleware')
+const guestMiddleware = require('../middlewares/guestMiddleware')
+const loggedInMiddleware = require('../middlewares/loggedInMiddleware')
 
 const adminController = require("../controllers/adminController")
 const logInDataValidation = [
@@ -129,25 +131,32 @@ const roomSelectionValidation = [
   },
 ];
 
-router.get("/login", userCreationMiddleware, adminController.cargaLogIn)
-router.post("/login", logInDataValidation, adminController.procesoLogIn)
+router.get("/login", loggedInMiddleware, userCreationMiddleware, adminController.cargaLogIn)
+router.post("/login", loggedInMiddleware, logInDataValidation, adminController.procesoLogIn)
 
-router.get("/menu", adminController.cargaMenu)
+router.get("/logOut", adminController.procesoLogOut)
 
-router.get("/roomEdit", adminController.cargaEdicion)
-router.put("/roomEdit",roomEditValidation, adminController.procesarEdicion)
+router.get("/menu", guestMiddleware, adminController.cargaMenu)
 
-router.get("/bankEdit", adminController.cargaBanco)
-router.put("/bankEdit", bankInfoValidation, adminController.procesarBanco)
+router.get("/roomEdit", guestMiddleware, adminController.cargaEdicion)
+router.put("/roomEdit", guestMiddleware, roomEditValidation, adminController.procesarEdicion)
 
-router.get("/disponibilidad", adminController.cargaDisponibilidad)
-router.get("/resultados", searchValidation, adminController.resultadosDisponibilidad)
+router.get("/bankEdit", guestMiddleware, adminController.cargaBanco)
+router.put("/bankEdit", guestMiddleware, bankInfoValidation, adminController.procesarBanco)
 
-router.get("/confirmar", adminController.cargaConfirmarReservas)
-router.post("/confirmarReserva/:idBooking", roomSelectionValidation, adminController.confirmarReserva)
+router.get("/disponibilidad", guestMiddleware, adminController.cargaDisponibilidad)
+router.get("/resultados", guestMiddleware, searchValidation, adminController.resultadosDisponibilidad)
 
-router.delete("/eliminarReserva/:idBooking", adminController.eliminarReserva)
+router.get("/ocupacion", guestMiddleware, adminController.cargarOcupacion)
+router.get("/reporteOcupacion", guestMiddleware, searchValidation, adminController.resultadosDisponibilidad)
 
-router.get("/verReserva/:idBooking", adminController.infoReserva)
+router.get("/confirmar", guestMiddleware, adminController.cargaConfirmarReservas)
+router.post("/confirmarReserva/:idBooking", guestMiddleware, roomSelectionValidation, adminController.confirmarReserva)
+router.delete("/eliminarReserva/:idBooking", guestMiddleware, adminController.eliminarReserva)
+
+router.get("/buscarReservas", guestMiddleware,  adminController.cargarBusquedaReservas)
+router.get("/resultadosBusqueda", guestMiddleware,  adminController.resultadosBusqueda)
+
+router.get("/verReserva/:idBooking", guestMiddleware,  adminController.infoReserva)
 
 module.exports=router

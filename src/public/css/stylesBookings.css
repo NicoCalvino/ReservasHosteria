@@ -351,6 +351,11 @@
     text-decoration: underline;
 }
 
+.nc-remember-container{
+    width: 50%;
+    margin: auto;
+}
+
 footer .nc-admin-loggin-container{
     width: 80%;
     margin:auto;
