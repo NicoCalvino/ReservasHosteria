@@ -1,0 +1,49 @@
+<%- include('../partials/header',{hojaDeEstilo:"/css/stylesAdmin.css"}) %>
+<div class="hero nc-timbre-tris" id="sector-admin">
+    <div class="container">
+        <div class="main-heading">
+            <h1 class="title-res nc-titulo-pagina">Ocupación</h1>
+            <div class="nc-back-container">
+                <a href="/admin/menu"><i class="fas fa-bars"></i>Menu</a>
+            </div>
+            <div class="nc-block">
+                <div class="adm-room-avlb-textosFecha">
+                    <div>
+                        <label class="adm-room-avlb-tituloFecha">Desde:</label>
+                        <label class="adm-room-avlb-datoFecha"><%= infoBusqueda.textoCheckIn %></label>
+                    </div>
+                    <div>
+                        <label class="adm-room-avlb-tituloFecha">Hasta:</label>
+                        <label class="adm-room-avlb-datoFecha"><%= infoBusqueda.textoCheckOut %></label>
+                    </div>
+                </div>
+                <div class="nc-ocup-container">
+                    <table class="nc-ocup-table">
+                        <tr class="nc-ocup-table-row">
+                            <th class="nc-ocup-table-row-header">Habitacion/Dia</th>
+                            <% fechas.forEach(dia =>{ %>
+                                <th class="nc-ocup-table-row-header"><%= dia %></th>   
+                            <% }) %>
+                        </tr>
+                        <% infoHabitaciones.forEach(habitacion => { %>
+                            <tr class="nc-ocup-table-row">
+                                <td class="nc-ocup-table-row-detail"><%= habitacion.nro %></td>
+                                <% habitacion.huespedes.forEach(huesped =>{ %>
+                                    <% if(huesped.cantidad > 0){ %>
+                                        <td class="nc-ocup-table-row-detail"><%= huesped.nombre %> (x<%= huesped.cantidad %>)</td>   
+                                    <% } else { %>
+                                        <td class="nc-ocup-table-row-detail"></td>   
+                                    <% } %>
+                                <% }) %> 
+                            </tr>
+                        <% }) %>        
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  <section class="booking">
+  </section>
+</main>
+<%- include('../partials/footer') %>

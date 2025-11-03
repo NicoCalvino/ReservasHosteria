@@ -169,15 +169,15 @@ const controller = {
 
         if(bookingInstance){
             let booking = bookingInstance.toJSON()
-        
+
             booking.totalFormateado = func.conversorNumero(booking.amount)
             booking.senaFormateado = func.conversorNumero(booking.downpayment)
-            booking.checkInFormateado = func.fechaATextoCorto(booking.check_in)
-            booking.checkOutFormateado = func.fechaATextoCorto(booking.check_out)
+            booking.checkInFormateado = func.fechaATextoMesCortado(booking.check_in)
+            booking.checkOutFormateado = func.fechaATextoMesCortado(booking.check_out)
             booking.formatoArchivo = booking.payment.split(".")[1]
 
             for(const room of booking.types_booked){
-                room.opciones = await func.disponiblesPorTipo(booking.checkIn, booking.checkOut, room)
+                room.opciones = await func.disponiblesPorTipo(booking.check_in, booking.check_out, room)
             }
 
             res.render("admin/adminBookingInfo",{booking})
@@ -221,7 +221,6 @@ const controller = {
             let booking = bookingInstance.toJSON()
             
             for(const room of booking.rooms){    
-                console.log
                 let habitacionAsignada = req.body['habitacion_' + room.id]
                 await db.Booking_Room.update({
                     room_id:habitacionAsignada
@@ -305,8 +304,8 @@ const controller = {
         for(const booking of resultados){
             booking.totalFormateado = func.conversorNumero(booking.amount)
             booking.senaFormateado = func.conversorNumero(booking.downpayment)
-            booking.checkInFormateado = func.fechaATextoCorto(booking.check_in)
-            booking.checkOutFormateado = func.fechaATextoCorto(booking.check_out)
+            booking.checkInFormateado = func.fechaATextoMesCortado(booking.check_in)
+            booking.checkOutFormateado = func.fechaATextoMesCortado(booking.check_out)
         }
 
         res.render("admin/adminBookingsList", {bookingsLista:resultados, linkVuelta:"/admin/buscarReservas"})
@@ -314,38 +313,118 @@ const controller = {
     cargarOcupacion: async(req,res)=>{ 
         res.render("admin/adminOcupacion")
     },
-    resultadosDisponibilidad: async(req,res)=>{ 
+    resultadosOcupacion: async(req,res)=>{ 
         let errors = validationResult(req)
 
         if (!errors.isEmpty()){
             return res.render("admin/adminOcupacion",{errors:errors.mapped(),oldInfo:req.query})
         }
 
+        let cantNoches = func.cantNoches(req.query.check_in, req.query.check_out)
         let desde = func.formateoFecha(req.query.check_in)
-        let hasta = func.formateoFecha(req.query.check_out)
 
-        for (let i = desde; i<= hasta; i++){
-            let ocupacion
+        let fechas = []
+        for (let i = 0; i<= cantNoches; i ++){
+            let fecha = new Date(desde.getFullYear(), desde.getMonth(), desde.getDate() + i)
+            fechas.push(func.fechaATextoMesCortado(fecha.getFullYear().toString() + '-' + fecha.getMonth().toString() + '-' + fecha.getDate().toString()))
         }
 
+        let habitaciones = await db.Room.findAll()
+
+        let infoHabitaciones = []
+        for(const habitacion of habitaciones){            
+            let huespedes = []
+            for (let i = 0; i<= cantNoches; i ++){
+                let fecha = new Date(desde.getFullYear(), desde.getMonth(), desde.getDate() + i)
+
+                let huespedInfo = await db.Booking_Room.findAll({
+                    include:[{
+                        model:db.Booking,
+                        as:'bookings',
+                        include:['guests']
+                    }],
+                    where:{
+                        room_id:habitacion.id,
+                        check_in:{[Op.lte]:fecha},
+                        check_out:{[Op.gte]:fecha}
+                    },
+                })
+
+                let nombreHuesped
+                let cantidad
+                if(huespedInfo.length > 0){
+                    nombreHuesped = huespedInfo[0].bookings.guests.name + ' ' + huespedInfo[0].bookings.guests.lastname
+                    cantidad = Number(huespedInfo[0].adults) + Number(huespedInfo[0].children)
+                }
+
+                huespedes.push({
+                    nombre:nombreHuesped,
+                    cantidad: cantidad
+                })    
+            }
+
+            infoHabitaciones.push({
+                nro:habitacion.number,
+                huespedes:huespedes
+            })
+        }
 
         let infoBusqueda ={
-            checkIn: req.query.check_in,
-            checkOut: req.query.check_out,
             textoCheckIn: func.fechaATextoCorto(req.query.check_in),
             textoCheckOut: func.fechaATextoCorto(req.query.check_out)
         }
-    
-        let habitaciones = await db.Room.findAll()
 
-        
-        let tipos = await func.habitacionesLibresExt(checkIn, checkOut)
-        
-        if (tipos.length==0){
-            return res.render("booking/bookingError")
+        res.render("admin/adminReporteOcupacion",{infoHabitaciones, infoBusqueda, fechas})
+
+    },
+    cargarHuespedesDelDia: async(req,res)=>{ 
+        res.render("admin/adminHuespedesDelDia")
+    },
+    resultadosHuespedesDelDia: async(req,res)=>{ 
+        let errors = validationResult(req)
+
+        if (!errors.isEmpty()){
+            return res.render("admin/adminHuespedesDelDia",{errors:errors.mapped(),oldInfo:req.query})
         }
 
-        res.render("admin/adminResultadosDisp",{tipos, infoBusqueda})
+        let fecha = func.formateoFecha(req.query.fecha)
+
+        let habitaciones = await db.Room.findAll()
+
+        let infoHabitaciones = []
+        for(const habitacion of habitaciones){            
+            let huespedInfo = await db.Booking_Room.findAll({
+                include:[{
+                    model:db.Booking,
+                    as:'bookings',
+                    include:['guests']
+                }],
+                where:{
+                    room_id:habitacion.id,
+                    check_in:{[Op.lte]:fecha},
+                    check_out:{[Op.gte]:fecha}
+                },
+            })
+
+            let nombreHuesped
+            let cantidad
+            if(huespedInfo.length > 0){
+                nombreHuesped = huespedInfo[0].bookings.guests.name + ' ' + huespedInfo[0].bookings.guests.lastname
+                cantidad = Number(huespedInfo[0].adults) + Number(huespedInfo[0].children)
+            }
+            
+            infoHabitaciones.push({
+                nro:habitacion.number,
+                huesped:nombreHuesped,
+                cantidad: cantidad
+            })
+        }
+
+        let infoBusqueda ={
+            textoCheckIn: func.fechaATextoCorto(req.query.fecha),
+        }
+
+        res.render("admin/adminListaHuespedes",{infoHabitaciones, infoBusqueda})
 
     }
 }   

@@ -1,0 +1,34 @@
+<%- include('../partials/header',{hojaDeEstilo:"/css/stylesAdmin.css"}) %>
+<div class="hero nc-timbre-tris" id="sector-admin">
+    <div class="container">
+        <div class="main-heading">
+            <h1 class="title-res nc-titulo-pagina">Huespedes Del Día</h1>
+            <div class="nc-back-container">
+                <a href="/admin/menu"><i class="fas fa-bars"></i>Menu</a>
+            </div>
+            <div class="nc-block">
+                <div class="adm-room-avlb-textosFecha">
+                    <div>
+                        <label class="adm-room-avlb-tituloFecha">Fecha:</label>
+                        <label class="adm-room-avlb-datoFecha"><%= infoBusqueda.textoCheckIn %></label>
+                    </div>
+                </div>
+                <div class="nc-ocup-container">
+                    <% infoHabitaciones.forEach(habitacion =>{ %>
+                        <div>
+                            <% if(habitacion.huesped){ %>
+                                <label>Hab <%= habitacion.nro %>: <%= habitacion.huesped + ' (x' + habitacion.cantidad +')' %></label>
+                            <% } else { %>
+                                <label>Hab <%= habitacion.nro %>:</label>
+                            <% } %>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  <section class="booking">
+  </section>
+</main>
+<%- include('../partials/footer') %>

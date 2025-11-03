@@ -71,7 +71,7 @@ const model = {
     },
     fechaATexto: function(fechaString){
         let infoSeccionada = fechaString.split("-")
-        let cadena = Number(infoSeccionada[2]) + " de " + this.nombreMes(Number(infoSeccionada[1])) + " de " + infoSeccionada[0]
+        let cadena = Number(infoSeccionada[2]) + " de " + this.nombreMes(Number(infoSeccionada[1])+1) + " de " + infoSeccionada[0]
 
         return cadena
     },
@@ -83,7 +83,7 @@ const model = {
     },
     fechaATextoMesCortado: function(fecha){
         let fechaSeparada = fecha.split("-")
-        let mes = this.nombreMes(Number(fechaSeparada[1]))
+        let mes = this.nombreMes(Number(fechaSeparada[1])+1)
 
         let final = fechaSeparada[2] + " de " + mes.slice(0,3)
 

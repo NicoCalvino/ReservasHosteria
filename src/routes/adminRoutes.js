@@ -113,6 +113,24 @@ const searchValidation = [
     }),
 ]
 
+const occupancyValidation = [
+    query('check_in').notEmpty().withMessage('Completar fecha de Entrada'),
+    query('check_out').notEmpty().withMessage('Completar fecha de Salida').custom((value,{req})=>{
+        let check_in = req.query.check_in
+        let check_out = req.query.check_out
+
+        if(check_in > check_out){
+           throw new Error ('La fecha de Salida no puede ser anterior a la de entrada')  
+        }
+
+        return true
+    }),
+]
+
+const dateGuestsValidation = [
+    query('fecha').notEmpty().withMessage('Completar fecha'),
+]
+
 const roomSelectionValidation = [
   (req, res, next) => {
     const habitaciones = [];
@@ -148,7 +166,10 @@ router.get("/disponibilidad", guestMiddleware, adminController.cargaDisponibilid
 router.get("/resultados", guestMiddleware, searchValidation, adminController.resultadosDisponibilidad)
 
 router.get("/ocupacion", guestMiddleware, adminController.cargarOcupacion)
-router.get("/reporteOcupacion", guestMiddleware, searchValidation, adminController.resultadosDisponibilidad)
+router.get("/reporteOcupacion", guestMiddleware, occupancyValidation, adminController.resultadosOcupacion)
+
+router.get("/huespedesDelDia", guestMiddleware, adminController.cargarHuespedesDelDia)
+router.get("/listaDelDia", guestMiddleware, dateGuestsValidation, adminController.resultadosHuespedesDelDia)
 
 router.get("/confirmar", guestMiddleware, adminController.cargaConfirmarReservas)
 router.post("/confirmarReserva/:idBooking", guestMiddleware, roomSelectionValidation, adminController.confirmarReserva)

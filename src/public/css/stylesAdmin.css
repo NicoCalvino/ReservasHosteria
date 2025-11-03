@@ -255,7 +255,7 @@ footer .nc-admin-loggin-container a i{
 /* Estilos de Disponibilidad */
 
 .nc-block .available-form{
-    width: 80%;
+    width: 100%;
     margin:20px auto;
     background-color: RGBA(0,0,0,0.5);
     padding: 10px 15px;
@@ -760,3 +760,31 @@ footer .nc-admin-loggin-container a i{
 .nc-block .room-booking-form .nc-booking-search{
     margin:auto;
 }
+
+/* Estilos Tablas Disponibilidad */
+
+.nc-block .nc-ocup-container{
+    width: 100%;
+    margin: 10px auto;
+    background-color: RGBA(0,0,0,0.7);
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.nc-block .nc-ocup-container table, th, td {
+    border: 1px solid;
+    border-collapse: collapse;
+    text-align: center;
+    table-layout:fixed;
+}
+
+.nc-block .nc-ocup-container th, td {
+    padding:5px;
+    width: 200px;
+    height: 50px;
+    min-width: 100px;
+    min-height: 100px;
+}
+

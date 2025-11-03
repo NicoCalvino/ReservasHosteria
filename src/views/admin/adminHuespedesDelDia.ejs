@@ -1,0 +1,31 @@
+<%- include('../partials/header',{hojaDeEstilo:"/css/stylesAdmin.css"}) %>
+<div class="hero nc-timbre-tris" id="sector-admin">
+    <div class="container">
+        <div class="main-heading">
+            <h1 class="title-res nc-titulo-pagina">Huespedes del Día</h1>
+            <div class="nc-back-container">
+                <a href="/admin/menu"><i class="fas fa-bars"></i>Menu</a>
+            </div>
+            <div class="nc-block">
+                <form action="/admin/listaDelDia" class="available-form" method="GET">
+                    <div class="nc-available-info">
+                        <label for="fecha">Fecha</label>
+                        <input id="fecha" name="fecha" type="date" value="<%= locals.oldInfo && oldInfo.fecha ? oldInfo.fecha : '' %>">
+                        <% if(locals.errors && errors.fecha){ %>
+                            <div class="nc-error-block">
+                                <label class="nc-error-message"><%= errors.fecha.msg %></label>   
+                            </div>
+                        <% } %>
+                    </div>
+                    <div class="nc-button-block admin-bank-edit-button">
+                        <input class="btn btn-gradient nc-btn-extra" type="submit" value="CONSULTAR">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+  <section class="booking">
+  </section>
+</main>
+<%- include('../partials/footer') %>
