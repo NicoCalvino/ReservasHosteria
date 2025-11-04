@@ -116,13 +116,27 @@ const controller = {
         res.redirect("/admin/menu")
     },
     cargaDisponibilidad: async(req,res)=>{ 
-        res.render("admin/adminDisponibilidad")
+        res.render("admin/adminDatesSearch",{
+            titulo:"Disponibilidad",
+            direccion:"/admin/resultados",
+            desde:"Check In",
+            hasta:"Check Out",
+            boton:"BUSCAR"
+        })
     },
     resultadosDisponibilidad: async(req,res)=>{ 
         let errors = validationResult(req)
 
         if (!errors.isEmpty()){
-            return res.render("admin/adminDisponibilidad",{errors:errors.mapped(),oldInfo:req.query})
+            return res.render("admin/adminDatesSearch",{
+                titulo:"Disponibilidad",
+                direccion:"/admin/resultados",
+                desde:"Check In",
+                hasta:"Check Out",
+                boton:"BUSCAR",
+                errors:errors.mapped(),
+                oldInfo:req.query
+            })
         }
 
         let infoBusqueda ={
@@ -311,13 +325,27 @@ const controller = {
         res.render("admin/adminBookingsList", {bookingsLista:resultados, linkVuelta:"/admin/buscarReservas"})
     },
     cargarOcupacion: async(req,res)=>{ 
-        res.render("admin/adminOcupacion")
+        res.render("admin/adminDatesSearch",{
+            titulo:"Ocupación",
+            direccion:"/admin/reporteOcupacion",
+            desde:"Desde",
+            hasta:"Hasta",
+            boton:"CONTINUAR"
+        })
     },
     resultadosOcupacion: async(req,res)=>{ 
         let errors = validationResult(req)
 
         if (!errors.isEmpty()){
-            return res.render("admin/adminOcupacion",{errors:errors.mapped(),oldInfo:req.query})
+            return res.render("admin/adminDatesSearch",{
+                titulo:"Ocupación",
+                direccion:"/admin/reporteOcupacion",
+                desde:"Desde",
+                hasta:"Hasta",
+                boton:"CONTINUAR",
+                errors:errors.mapped(),
+                oldInfo:req.query
+            })
         }
 
         let cantNoches = func.cantNoches(req.query.check_in, req.query.check_out)
@@ -378,7 +406,14 @@ const controller = {
 
     },
     cargarHuespedesDelDia: async(req,res)=>{ 
-        res.render("admin/adminHuespedesDelDia")
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = (today.getMonth() + 1).toString().padStart(2, '0');
+        const day = today.getDate().toString().padStart(2, '0');
+        const fecha = `${year}-${month}-${day}`;
+
+
+        res.render("admin/adminHuespedesDelDia", {fecha})
     },
     resultadosHuespedesDelDia: async(req,res)=>{ 
         let errors = validationResult(req)
@@ -425,6 +460,114 @@ const controller = {
         }
 
         res.render("admin/adminListaHuespedes",{infoHabitaciones, infoBusqueda})
+
+    },
+    cargarFechasReservar: async(req,res)=>{ 
+        res.render("admin/adminDatesSearch",{
+            titulo:"Reservar",
+            direccion:"/admin/reservarHabitacion",
+            desde:"Check in",
+            hasta:"Check Out",
+            boton:"Consultar"
+        })
+    },
+    cargarReservarHabitacion:async(req,res)=>{ 
+        let errors = validationResult(req)
+
+        if (!errors.isEmpty()){
+            return res.render("admin/adminDatesSearch",{
+                titulo:"Reservar",
+                direccion:"/admin/reservarHabitacion",
+                desde:"Check in",
+                hasta:"Check Out",
+                boton:"Consultar",
+                errors:errors.mapped(),
+                oldInfo:req.query
+            })
+        }
+
+        let infoBusqueda ={
+            checkIn: req.query.check_in,
+            checkOut: req.query.check_out,
+            textoCheckIn: func.fechaATextoCorto(req.query.check_in),
+            textoCheckOut: func.fechaATextoCorto(req.query.check_out)
+        }
+
+        let checkIn = req.query.check_in
+        let checkOut = req.query.check_out
+        
+        let tipos = await func.habitacionesLibresExt(checkIn, checkOut)
+        
+        if (tipos.length==0){
+            return res.render("booking/bookingError")
+        }
+
+        res.render("admin/adminReservarHabitacion",{tipos, infoBusqueda})
+
+    },
+    procesoReservaHabitacion:async(req,res)=>{ 
+        let errors = validationResult(req)
+
+        if (!errors.isEmpty()){
+
+        }
+
+        let checkIn = req.body.check_in 
+        let checkOut = req.body.check_out
+        let cantNoches = func.cantNoches(checkIn, checkOut)
+        let adultos = req.body.adults
+        let menores = req.body.children
+        let people = Number(adultos) + Number(menores)
+        let nombre = req.body.name
+        let lastname = req.body.lastname
+
+        db.Guest.create({
+            name:nombre,
+            lastname:lastname,
+            email:"solar@solardelacosta.com",
+            phone:54902804200010
+        }).then(async guest =>{
+            let booking = await db.Booking.create({
+                    check_in:checkIn,
+                    check_out:checkOut,
+                    nights:cantNoches,
+                    occupancy:people,
+                    room_count:1,
+                    downpayment: 0,
+                    payment:"noPayment.png",
+                    amount: 0,
+                    guest_id:guest.id,
+                    state_id:3
+            })
+            
+            await db.Booking.update({
+                booking_code:"HSC" + String(booking.id).padStart(5,"0")
+            },{
+                where:{
+                    id:booking.id
+                }
+            })
+            
+            await db.Booking_Room.create({
+                check_in:checkIn,
+                check_out:checkOut,
+                adults:adultos,
+                children:menores,
+                booking_id:booking.id,
+                room_type_id:room.type,
+                room_id:cuarto
+            })
+                        
+            res.redirect("/admin/menu")
+        }).then()
+
+
+
+        if (tipos.length==0){
+            return res.render("booking/bookingError")
+        }
+
+        res.render("admin/adminReservarHabitacion",{tipos, infoBusqueda})
 
     }
 }   

@@ -149,6 +149,11 @@ const roomSelectionValidation = [
   },
 ];
 
+const personalInfoValidation = [
+    body('name').notEmpty().withMessage('Completar el nombre'),
+    body('lastname').notEmpty().withMessage('Completar el apellido'),
+]
+
 router.get("/login", loggedInMiddleware, userCreationMiddleware, adminController.cargaLogIn)
 router.post("/login", loggedInMiddleware, logInDataValidation, adminController.procesoLogIn)
 
@@ -167,6 +172,9 @@ router.get("/resultados", guestMiddleware, searchValidation, adminController.res
 
 router.get("/ocupacion", guestMiddleware, adminController.cargarOcupacion)
 router.get("/reporteOcupacion", guestMiddleware, occupancyValidation, adminController.resultadosOcupacion)
+
+router.get("/fechasReservarHabitacion", guestMiddleware, adminController.cargarFechasReservar)
+router.get("/reservarHabitacion", guestMiddleware, occupancyValidation, adminController.cargarReservarHabitacion)
 
 router.get("/huespedesDelDia", guestMiddleware, adminController.cargarHuespedesDelDia)
 router.get("/listaDelDia", guestMiddleware, dateGuestsValidation, adminController.resultadosHuespedesDelDia)

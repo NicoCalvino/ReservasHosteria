@@ -10,7 +10,7 @@
                 <form action="/admin/listaDelDia" class="available-form" method="GET">
                     <div class="nc-available-info">
                         <label for="fecha">Fecha</label>
-                        <input id="fecha" name="fecha" type="date" value="<%= locals.oldInfo && oldInfo.fecha ? oldInfo.fecha : '' %>">
+                        <input id="fecha" name="fecha" type="date" value="<%= fecha  %>">
                         <% if(locals.errors && errors.fecha){ %>
                             <div class="nc-error-block">
                                 <label class="nc-error-message"><%= errors.fecha.msg %></label>   

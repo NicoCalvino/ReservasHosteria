@@ -13,15 +13,13 @@
                         <label class="adm-room-avlb-datoFecha"><%= infoBusqueda.textoCheckIn %></label>
                     </div>
                 </div>
-                <div class="nc-ocup-container">
+                <div class="nc-guests-list">
                     <% infoHabitaciones.forEach(habitacion =>{ %>
-                        <div>
-                            <% if(habitacion.huesped){ %>
-                                <label>Hab <%= habitacion.nro %>: <%= habitacion.huesped + ' (x' + habitacion.cantidad +')' %></label>
-                            <% } else { %>
-                                <label>Hab <%= habitacion.nro %>:</label>
-                            <% } %>
-                        </div>
+                        <% if(habitacion.huesped){ %>
+                            <div class="nc-guests-list-guest"><label class="nc-guests-list-room-num">Hab<%= habitacion.nro %>:</label><%= habitacion.huesped + ' (x' + habitacion.cantidad +')' %></div>
+                        <% } else { %>
+                            <div class="nc-guests-list-guest"><label class="nc-guests-list-room-num">Hab<%= habitacion.nro %>:</label></div>
+                        <% } %>
                     <% }) %>
                 </div>
             </div>

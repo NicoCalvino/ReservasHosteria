@@ -1,0 +1,71 @@
+<%- include('../partials/header',{hojaDeEstilo:"/css/stylesAdmin.css"}) %>
+<div class="hero nc-timbre-tris" id="sector-admin">
+    <div class="container">
+        <div class="main-heading">
+            <h1 class="title-res nc-titulo-pagina">Reservar</h1>
+            <div class="nc-back-container">
+                <a href="/admin/menu"><i class="fas fa-bars"></i>Menu</a>
+            </div>
+            <div class="nc-block">
+                <div class="adm-room-avlb-textosFecha">
+                    <div>
+                        <label class="adm-room-avlb-tituloFecha">Check In:</label>
+                        <label class="adm-room-avlb-datoFecha"><%= infoBusqueda.textoCheckIn %></label>
+                    </div>
+                    <div>
+                        <label class="adm-room-avlb-tituloFecha">Check Out:</label>
+                        <label class="adm-room-avlb-datoFecha"><%= infoBusqueda.textoCheckOut %></label>
+                    </div>
+                </div>
+                <form action="/search/roomSelection" class="nc-reservar-form" method="GET" target="_blank">
+                    <div class="nc-reservar-conteiner">
+                        <div class="nc-reservar-input">
+                            <label for="check_in">Check In</label>
+                            <input id="check_in" name="check_in" type="date"  value="<%= infoBusqueda.checkIn %>">
+                        </div>
+                        <div class="nc-reservar-input">
+                            <label for="check_out">Check Out</label>
+                            <input id="check_out" name="check_out" type="date"  value="<%= infoBusqueda.checkOut %>">
+                        </div>
+                    </div>
+                    <div class="nc-reservar-conteiner">
+                        <div class="nc-reservar-input">
+                            <label for="adults">Adultos</label>
+                            <input id="adults" name="adults" type="number">
+                        </div>
+                        <div class="nc-reservar-input">
+                            <label for="children">Menores</label>
+                            <input id="children" name="children" type="number">
+                        </div>
+                    </div>                    
+                    <div class="nc-reservar-input">
+                        <label for="name">Nombre</label>
+                        <input id="name" name="name" type="text">
+                    </div>
+                    <div class="nc-reservar-input">
+                        <label for="lastname">Apellido</label>
+                        <input id="lastname" name="lastname" type="text">
+                    </div>
+                    <div class="nc-reservar-input">
+                        <label for="cuarto">Habitacion</label>
+                        <select name="habitacion" class="nc-booking-room-selector">
+                            <option class="nc-booking-room-option" value="" selected>S/A</option>
+                            <% tipos.forEach(tipo =>{ %>
+                                <% tipo.habDisp.forEach(habitacion =>{ %>
+                                    <option class="nc-booking-room-option" value="<%= habitacion.id %>"><%= habitacion.number %></option>
+                                <% }) %>
+                            <% }) %>
+                        </select>
+                    </div>
+                    <div class="nc-button-block admin-booking-button">
+                        <input class="btn btn-gradient nc-btn-extra" type="submit" value="RESERVAR">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+  <section class="booking">
+  </section>
+</main>
+<%- include('../partials/footer') %>

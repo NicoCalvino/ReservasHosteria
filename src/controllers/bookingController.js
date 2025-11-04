@@ -138,7 +138,7 @@ const controller = {
                     room_type_id:room.type,
                 })
             }
-            console.log("\n" + booking + "\n")
+
             req.session.idTemp = false
             req.session.booking = booking.id
             res.redirect("/booking/confirmed")
