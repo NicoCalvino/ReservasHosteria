@@ -83,7 +83,7 @@ const model = {
     },
     fechaATextoMesCortado: function(fecha){
         let fechaSeparada = fecha.split("-")
-        let mes = this.nombreMes(Number(fechaSeparada[1])+1)
+        let mes = this.nombreMes(Number(fechaSeparada[1]))
 
         let final = fechaSeparada[2] + " de " + mes.slice(0,3)
 
@@ -166,29 +166,19 @@ const model = {
         })
 
         /*Bookings que empiezan antes*/
-        let bookingsAntes = await db.Booking_Room.count({
+        let bookingsExistentes = await db.Booking_Room.count({
             where:{
-                check_in:{
-                    [Op.lte]:checkIn,
+                room_type_id: tipo.id,
+                check_in: {
+                    [Op.lt]: checkOut // Empieza antes de que el nuevo período TERMINE
                 },
-                check_out:{
-                    [Op.between]:[checkIn, checkOut]
-                },
-                room_type_id:tipo.id
+                check_out: {
+                    [Op.gt]: checkIn // Y termina después de que el nuevo período EMPIECE
+                }
             }
         })
 
-        /*Bookings que empiezan despues*/
-        let bookingsDespues = await db.Booking_Room.count({
-            where:{
-                check_in:{
-                    [Op.between]:[checkIn, checkOut]
-                },
-                room_type_id:tipo.id
-            }
-        })
-
-        let disponibles = quantity - bookingsAntes - bookingsDespues
+        let disponibles = quantity - bookingsExistentes
 
         return disponibles
 
@@ -204,30 +194,19 @@ const model = {
         let cuartosDisponibles = []
 
         for(const cuarto of cuartosTipo){
-            /*Bookings que empiezan antes*/
-            let bookingsAntes = await db.Booking_Room.count({
+            let bookingsExistentes = await db.Booking_Room.count({
                 where:{
-                    check_in:{
-                        [Op.lte]:checkIn,
+                    room_id: cuarto.id,
+                    check_in: {
+                        [Op.lt]: checkOut // Empieza antes de que el nuevo período TERMINE
                     },
-                    check_out:{
-                        [Op.between]:[checkIn, checkOut]
-                    },
-                    room_id:cuarto.id
+                    check_out: {
+                        [Op.gt]: checkIn // Y termina después de que el nuevo período EMPIECE
+                    }
                 }
             })
 
-            /*Bookings que empiezan despues*/
-            let bookingsDespues = await db.Booking_Room.count({
-                where:{
-                    check_in:{
-                        [Op.between]:[checkIn, checkOut]
-                    },
-                    room_id:cuarto.id
-                }
-            })
-
-            if((bookingsAntes + bookingsDespues) == 0){cuartosDisponibles.push(cuarto)}
+            if(bookingsExistentes == 0){cuartosDisponibles.push(cuarto)}
         }
         
         return cuartosDisponibles

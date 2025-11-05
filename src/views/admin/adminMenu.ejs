@@ -5,7 +5,7 @@
             <h1 class="title-res nc-titulo-pagina">Menu Administración</h1>
             <% if(bookingsPendientes > 0){ %>
                 <div class="nc-pending-booking-msg">
-                    <article>HAY <%= bookingsPendientes %> RESERVAS SIN CONFIRMAR</article>
+                    <a href="/admin/confirmar">HAY <%= bookingsPendientes %> RESERVAS SIN CONFIRMAR</a>
                 </div>
             <% } %>
             <div class="nc-block">
@@ -14,24 +14,24 @@
                     <a href="/admin/confirmar" class="btn btn-gradient nc-btn-extra" type="submit">CONFIRMAR RESERVAS</a>
                 </div>
                 <div class="nc-button-block">
-                    <label><i class="fas fa-users"></i></label>
-                    <a href="/admin/ocupacion" class="btn btn-gradient nc-btn-extra" type="submit">VER OCUPACION</a>
+                    <label><i class="fas fa-search"></i></label>
+                    <a href="/admin/buscarReservas" class="btn btn-gradient nc-btn-extra" type="submit">BUSCAR RESERVAS</a>
                 </div>
                 <div class="nc-button-block">
                     <label><i class="fas fa-bed"></i></label>
                     <a href="/admin/fechasReservarHabitacion" class="btn btn-gradient nc-btn-extra" type="submit">RESERVAR HABITACION</a>
                 </div>
                 <div class="nc-button-block">
-                    <label><i class="fas fa-male"></i></label>
-                    <a href="/admin/huespedesDelDia" class="btn btn-gradient nc-btn-extra" type="submit">HUESPEDES DEL DIA</a>
-                </div>
-                <div class="nc-button-block">
                     <label><i class="fas fa-hotel"></i></label>
                     <a href="/admin/disponibilidad" class="btn btn-gradient nc-btn-extra" type="submit">VER DISPONIBILIDAD</a>
                 </div>
                 <div class="nc-button-block">
-                    <label><i class="fas fa-search"></i></label>
-                    <a href="/admin/buscarReservas" class="btn btn-gradient nc-btn-extra" type="submit">BUSCAR RESERVAS</a>
+                    <label><i class="fas fa-users"></i></label>
+                    <a href="/admin/ocupacion" class="btn btn-gradient nc-btn-extra" type="submit">VER OCUPACION</a>
+                </div>
+                <div class="nc-button-block">
+                    <label><i class="fas fa-male"></i></label>
+                    <a href="/admin/huespedesDelDia" class="btn btn-gradient nc-btn-extra" type="submit">HUESPEDES DEL DIA</a>
                 </div>
                 <div class="nc-button-block">
                     <label><i class="fas fa-door-closed"></i></label>

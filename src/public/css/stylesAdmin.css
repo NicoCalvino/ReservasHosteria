@@ -872,3 +872,17 @@ footer .nc-admin-loggin-container a i{
     display: flex;
     justify-content: center;
 }
+
+
+.nc-block .nc-reservar-form .nc-error-block{
+    width: 100%;
+}
+
+.nc-block .nc-reservar-form .nc-error-block .nc-error-message{
+    width: 100%;
+    text-transform: capitalize !important;
+    font-size: 12px;
+    margin-left: 10px;
+    color: rgb(248, 245, 53);
+    font-weight: 100;
+}

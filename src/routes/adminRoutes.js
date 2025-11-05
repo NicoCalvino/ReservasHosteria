@@ -6,6 +6,7 @@ const moment = require('moment')
 const router = express.Router()
 const bcryptjs = require('bcryptjs')
 const func = require("../functions/funciones")
+const adminSessionMiddleware = require ("../middlewares/adminSessionMiddleware")
 
 const {body} = require('express-validator')
 const {query} = require('express-validator')
@@ -132,26 +133,52 @@ const dateGuestsValidation = [
 ]
 
 const roomSelectionValidation = [
-  (req, res, next) => {
-    const habitaciones = [];
-    for (const key in req.body) {
-      if (key.startsWith('habitacion_')) {
-        habitaciones.push(
-          body(key)
-            .notEmpty()
-            .withMessage("Indicar la Habitacion a Reservar")
-        );
-      }
-    }
-    Promise.all(habitaciones.map(validation => validation.run(req))).then(() => {
-      next();
-    });
-  },
-];
+    body('habitaciones').custom((value,{req})=>{
+        let todoCompleto = true
+        let todasHabitaciones = []
+        for (const key in req.body) {
+            if (key.startsWith('habitacion_')) {
+                if(!req.body[key]){
+                    todoCompleto = false
+                }else{
+                    todasHabitaciones.push(req.body[key])
+                }
+            }
+        }
 
-const personalInfoValidation = [
+        let habitacionesUnicas = [...new Set(todasHabitaciones)]
+
+        if(!todoCompleto){
+           throw new Error ('Completar todas las habitaciones')  
+        }
+
+        if(habitacionesUnicas.length < todasHabitaciones.length){
+           throw new Error ('No puede asignar la misma habitación más de una vez')  
+        }
+
+        return true
+    }),
+]
+
+const roomBookingValidation = [
     body('name').notEmpty().withMessage('Completar el nombre'),
     body('lastname').notEmpty().withMessage('Completar el apellido'),
+    body('ocupacion').custom(async (value,{req})=>{
+        let cantMayores = req.body.adults
+        let cantMenores = req.body.children
+
+        if(cantMayores == undefined){cantMayores=0}
+        if(cantMenores == undefined){cantMenores=0}
+
+        let cantTotal = Number(cantMayores) + Number(cantMenores)
+        
+        if(cantTotal == 0){
+            throw new Error ('Indicar ocupantes de la habitación')     
+        }
+
+        return true
+    }),
+    body('habitacion').notEmpty().withMessage('Indicar la habitacion'),
 ]
 
 router.get("/login", loggedInMiddleware, userCreationMiddleware, adminController.cargaLogIn)
@@ -174,7 +201,8 @@ router.get("/ocupacion", guestMiddleware, adminController.cargarOcupacion)
 router.get("/reporteOcupacion", guestMiddleware, occupancyValidation, adminController.resultadosOcupacion)
 
 router.get("/fechasReservarHabitacion", guestMiddleware, adminController.cargarFechasReservar)
-router.get("/reservarHabitacion", guestMiddleware, occupancyValidation, adminController.cargarReservarHabitacion)
+router.get("/reservarHabitacion", guestMiddleware,occupancyValidation, adminController.cargarReservarHabitacion)
+router.post("/reservarHabitacion", guestMiddleware, adminSessionMiddleware, roomBookingValidation, adminController.procesoReservaHabitacion)
 
 router.get("/huespedesDelDia", guestMiddleware, adminController.cargarHuespedesDelDia)
 router.get("/listaDelDia", guestMiddleware, dateGuestsValidation, adminController.resultadosHuespedesDelDia)

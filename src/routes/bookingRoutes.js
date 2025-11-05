@@ -53,7 +53,11 @@ const initialValidation = [
             }
         })
 
-        let habLibres = func.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
+        let habLibres = await func.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
+
+        console.log("****************")
+        console.log(habLibres)
+        console.log("****************")
 
         if(habLibres < cant){
             throw new Error ('No hay ' + cant + ' habitaciones triples disponibles') 
@@ -73,7 +77,7 @@ const initialValidation = [
             }
         })
 
-        let habLibres = func.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
+        let habLibres = await func.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
 
         if(habLibres < cant){
             throw new Error ('No hay ' + cant + ' habitaciones dobles vista al mar disponibles') 
@@ -93,7 +97,7 @@ const initialValidation = [
             }
         })
 
-        let habLibres = func.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
+        let habLibres = await func.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
 
         if(habLibres < cant){
             throw new Error ('No hay ' + cant + ' habitaciones dobles vista al jardin disponibles') 
@@ -113,7 +117,7 @@ const initialValidation = [
             }
         })
 
-        let habLibres = func.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
+        let habLibres = await func.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
 
         if(habLibres < cant){
             throw new Error ('No hay ' + cant + ' habitaciones de 4 personas disponibles') 
@@ -133,7 +137,7 @@ const initialValidation = [
             }
         })
 
-        let habLibres = func.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
+        let habLibres = await func.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
 
         if(habLibres < cant){
             throw new Error ('No hay ' + cant + ' suites disponibles') 

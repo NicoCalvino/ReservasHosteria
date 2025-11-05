@@ -42,33 +42,51 @@
                     </div>
                     <form action="/admin/confirmarReserva/<%= booking.id %>" method="POST" class="nc-booking-rooms-container">
                         <h2>Habitaciones</h2>
-                        <% for(let i = 0; i< booking.rooms.length; i++){ %>     
-                            <div class="nc-booking-room">
-                                <h3><%= (i+1) + ' - ' + booking.types_booked[i].description %></h3>
-                                <select name="<%= 'habitacion_' + booking.rooms[i].id %>" class="nc-booking-room-selector">
-                                    <option class="nc-booking-room-option" value="" selected>S/A</option>
-                                    <% booking.types_booked[i].opciones.forEach(opcion =>{ %>
-                                        <% if(locals.oldInfo){ %>
-                                            <% if(oldInfo['habitacion_' + booking.rooms[i].id] == opcion.id){ %>
-                                                <option class="nc-booking-room-option" value="<%= opcion.id %>" selected><%= opcion.number %></option>
-                                            <% } else { %>
-                                                <option class="nc-booking-room-option" value="<%= opcion.id %>"><%= opcion.number %></option>
-                                            <% } %> 
-                                        <% } else { %>
-                                            <option class="nc-booking-room-option" value="<%= opcion.id %>" <%= booking.rooms[i].room_id && booking.rooms[i].room_id == opcion.id ? "selected" : '' %>><%= opcion.number %></option>
-                                        <% } %> 
-                                    <% }) %>
-                                </select>
-                                <div class="nc-booking-room-guests">
-                                    <label>Adultos: <%= booking.rooms[i].adults %></label>
-                                    <label>Niños: <%= booking.rooms[i].children %></label>
-                                </div>
-                                <% if(locals.errors && errors['habitacion_' + booking.rooms[i].id]){ %>
-                                    <div class="nc-error-block">
-                                        <label class="nc-error-message"><%= errors['habitacion_' + booking.rooms[i].id].msg %></label>   
+                        <% if(locals.errors && errors.habitaciones){ %>
+                            <div class="nc-error-block">
+                                <label class="nc-error-message"><%= errors.habitaciones.msg %></label>   
+                            </div>
+                        <% } %>
+                        <% if(booking.state_id == 3){ %>
+                            <% for(let i = 0; i< booking.rooms.length; i++){ %>  
+                                <div class="nc-booking-room">
+                                    <h3><%= (i+1) + ' - ' + booking.rooms[i].description %></h3>
+                                    <select name="<%= 'habitacion_' + booking.rooms[i].id %>" class="nc-booking-room-selector">
+                                        <option class="nc-booking-room-option" value="<%= booking.rooms[i].room_id %>" selected><%= booking.rooms[i].number %></option>
+                                        <% booking.rooms[i].opciones.forEach(opcion =>{ %>
+                                            <option class="nc-booking-room-option" value="<%= opcion.id %>" <%= locals.oldInfo && oldInfo['habitacion_' + booking.rooms[i].id] == opcion.id ? "selected" : '' %>><%= opcion.number %></option>
+                                        <% }) %>
+                                    </select>
+                                    <div class="nc-booking-room-guests">
+                                        <label>Adultos: <%= booking.rooms[i].adults %></label>
+                                        <label>Niños: <%= booking.rooms[i].children %></label>
                                     </div>
-                                <% } %>
-                            </div>                    
+                                </div>
+                            <% } %>
+                        <% } else { %>
+                            <% for(let i = 0; i< booking.rooms.length; i++){ %>     
+                                <div class="nc-booking-room">
+                                    <h3><%= (i+1) + ' - ' + booking.rooms[i].description %></h3>
+                                    <select name="<%= 'habitacion_' + booking.rooms[i].id %>" class="nc-booking-room-selector">
+                                        <option class="nc-booking-room-option" value="" selected>S/A</option>
+                                        <% booking.rooms[i].opciones.forEach(opcion =>{ %>
+                                            <% if(locals.oldInfo){ %>
+                                                <% if(oldInfo['habitacion_' + booking.rooms[i].id] == opcion.id){ %>
+                                                    <option class="nc-booking-room-option" value="<%= opcion.id %>" selected><%= opcion.number %></option>
+                                                <% } else { %>
+                                                    <option class="nc-booking-room-option" value="<%= opcion.id %>"><%= opcion.number %></option>
+                                                <% } %> 
+                                            <% } else { %>
+                                                <option class="nc-booking-room-option" value="<%= opcion.id %>" <%= booking.rooms[i].room_id && booking.rooms[i].room_id == opcion.id ? 'selected' : '' %>><%= opcion.number %></option>
+                                            <% } %> 
+                                        <% }) %>
+                                    </select>
+                                    <div class="nc-booking-room-guests">
+                                        <label>Adultos: <%= booking.rooms[i].adults %></label>
+                                        <label>Niños: <%= booking.rooms[i].children %></label>
+                                    </div>
+                                </div>                    
+                            <% } %>
                         <% } %>
                         <div class="nc-button-block admin-booking-confirmation-button">
                             <input class="btn btn-gradient nc-btn-extra" type="submit" value="CONFIRMAR RESERVA">

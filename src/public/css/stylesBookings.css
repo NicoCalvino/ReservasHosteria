@@ -374,15 +374,21 @@ footer .nc-admin-loggin-container a i{
     font-size: 20px;
 }
 
-@media (min-width: 680px){
+@media (min-width: 768px){
     .nc-booking-block{
         width: 40%;
     }
 }
 
-@media (min-width: 1200px){
+@media (min-width: 992px){
     .nc-booking-block{
         width: 30%;
+    }
+}
+
+@media (min-width: 1200px){
+    .nc-booking-block{
+        width: 20%;
     }
 
     .nc-form .nc-rooms-list .nc-room-block .nc-room-info-block .hover-container .hover-image {

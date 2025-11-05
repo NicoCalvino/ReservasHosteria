@@ -178,7 +178,7 @@ const controller = {
     infoReserva: async(req,res)=>{
         let idBooking = req.params.idBooking
         let bookingInstance  = await db.Booking.findByPk(idBooking,{
-            include:['guests','types_booked','rooms']
+            include:['guests','rooms']
         })
 
         if(bookingInstance){
@@ -189,9 +189,15 @@ const controller = {
             booking.checkInFormateado = func.fechaATextoMesCortado(booking.check_in)
             booking.checkOutFormateado = func.fechaATextoMesCortado(booking.check_out)
             booking.formatoArchivo = booking.payment.split(".")[1]
-
-            for(const room of booking.types_booked){
-                room.opciones = await func.disponiblesPorTipo(booking.check_in, booking.check_out, room)
+            
+            for(const room of booking.rooms){
+                infoCuarto = await db.Room_Type.findByPk(room.room_type_id)
+                room.opciones = await func.disponiblesPorTipo(booking.check_in, booking.check_out, infoCuarto)
+                room.description = infoCuarto.description
+                if(room.room_id){
+                    let detalleHabitacion = await db.Room.findByPk(room.room_id)
+                    room.number=detalleHabitacion.number
+                }
             }
 
             res.render("admin/adminBookingInfo",{booking})
@@ -205,20 +211,22 @@ const controller = {
 
         if (!errors.isEmpty()){
             let bookingInstance  = await db.Booking.findByPk(idBooking,{
-                include:['guests','types_booked','rooms']
+                include:['guests','rooms']
             })
 
             if(bookingInstance){
                 let booking = bookingInstance.toJSON()
-            
+
                 booking.totalFormateado = func.conversorNumero(booking.amount)
                 booking.senaFormateado = func.conversorNumero(booking.downpayment)
-                booking.checkInFormateado = func.fechaATextoCorto(booking.check_in)
-                booking.checkOutFormateado = func.fechaATextoCorto(booking.check_out)
+                booking.checkInFormateado = func.fechaATextoMesCortado(booking.check_in)
+                booking.checkOutFormateado = func.fechaATextoMesCortado(booking.check_out)
                 booking.formatoArchivo = booking.payment.split(".")[1]
-
-                for(const room of booking.types_booked){
-                    room.opciones = await func.disponiblesPorTipo(booking.checkIn, booking.checkOut, room)
+                
+                for(const room of booking.rooms){
+                    infoCuarto = await db.Room_Type.findByPk(room.room_type_id)
+                    room.opciones = await func.disponiblesPorTipo(booking.check_in, booking.check_out, infoCuarto)
+                    room.description = infoCuarto.description
                 }
 
                 return res.render("admin/adminBookingInfo",{booking,errors:errors.mapped(),oldInfo:req.body})
@@ -279,7 +287,7 @@ const controller = {
             }
         })
 
-        res.redirect("/admin/confirmar")
+        res.redirect("/admin/menu")
     },
     cargarBusquedaReservas: async(req,res)=>{
         res.render("admin/adminBusquedaReservas")
@@ -354,7 +362,7 @@ const controller = {
         let fechas = []
         for (let i = 0; i<= cantNoches; i ++){
             let fecha = new Date(desde.getFullYear(), desde.getMonth(), desde.getDate() + i)
-            fechas.push(func.fechaATextoMesCortado(fecha.getFullYear().toString() + '-' + fecha.getMonth().toString() + '-' + fecha.getDate().toString()))
+            fechas.push(func.fechaATextoMesCortado(fecha.getFullYear().toString() + '-' + (fecha.getMonth()+1).toString() + '-' + fecha.getDate().toString()))
         }
 
         let habitaciones = await db.Room.findAll()
@@ -486,15 +494,24 @@ const controller = {
             })
         }
 
+        let checkIn = req.query.check_in
+        let checkOut = req.query.check_out
+
+        let infoTemp = await db.Temp.create({
+            check_in:checkIn,
+            check_out:checkOut,
+            occupancy:1,
+            rooms:1
+        })
+        
+        req.session.idTemp = infoTemp.id
+        
         let infoBusqueda ={
             checkIn: req.query.check_in,
             checkOut: req.query.check_out,
             textoCheckIn: func.fechaATextoCorto(req.query.check_in),
             textoCheckOut: func.fechaATextoCorto(req.query.check_out)
         }
-
-        let checkIn = req.query.check_in
-        let checkOut = req.query.check_out
         
         let tipos = await func.habitacionesLibresExt(checkIn, checkOut)
         
@@ -503,23 +520,44 @@ const controller = {
         }
 
         res.render("admin/adminReservarHabitacion",{tipos, infoBusqueda})
-
     },
     procesoReservaHabitacion:async(req,res)=>{ 
         let errors = validationResult(req)
 
-        if (!errors.isEmpty()){
+        let idTemp = req.session.idTemp
+        let infoTemp = await db.Temp.findByPk(idTemp)
 
+        if (!errors.isEmpty()){  
+            let checkIn = infoTemp.check_in
+            let checkOut = infoTemp.check_out
+
+            let infoBusqueda ={
+                checkIn: checkIn,
+                checkOut: checkOut,
+                textoCheckIn: func.fechaATextoCorto(checkIn),
+                textoCheckOut: func.fechaATextoCorto(checkOut)
+            }
+        
+            let tipos = await func.habitacionesLibresExt(checkIn, checkOut)
+
+            if (tipos.length==0){
+                return res.render("booking/bookingError")
+            }
+
+            return res.render("admin/adminReservarHabitacion",{tipos, infoBusqueda,errors:errors.mapped(),oldInfo:req.body})
         }
 
-        let checkIn = req.body.check_in 
-        let checkOut = req.body.check_out
-        let cantNoches = func.cantNoches(checkIn, checkOut)
+        let checkIn = infoTemp.check_in 
+        let checkOut = infoTemp.check_out
+        let cantNoches = func.cantNoches(infoTemp.check_in, infoTemp.check_out)
         let adultos = req.body.adults
         let menores = req.body.children
         let people = Number(adultos) + Number(menores)
         let nombre = req.body.name
         let lastname = req.body.lastname
+        let cuarto = req.body.habitacion
+
+        infoHabitacion = await db.Room.findByPk(cuarto)
 
         db.Guest.create({
             name:nombre,
@@ -536,6 +574,7 @@ const controller = {
                     downpayment: 0,
                     payment:"noPayment.png",
                     amount: 0,
+                    temp_id:idTemp,
                     guest_id:guest.id,
                     state_id:3
             })
@@ -554,20 +593,12 @@ const controller = {
                 adults:adultos,
                 children:menores,
                 booking_id:booking.id,
-                room_type_id:room.type,
+                room_type_id:infoHabitacion.room_type_id,
                 room_id:cuarto
             })
                         
             res.redirect("/admin/menu")
         }).then()
-
-
-
-        if (tipos.length==0){
-            return res.render("booking/bookingError")
-        }
-
-        res.render("admin/adminReservarHabitacion",{tipos, infoBusqueda})
 
     }
 }   
