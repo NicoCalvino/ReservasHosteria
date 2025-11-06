@@ -13,6 +13,7 @@ const paymentRoutes = require("./routes/paymentRoutes")
 const errorRoutes = require("./routes/errorRoutes")
 const adminRoutes = require("./routes/adminRoutes")
 const adminLoggedMiddleware = require("./middlewares/adminLoggedMiddleware")
+const draftBookingsMiddleware = require("./middlewares/draftBookingsMiddleware")
 
 
 app.set("view engine","ejs")
@@ -25,6 +26,7 @@ app.use(session({secret:'Esto Es Secreto',resave:false, saveUninitialized:false}
 app.use(methodOverride("_method")) 
 app.use(cookie())
 app.use(adminLoggedMiddleware)
+app.use(draftBookingsMiddleware)
 
 app.use("/search", searchRoutes)
 app.use("/booking", bookingRoutes)

@@ -40,16 +40,20 @@
                             </div>     
                         <% } %>
                     </div>
-                    <form action="/admin/confirmarReserva/<%= booking.id %>" method="POST" class="nc-booking-rooms-container">
+                    <% if(booking.state_id == 3){ %>
+                        <form action="/admin/editarReserva/<%= booking.id %>?_method=PUT" method="POST" class="nc-booking-rooms-container">
+                    <% } else { %>
+                        <form action="/admin/confirmarReserva/<%= booking.id %>" method="POST" class="nc-booking-rooms-container">
+                    <% } %>
                         <h2>Habitaciones</h2>
                         <% if(locals.errors && errors.habitaciones){ %>
                             <div class="nc-error-block">
                                 <label class="nc-error-message"><%= errors.habitaciones.msg %></label>   
                             </div>
                         <% } %>
-                        <% if(booking.state_id == 3){ %>
-                            <% for(let i = 0; i< booking.rooms.length; i++){ %>  
-                                <div class="nc-booking-room">
+                        <div class="nc-booking-room">
+                            <% if(booking.state_id == 3){ %>
+                                <% for(let i = 0; i< booking.rooms.length; i++){ %>  
                                     <h3><%= (i+1) + ' - ' + booking.rooms[i].description %></h3>
                                     <select name="<%= 'habitacion_' + booking.rooms[i].id %>" class="nc-booking-room-selector">
                                         <option class="nc-booking-room-option" value="<%= booking.rooms[i].room_id %>" selected><%= booking.rooms[i].number %></option>
@@ -58,14 +62,18 @@
                                         <% }) %>
                                     </select>
                                     <div class="nc-booking-room-guests">
-                                        <label>Adultos: <%= booking.rooms[i].adults %></label>
-                                        <label>Niños: <%= booking.rooms[i].children %></label>
+                                        <div class="nc-reservar-input">
+                                            <label for="<%= 'adults' + booking.rooms[i].id %>">Adultos: </label>
+                                            <input id="<%= 'adults' + booking.rooms[i].id %>" name="<%= 'adults' + booking.rooms[i].id %>" type="number" min="0" max="<%= booking.rooms[i].occupancy %>" value="<%= locals.oldInfo && oldInfo['adults' + booking.rooms[i].id] ? oldInfo['adults' + booking.rooms[i].id] : booking.rooms[i].adults %>">
+                                        </div>
+                                        <div class="nc-reservar-input">
+                                            <label for="<%= 'children' + booking.rooms[i].id %>">Niños: </label>
+                                            <input id="<%= 'children' + booking.rooms[i].id %>" name="<%= 'children' + booking.rooms[i].id %>" type="number" min="0" max="<%= booking.rooms[i].occupancy %>" value="<%= locals.oldInfo && oldInfo['children' + booking.rooms[i].id] ? oldInfo['children' + booking.rooms[i].id] : booking.rooms[i].children %>">
+                                        </div>
                                     </div>
-                                </div>
-                            <% } %>
-                        <% } else { %>
-                            <% for(let i = 0; i< booking.rooms.length; i++){ %>     
-                                <div class="nc-booking-room">
+                                <% } %>
+                            <% } else { %>
+                                <% for(let i = 0; i< booking.rooms.length; i++){ %>     
                                     <h3><%= (i+1) + ' - ' + booking.rooms[i].description %></h3>
                                     <select name="<%= 'habitacion_' + booking.rooms[i].id %>" class="nc-booking-room-selector">
                                         <option class="nc-booking-room-option" value="" selected>S/A</option>
@@ -85,9 +93,9 @@
                                         <label>Adultos: <%= booking.rooms[i].adults %></label>
                                         <label>Niños: <%= booking.rooms[i].children %></label>
                                     </div>
-                                </div>                    
+                                <% } %>
                             <% } %>
-                        <% } %>
+                        </div>
                         <div class="nc-button-block admin-booking-confirmation-button">
                             <input class="btn btn-gradient nc-btn-extra" type="submit" value="CONFIRMAR RESERVA">
                         </div>

@@ -17,6 +17,8 @@
                                 <label>(<%= booking.states.state %>)</label>
                                 <% if(booking.states.id == 3){ %>
                                     <a href="/admin/verReserva/<%= booking.id %>" class="btn btn-gradient" type="submit">MODIFICAR</a>
+                                <% } else if (booking.states.id == 4){ %>
+                                    <a href="/search/roomSelection?check_in=<%= booking.check_in %>&check_out=<%= booking.check_out %>&people=<%= booking.occupancy %>&rooms=<%= booking.room_count %>" class="btn btn-gradient" type="submit">REACTIVAR</a>
                                 <% } else { %>
                                     <a href="/admin/verReserva/<%= booking.id %>" class="btn btn-gradient" type="submit">CONFIRMAR</a>
                                 <% } %>

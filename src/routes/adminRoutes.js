@@ -160,6 +160,41 @@ const roomSelectionValidation = [
     }),
 ]
 
+const bookingEditValidation = [
+    body('habitaciones').custom(async (value,{req})=>{
+        for (const key in req.body) {
+            if (key.startsWith('habitacion_')) {
+                habitacionElegida = req.body[key]
+
+                infoHabitacion = await db.Room.findByPk(habitacionElegida,{
+                    include:['room_types']
+                })
+
+                camposSeparados = key.split("_")
+                nroCampo = camposSeparados[1]
+
+                let cantMayores = req.body['adults' + nroCampo]
+                let cantMenores = req.body['children' + nroCampo]
+
+                if(cantMayores == undefined){cantMayores=0}
+                if(cantMenores == undefined){cantMenores=0}
+
+                let cantTotal = Number(cantMayores) + Number(cantMenores)
+
+                if(cantTotal == 0){
+                    throw new Error ('No Puede haber habitaciones Vacias') 
+                }
+
+                if(cantTotal > infoHabitacion.room_types.occupancy){
+                    throw new Error ('No Puede Superar la capacidad del Habitacion') 
+                }
+            }
+        }
+
+        return true
+    }),
+]
+
 const roomBookingValidation = [
     body('name').notEmpty().withMessage('Completar el nombre'),
     body('lastname').notEmpty().withMessage('Completar el apellido'),
@@ -209,6 +244,7 @@ router.get("/listaDelDia", guestMiddleware, dateGuestsValidation, adminControlle
 
 router.get("/confirmar", guestMiddleware, adminController.cargaConfirmarReservas)
 router.post("/confirmarReserva/:idBooking", guestMiddleware, roomSelectionValidation, adminController.confirmarReserva)
+router.put("/editarReserva/:idBooking", guestMiddleware, roomSelectionValidation, bookingEditValidation, adminController.editarReserva)
 router.delete("/eliminarReserva/:idBooking", guestMiddleware, adminController.eliminarReserva)
 
 router.get("/buscarReservas", guestMiddleware,  adminController.cargarBusquedaReservas)
