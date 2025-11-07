@@ -211,6 +211,21 @@ const roomBookingValidation = [
             throw new Error ('Indicar ocupantes de la habitación')     
         }
 
+        let habitacion = req.body.habitacion
+        console.log(habitacion)
+        if (habitacion){
+            let infoCuarto = await db.Room.findByPk(habitacion,{
+                    include:['room_types']
+                })
+
+                console.log(cantTotal)
+                console.log(infoCuarto.room_types.occupancy)
+
+            if(habitacion && cantTotal > infoCuarto.room_types.occupancy){
+                throw new Error ('No se puede superar la capacidad dela habitacion')     
+            }
+        }
+        
         return true
     }),
     body('habitacion').notEmpty().withMessage('Indicar la habitacion'),

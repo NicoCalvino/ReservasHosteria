@@ -16,7 +16,7 @@ const controller = {
         infoTemp.check_out_s = infoTemp.check_out
 
         if (!errors.isEmpty()){
-            let tiposHab = await func.habitacionesLibres(infoTemp.checkIn, infoTemp.checkOut)
+            let tiposHab = await func.habitacionesLibres(infoTemp.check_in, infoTemp.check_out)
             return res.render("search/roomSelection",{tiposHab, qHab:infoTemp.rooms, infoTemp, errors:errors.mapped(),oldInfo:req.body})
         }
         
@@ -75,7 +75,8 @@ const controller = {
 
                 let cantTotal = Number(cantMayores) + Number(cantMenores)
                 if(cantTotal > 0){
-                    totalAmount += Number(tipo.price) * cantNoches
+                    let montoHabitacion = Number(tipo.price) * cantNoches
+                    totalAmount += montoHabitacion
                     switch (cantNoches){
                         case 1:
                         case 2:
@@ -83,7 +84,7 @@ const controller = {
                             downAmount += Number(tipo.price)
                             break
                         default:
-                            downAmount += totalAmount * 0.3
+                            downAmount += montoHabitacion * 0.3
                     }
                     
                     roomDetails.push({
@@ -193,8 +194,7 @@ const controller = {
 
         let guestBooking = await db.Booking.findAll({
             where:{
-                booking_code:codigoReserva,
-                state_id:1
+                booking_code:codigoReserva
             },
             include: [{
                 model: db.Guest, 

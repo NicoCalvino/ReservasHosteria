@@ -203,7 +203,7 @@ const controller = {
 
             res.render("admin/adminBookingInfo",{booking})
         } else {
-            res.send("HOY UN ERROR")
+            res.render("error/errorAdmin",{error:"No se encontró la reserva"})
         }
     },
     confirmarReserva: async(req,res)=>{

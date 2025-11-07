@@ -57,7 +57,7 @@
                             <option class="nc-booking-room-option" value="" selected>S/A</option>
                             <% tipos.forEach(tipo =>{ %>
                                 <% tipo.habDisp.forEach(habitacion =>{ %>
-                                    <option class="nc-booking-room-option" value="<%= habitacion.id %>"  value="<%= locals.oldInfo && oldInfo.habitacion && oldInfo.habitacion == habitacion.id ? 'selected' : '' %>"><%= habitacion.number %></option>
+                                    <option class="nc-booking-room-option" value="<%= habitacion.id %>"  <%= locals.oldInfo && oldInfo.habitacion && oldInfo.habitacion == habitacion.id ? 'selected' : '' %>><%= habitacion.number %></option>
                                 <% }) %>
                             <% }) %>
                         </select>
