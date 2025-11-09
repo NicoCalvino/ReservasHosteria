@@ -448,6 +448,18 @@ footer .nc-admin-loggin-container a i{
     width: 60%;
 }
 
+.nc-block .nc-booking-search-reset{
+    font-size: 22px;
+    line-height: 30px;
+    width: 90%;
+    margin: auto;
+}
+
+.nc-block .nc-booking-search-reset i{
+    margin-right: 5px;
+}
+
+
 /* Estilos Confirmar Reservas */
 
 .nc-block .nc-no-results-bookings{
@@ -782,6 +794,9 @@ footer .nc-admin-loggin-container a i{
 .nc-block .nc-booking-info .admin-booking-delete-button{
     width: 50%;
     margin: 200px auto 10px auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 .nc-block .nc-booking-info .admin-booking-delete-button .nc-btn-extra{
@@ -980,6 +995,61 @@ footer .nc-admin-loggin-container a i{
         line-height: 24px;
     }
 
+    /* Info Bookings */
+    .nc-block .nc-booking-info{
+        width: 100%;
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        position: relative
+    }
+
+    .nc-block .nc-booking-info .nc-booking-info-header{
+        width: 51%;
+        margin: 10px 0px;
+    }
+
+    .nc-block .nc-booking-info .nc-booking-rooms-container{
+        width: 51%;
+        margin: 0px;
+    }
+
+    .nc-block .nc-booking-info .nc-booking-rooms-container .nc-booking-room h3{
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    .nc-block .nc-booking-info .nc-booking-rooms-container .nc-booking-room-selector{
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .nc-block .nc-booking-info .nc-booking-rooms-container .nc-booking-room .nc-booking-room-guests{
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .nc-block .nc-booking-info .nc-booking-payment-container{
+        position: absolute;
+        width: 48%;
+        right: 1px;
+    }
+
+    .nc-block .nc-booking-info .nc-booking-delete{
+        width: 100%;
+    }
+
+    .nc-block .nc-booking-info .admin-booking-delete-button{
+        width: 30%;
+        margin: 200px auto 10px auto;
+    }
+
+    .nc-block .nc-booking-info .admin-booking-delete-button .nc-btn-extra{
+        font-size: 14px;
+        line-height: 22px;
+    }
+
 }
 
 @media (min-width: 992px){
@@ -1020,8 +1090,61 @@ footer .nc-admin-loggin-container a i{
         line-height: 68px;
     }
 
+    .nc-block .room-booking-form{
+        width: 60%;
+    }
+
+    .nc-block .nc-booking-search-reset{
+        width: 60%;
+    }
+
     .nc-booking-list{
         width: 70%;
+    }
+
+    /* Info Bookings */
+    .nc-block .nc-booking-info{
+        width: 90%;
+    }
+
+    .nc-block .nc-booking-info .nc-booking-info-header .nc-booking-header-guest .nc-booking-guest-main{
+        font-size: 32px;
+        line-height: 40px;
+    }
+
+    .nc-block .nc-booking-info .nc-booking-info-header .nc-booking-header-guest .nc-booking-guest-secondary{
+        font-size: 18px;
+        line-height: 26px;
+    }
+
+    .nc-block .nc-booking-info .nc-booking-info-header .nc-booking-header-extra div label{
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    .nc-block .nc-booking-info .nc-booking-info-header .nc-booking-amounts .nc-booking-amounts-main{
+        font-size: 24px;
+        line-height: 32px;
+    }
+
+    .nc-block .nc-booking-info .nc-booking-info-header .nc-booking-amounts .nc-booking-amounts-secondary{
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    .nc-block .nc-booking-info .nc-booking-rooms-container .nc-booking-room h3{
+        font-size: 26px;
+        line-height: 34px;
+    }
+
+    .nc-block .nc-booking-info .nc-booking-rooms-container .nc-booking-room-selector{
+        font-size: 18px;
+        line-height: 26px;
+    }
+
+    .nc-block .nc-booking-info .nc-booking-rooms-container .nc-booking-room .nc-booking-room-guests{
+        font-size: 20px;
+        line-height: 28px;
     }
 
 }
@@ -1069,6 +1192,14 @@ footer .nc-admin-loggin-container a i{
         line-height: 68px;
     }
 
+    .nc-block .room-booking-form{
+        width: 50%;
+    }
+
+    .nc-block .nc-booking-search-reset{
+        width: 50%;
+    }
+
     .nc-booking-list{
         width: 100%;
         display: flex;
@@ -1080,5 +1211,33 @@ footer .nc-admin-loggin-container a i{
     .nc-block .nc-booking-confirm-booking{
         width: 45%;
     }
+
+    /* Info Bookings */
+
+    .nc-block .nc-booking-info .nc-booking-info-header .nc-booking-header-guest .nc-booking-guest-main{
+        font-size: 36px;
+        line-height: 44px;
+    }
+
+    .nc-block .nc-booking-info .nc-booking-info-header .nc-booking-header-guest .nc-booking-guest-secondary{
+        font-size: 22px;
+        line-height: 30px;
+    }
+
+    .nc-block .nc-booking-info .nc-booking-info-header .nc-booking-header-extra div label{
+        font-size: 24px;
+        line-height: 32px;
+    }
+
+    .nc-block .nc-booking-info .nc-booking-info-header .nc-booking-amounts .nc-booking-amounts-main{
+        font-size: 28px;
+        line-height: 36px;
+    }
+
+    .nc-block .nc-booking-info .nc-booking-info-header .nc-booking-amounts .nc-booking-amounts-secondary{
+        font-size: 24px;
+        line-height: 32px;
+    }
+
 
 }
