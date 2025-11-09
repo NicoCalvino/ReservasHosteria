@@ -22,7 +22,9 @@
 .main-heading .nc-back-container{
     width: 100%;
     margin-top: 10px;
-    font-size: 18px;
+    margin-bottom: 10px;
+    font-size: 22px;
+    line-height: 30px;
     display: flex;
     flex-wrap: wrap;
 }
@@ -30,7 +32,12 @@
 .main-heading .nc-back-container a{
     display: flex;
     flex-wrap: wrap;
-    width: 20%;
+    align-items: center;
+    width: 30%;
+    background-color: rgba(0,0,0,0.5);
+    padding: 5px 10px;
+    border-radius: 10px;
+    text-transform: uppercase;
 }
 
 .main-heading .nc-back-container a i{
@@ -443,12 +450,26 @@ footer .nc-admin-loggin-container a i{
 
 /* Estilos Confirmar Reservas */
 
+.nc-block .nc-no-results-bookings{
+    width: 90%;
+    margin: 25px auto;
+    margin-top: 25px;
+    margin-bottom: 700px;
+    font-size: 45px;
+    line-height: 53px;
+    text-align: center;
+}
+
 .nc-block .nc-booking-confirm-booking{
     width: 100%;
     margin: 10px auto;
     background-color: RGBA(0,0,0,0.7);
     padding: 10px;
     border-radius: 10px;
+}
+
+.nc-block .nc-invisible-booking{
+    background-color: unset;
 }
 
 .nc-block .nc-booking-confirm-booking .nc-booking-confirm-booking-header{
@@ -460,7 +481,7 @@ footer .nc-admin-loggin-container a i{
 }
 
 .nc-block .nc-booking-confirm-booking .nc-booking-confirm-booking-header .nc-booking-confirm-code{
-    width: 30%;
+    width: 40%;
     color: rgb(252, 176, 64);
     font-weight: bold;
     font-size: 28px;
@@ -468,9 +489,9 @@ footer .nc-admin-loggin-container a i{
 }
 
 .nc-block .nc-booking-confirm-booking .nc-booking-confirm-booking-header label{
-    width: 30%;
-    font-size: 16px;
-    line-height: 24px;
+    width: 20%;
+    font-size: 12px;
+    line-height: 22px;
     text-align: center;
 }
 
@@ -909,4 +930,155 @@ footer .nc-admin-loggin-container a i{
     margin-left: 10px;
     color: rgb(248, 245, 53);
     font-weight: 100;
+}
+
+@media (min-width: 768px){
+    /* General */
+    .nc-titulo-pagina{
+        margin-top: 100px;
+        margin-bottom: 10px;
+    }
+
+    .main-heading .nc-back-container{
+        font-size: 26px;
+        line-height: 34px;
+    }
+
+    .main-heading .nc-back-container a{
+        width: 20%;
+    }
+
+    .main-heading .nc-back-container a i{
+        margin-right: 10px;
+    }
+
+    /* Menu Principal */
+    .nc-admin-menu{
+        width: 60%;
+    }
+
+    .nc-admin-menu .nc-button-block{
+        font-size: 20px;
+        margin: 30px auto;
+    }
+
+    .nc-admin-menu .nc-button-block .nc-btn-extra{
+        font-size: 28px;
+        line-height: 36px;
+        padding: 0.5rem 4.5rem;
+    }
+
+    /* Busqueda Reservas */
+    .nc-block .nc-no-results-bookings{
+        font-size: 56px;
+        line-height: 64px;
+        margin-bottom: 900px;
+    }
+
+    .nc-block .nc-booking-confirm-booking .nc-booking-confirm-booking-header label{
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+}
+
+@media (min-width: 992px){
+    /* General */
+    .nc-titulo-pagina{
+        margin-bottom: 20px;
+        font-size: 5rem;
+    }
+
+    .main-heading .nc-back-container{
+        font-size: 30px;
+        line-height: 38px;
+    }
+
+    /* Menu Principal */
+    .nc-admin-menu{
+        width: 55%;
+    }
+
+    .nc-admin-menu .nc-button-block{
+        font-size: 24px;
+        margin: 30px auto;
+    }
+
+    .nc-admin-menu .nc-button-block .nc-btn-extra{
+        font-size: 32px;
+        line-height: 40px;
+        padding: 0.5rem 5.5rem;
+    }
+
+    .nc-admin-menu .nc-button-block i{
+        left:15px
+    }
+
+    /* Busqueda Reservas */
+    .nc-block .nc-no-results-bookings{
+        font-size: 60px;
+        line-height: 68px;
+    }
+
+    .nc-booking-list{
+        width: 70%;
+    }
+
+}
+
+@media (min-width: 1200px){
+    /* General */
+    .nc-titulo-pagina{
+        margin-bottom: 50px;
+        font-size: 6rem;
+    }
+
+    .main-heading .nc-back-container{
+        font-size: 34px;
+        line-height: 42px;
+    }
+
+    /* Menu Principal */
+    .nc-admin-menu{
+        width: 50%;
+    }
+
+    .nc-admin-menu .nc-button-block{
+        font-size: 28px;
+        margin: 30px auto;
+    }
+
+    .nc-admin-menu .nc-button-block .nc-btn-extra{
+        font-size: 36px;
+        line-height: 44px;
+        padding: 0.5rem 6.5rem;
+    }
+
+    .nc-admin-menu .nc-button-block i{
+        left:20px
+    }
+
+    /* Busqueda Reservas */
+    .nc-block .nc-no-results-bookings{
+        font-size: 70px;
+        line-height: 78px;
+    }
+
+    .nc-block .nc-no-results-bookings{
+        font-size: 60px;
+        line-height: 68px;
+    }
+
+    .nc-booking-list{
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 300px;
+        justify-content: flex-start;
+    }
+
+    .nc-block .nc-booking-confirm-booking{
+        width: 45%;
+    }
+
 }

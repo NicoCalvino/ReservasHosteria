@@ -59,7 +59,7 @@
                         <% if(tipo.cantidad > 0) { %>
                             <div class="nc-room-block">
                                 <div class="nc-room-quantity-block">
-                                    <input type="number" class="nc-room-q" id="<%= tipo.short_name %>" name="<%= tipo.short_name %>" min="0" max="<%= tipo.cantidad > qHab ? qHab : tipo.cantidad %>" <%=locals.oldInfo && oldInfo[tipo.short_name] ? "value=" + oldInfo[tipo.short_name] : '' %>>
+                                    <input type="number" class="nc-room-q <%= locals.errors && errors[tipo.short_name] ? 'nc-input-with-error' : '' %>" id="<%= tipo.short_name %>" name="<%= tipo.short_name %>" min="0" max="<%= tipo.cantidad > qHab ? qHab : tipo.cantidad %>" <%=locals.oldInfo && oldInfo[tipo.short_name] ? "value=" + oldInfo[tipo.short_name] : '' %>>
                                 </div>
                                 <div class="nc-room-info-block">
                                     <label for="<%= tipo.short_name %>" class="nc-room-type"><%= tipo.description %></label>

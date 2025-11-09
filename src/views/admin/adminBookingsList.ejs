@@ -6,9 +6,9 @@
             <div class="nc-back-container">
                 <a href="/admin/menu"><i class="fas fa-bars"></i>Menu</a>
             </div>
-            <div class="nc-block">
+            <div class="nc-block nc-booking-list">
                 <% if(bookingsLista.length == 0){ %>
-                    <h2>NO SE ENCONTRARON RESERVAS</h2>
+                    <h2 class="nc-no-results-bookings">NO SE ENCONTRARON RESERVAS</h2>
                 <% } else { %>
                     <% bookingsLista.forEach(booking =>{ %>
                         <div class="nc-booking-confirm-booking">
@@ -51,6 +51,7 @@
                             </div>
                         </div>
                     <% }) %>
+                    <div class="nc-booking-confirm-booking nc-invisible-booking"></div>
                 <% } %>
             </div>
         </div>

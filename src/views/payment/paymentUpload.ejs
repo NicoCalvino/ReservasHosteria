@@ -9,7 +9,7 @@
                 </div>
             <% } %>
             <div class="nc-block">
-                <form action="/payment/upload" class="form" method="POST" enctype="multipart/form-data">
+                <form action="/payment/upload" class="form nc-payment-form" method="POST" enctype="multipart/form-data">
                     <div class="nc-file-info-div">
                         <label class="nc-file-info-label" for="booking_code">Código de Reserva</label>
                         <input class="nc-file-input" type="text" id="booking_code" name="booking_code" <%=locals.oldInfo && oldInfo.booking_code ? "value=" + oldInfo.booking_code : '' %>>

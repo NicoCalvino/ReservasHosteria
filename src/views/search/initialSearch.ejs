@@ -7,7 +7,7 @@
                 <form action="/search/roomSelection" class="form" method="GET">
                     <div class="input-group">
                         <label for="check-in" class="input-label">Entrada</label>
-                        <input type="date" class="input" id="check-in" name="check_in" <%=locals.oldInfo && oldInfo.check_in ? "value=" + oldInfo.check_in : '' %>>
+                        <input type="date" class="input <%= locals.errors && errors.check_in ? 'nc-input-with-error' : '' %>" id="check-in" name="check_in" <%=locals.oldInfo && oldInfo.check_in ? "value=" + oldInfo.check_in : '' %>>
                         <% if(locals.errors && errors.check_in){ %>
                             <div class="nc-error-block">
                                 <label class="nc-error-message"><%= errors.check_in.msg %></label>   
@@ -16,7 +16,7 @@
                     </div>
                     <div class="input-group">
                         <label for="check-out" class="input-label">Salida</label>
-                        <input type="date" class="input" id="check-out"  name="check_out" <%=locals.oldInfo && oldInfo.check_out ? "value=" + oldInfo.check_out : '' %>>
+                        <input type="date" class="input <%= locals.errors && errors.check_out ? 'nc-input-with-error' : '' %>" id="check-out"  name="check_out" <%=locals.oldInfo && oldInfo.check_out ? "value=" + oldInfo.check_out : '' %>>
                         <% if(locals.errors && errors.check_out){ %>
                             <div class="nc-error-block">
                                 <label class="nc-error-message"><%= errors.check_out.msg %></label>   
@@ -25,7 +25,7 @@
                     </div>
                     <div class="input-group">
                         <label for="people" class="input-label">Huespedes</label>
-                        <input type="number" class="input" id="people" name="people" min="0" <%=locals.oldInfo && oldInfo.people ? "value=" + oldInfo.people : '' %>>
+                        <input type="number" class="input <%= locals.errors && errors.people ? 'nc-input-with-error' : '' %>" id="people" name="people" min="0" <%=locals.oldInfo && oldInfo.people ? "value=" + oldInfo.people : '' %>>
                         <% if(locals.errors && errors.people){ %>
                             <div class="nc-error-block">
                                 <label class="nc-error-message"><%= errors.people.msg %></label>   
@@ -33,8 +33,8 @@
                         <% } %>
                     </div>
                     <div class="input-group">
-                        <label for="check-out" class="input-label">Habitaciones</label>
-                        <input type="number" class="input" id="rooms" name="rooms" min="0" max="14" <%=locals.oldInfo && oldInfo.rooms ? "value=" + oldInfo.rooms : '' %>>
+                        <label for="rooms" class="input-label">Habitaciones</label>
+                        <input type="number" class="input <%= locals.errors && errors.rooms ? 'nc-input-with-error' : '' %>" id="rooms" name="rooms" min="0" max="14" <%=locals.oldInfo && oldInfo.rooms ? "value=" + oldInfo.rooms : '' %>>
                         <% if(locals.errors && errors.rooms){ %>
                             <div class="nc-error-block">
                                 <label class="nc-error-message"><%= errors.rooms.msg %></label>   
