@@ -76,6 +76,10 @@ module.exports=function(sequelize, DataTypes){
             as:'rooms',
             foreignKey:'booking_id'
         }),
+        Booking.hasMany(models.Comment,{
+            as:'comments',
+            foreignKey:'booking_id'
+        }),
         Booking.belongsToMany(models.Room_Type,{
             as:'types_booked',
             through:'booking_rooms',

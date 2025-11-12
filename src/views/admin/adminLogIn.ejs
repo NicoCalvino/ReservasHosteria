@@ -4,7 +4,7 @@
         <div class="main-heading">
             <h1 class="title-res nc-titulo-pagina">ADMINISTRACION</h1>
             <div class="nc-block">
-                <form action="/admin/login" class="form" method="POST">
+                <form action="/admin/login" class="form nc-login-form" method="POST">
                     <div class="nc-file-info-div">
                         <label class="nc-file-info-label" for="user_name">Usuario</label>
                         <input class="nc-file-input" type="text" id="user_name" name="user_name" <%=locals.oldInfo && oldInfo.user_name ? "value=" + oldInfo.user_name : '' %>>

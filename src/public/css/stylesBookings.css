@@ -222,7 +222,7 @@
 }
 
 .nc-confirmation-block{
-    margin: 10px auto
+    margin: 10px auto 600px auto
 }
 
 .nc-confirmation-block .nc-booking-code-block{
@@ -372,6 +372,10 @@
     text-decoration: underline;
 }
 
+.nc-login-form{
+    margin-bottom: 200px;
+}
+
 .nc-remember-container{
     width: 50%;
     margin: auto;
@@ -469,12 +473,20 @@ footer .nc-admin-loggin-container a i{
         margin: auto;
     }
 
+    .nc-comunication-block{
+        margin-bottom: 250px;
+    }
+
     /* Estado Reserva */
     .nc-confirmation-block{
         width: 90%;
         background-color: rgba(0, 0, 0, 0.5);
         padding: 20px;
         border-radius: 20px;
+    }
+
+    .nc-login-form{
+       margin-bottom: 300px;
     }
 
 }
@@ -560,6 +572,10 @@ footer .nc-admin-loggin-container a i{
         width: 40%;
     }
 
+    .nc-login-form{
+       margin-bottom: 400px;
+    }
+
 }
 
 @media (min-width: 1200px){
@@ -604,6 +620,7 @@ footer .nc-admin-loggin-container a i{
         background-color: rgba(0, 0, 0, 0.5);
         padding: 20px;
         border-radius: 20px;
+        margin-top: 0px;
     }
 
     .nc-form .nc-guest-block{

@@ -231,6 +231,11 @@ const roomBookingValidation = [
     body('habitacion').notEmpty().withMessage('Indicar la habitacion'),
 ]
 
+const bookingStateValidation = [
+    body('estado').notEmpty().withMessage('Indicar nuevo Estado'),
+    body('comentarios').notEmpty().withMessage('Indicar la razón del cambio de estado'),
+]
+
 router.get("/login", loggedInMiddleware, userCreationMiddleware, adminController.cargaLogIn)
 router.post("/login", loggedInMiddleware, logInDataValidation, adminController.procesoLogIn)
 
@@ -260,6 +265,7 @@ router.get("/listaDelDia", guestMiddleware, dateGuestsValidation, adminControlle
 router.get("/confirmar", guestMiddleware, adminController.cargaConfirmarReservas)
 router.post("/confirmarReserva/:idBooking", guestMiddleware, roomSelectionValidation, adminController.confirmarReserva)
 router.put("/editarReserva/:idBooking", guestMiddleware, roomSelectionValidation, bookingEditValidation, adminController.editarReserva)
+router.put("/forzarEstado/:idBooking", guestMiddleware, bookingStateValidation,  adminController.cambiarEstado)
 router.delete("/eliminarReserva/:idBooking", guestMiddleware, adminController.eliminarReserva)
 
 router.get("/buscarReservas", guestMiddleware,  adminController.cargarBusquedaReservas)

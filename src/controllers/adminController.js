@@ -178,7 +178,11 @@ const controller = {
     infoReserva: async(req,res)=>{
         let idBooking = req.params.idBooking
         let bookingInstance  = await db.Booking.findByPk(idBooking,{
-            include:['guests','rooms']
+            include:['guests','rooms','states',{
+                model:db.Comment,
+                as:'comments',
+                include:['states']
+            }]
         })
 
         if(bookingInstance){
@@ -201,18 +205,28 @@ const controller = {
                 }
             }
 
-            res.render("admin/adminBookingInfo",{booking})
+            let estados = await db.State.findAll({
+                where:{
+                    state:{[Op.ne]:"Deleted"}
+                }
+            })
+
+            res.render("admin/adminBookingInfo",{booking, estados})
         } else {
             res.render("error/errorAdmin",{error:"No se encontró la reserva"})
         }
     },
-    confirmarReserva: async(req,res)=>{
+    cambiarEstado: async(req,res)=>{
         let idBooking = req.params.idBooking
         let errors = validationResult(req)
-
+        
         if (!errors.isEmpty()){
             let bookingInstance  = await db.Booking.findByPk(idBooking,{
-                include:['guests','rooms']
+                include:['guests','rooms','states',{
+                    model:db.Comment,
+                    as:'comments',
+                    include:['states']
+                }]
             })
 
             if(bookingInstance){
@@ -231,7 +245,82 @@ const controller = {
                     room.occupancy = infoCuarto.occupancy
                 }
 
-                return res.render("admin/adminBookingInfo",{booking,errors:errors.mapped(),oldInfo:req.body})
+                let estados = await db.State.findAll({
+                    where:{
+                        state:{[Op.ne]:"Deleted"}
+                    }
+                })
+
+                return res.render("admin/adminBookingInfo",{booking, estados, errors:errors.mapped(),oldInfo:req.body})
+            } else {
+                res.send("HOY UN ERROR")
+            }
+        }
+
+        let bookingInstance  = await db.Booking.findByPk(idBooking)
+        let idEstado = req.body.estado
+        let comentarios = req.body.comentarios
+
+        if(bookingInstance){
+            await db.Booking.update({
+                state_id:idEstado
+            },{
+                where:{
+                    id:idBooking
+                }
+            })
+
+            let fechaComentario = new Date
+            await db.Comment.create({
+                comment:comentarios,
+                date:fechaComentario,
+                state_id:idEstado,
+                booking_id:idBooking
+            })
+
+            res.redirect("/admin/verReserva/" + idBooking)
+        } else {
+            res.send("HOY UN ERROR")
+        }
+
+    },
+    confirmarReserva: async(req,res)=>{
+        let idBooking = req.params.idBooking
+        let errors = validationResult(req)
+
+        if (!errors.isEmpty()){
+            let bookingInstance  = await db.Booking.findByPk(idBooking,{
+                include:['guests','rooms','states',{
+                    model:db.Comment,
+                    as:'comments',
+                    include:['states']
+                }]
+            })
+
+            if(bookingInstance){
+                let booking = bookingInstance.toJSON()
+
+                booking.totalFormateado = func.conversorNumero(booking.amount)
+                booking.senaFormateado = func.conversorNumero(booking.downpayment)
+                booking.checkInFormateado = func.fechaATextoMesCortado(booking.check_in)
+                booking.checkOutFormateado = func.fechaATextoMesCortado(booking.check_out)
+                booking.formatoArchivo = booking.payment.split(".")[1]
+                
+                for(const room of booking.rooms){
+                    infoCuarto = await db.Room_Type.findByPk(room.room_type_id)
+                    room.opciones = await func.disponiblesPorTipo(booking.check_in, booking.check_out, infoCuarto)
+                    room.description = infoCuarto.room_name
+                    room.occupancy = infoCuarto.occupancy
+                }
+
+                let estados = await db.State.findAll({
+                    where:{
+                        state:{[Op.ne]:"Deleted"}
+                    }
+                })
+
+
+                return res.render("admin/adminBookingInfo",{booking, estados, errors:errors.mapped(),oldInfo:req.body})
             } else {
                 res.send("HOY UN ERROR")
             }
@@ -272,7 +361,11 @@ const controller = {
 
         if (!errors.isEmpty()){
             let bookingInstance  = await db.Booking.findByPk(idBooking,{
-                include:['guests','rooms']
+                include:['guests','rooms','states',{
+                    model:db.Comment,
+                    as:'comments',
+                    include:['states']
+                }]
             })
 
             if(bookingInstance){
@@ -295,7 +388,13 @@ const controller = {
                     }
                 }
 
-                return res.render("admin/adminBookingInfo",{booking,errors:errors.mapped(),oldInfo:req.body})
+                let estados = await db.State.findAll({
+                    where:{
+                        state:{[Op.ne]:"Deleted"}
+                    }
+                })
+
+                return res.render("admin/adminBookingInfo",{booking, estados, errors:errors.mapped(),oldInfo:req.body})
             } else {
                 res.send("HOY UN ERROR")
             }
@@ -309,11 +408,11 @@ const controller = {
             let booking = bookingInstance.toJSON()
             
             let totalOccupancy = 0
-            for(const room of booking.rooms){    
-                let habitacionAsignada = req.body['habitacion_' + room.id]
+            for(const bookingRoom of booking.rooms){    
+                let habitacionAsignada = req.body['habitacion_' + bookingRoom.id]
                 
-                let cantMayores = req.body['adults' + nroCampo]
-                let cantMenores = req.body['children' + nroCampo]
+                let cantMayores = req.body['adults' + bookingRoom.id]
+                let cantMenores = req.body['children' + bookingRoom.id]
 
                 if(cantMayores == undefined){cantMayores=0}
                 if(cantMenores == undefined){cantMenores=0}
@@ -327,7 +426,7 @@ const controller = {
                     children:cantMenores
                 },{
                     where:{
-                        id:room.id
+                        id:bookingRoom.id
                     }
                 })
             }

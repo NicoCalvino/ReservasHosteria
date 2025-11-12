@@ -21,12 +21,12 @@
 
 .main-heading .nc-back-container{
     width: 100%;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 80px;
     font-size: 22px;
     line-height: 30px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: flex-end;
 }
 
 .main-heading .nc-back-container a{
@@ -71,22 +71,27 @@
 }
 
 .nc-titulo-pagina{
-    margin-top: 80px;
+    margin-top: 20px;
 }
 
 .nc-pending-booking-msg{
-    width: 90%;
+    width: 80%;
     margin: 10px auto;
-    color: rgb(255, 255, 255);
     text-transform: uppercase;
-    background-color: rgba(0,0,0,0.5);
-    padding: 5px;
-    border-radius: 10px;
     text-align: center;
     font-size: 20px;
     line-height: 28px;
     color: rgb(252, 176, 64);
     font-weight: bold;
+    display: flex;
+}
+
+.nc-pending-booking-msg a{
+    width: 100%;
+    background-color: rgba(0,0,0,0.6);
+    padding: 5px;
+    border-radius: 10px;
+    margin: auto;
 }
 
 footer .nc-admin-loggin-container{
@@ -263,7 +268,7 @@ footer .nc-admin-loggin-container a i{
 
 .nc-block .available-form{
     width: 100%;
-    margin:20px auto;
+    margin:20px auto 300px auto;
     background-color: RGBA(0,0,0,0.5);
     padding: 10px 15px;
     border-radius: 15px;
@@ -687,6 +692,7 @@ footer .nc-admin-loggin-container a i{
     border-radius: 10px;
     display: flex;
     flex-wrap: wrap;
+    max-width: 40rem;
 }
 
 .nc-block .nc-booking-info .imagen-comprobante{
@@ -817,11 +823,95 @@ footer .nc-admin-loggin-container a i{
     color: rgb(248, 245, 53);
 }
 
+.nc-block .nc-booking-comments h2{
+    margin-bottom: 20px;
+}
+
+.nc-block .nc-booking-comments article{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.nc-block .nc-booking-comments article section{
+    padding: 0px;
+}
+
+.nc-block .nc-booking-comments article .nc-booking-comments-date{
+    margin-right: 5px;
+}
+
+.nc-block .nc-booking-comments article .nc-booking-comments-header{
+    font-weight: bold;
+}
+
+.nc-block .nc-booking-comments article .nc-booking-comments-text{
+    width: 100%;
+    margin-top: 10px;
+}
+
+.nc-block .nc-booking-info .nc-cambiar-estado-form{
+    margin-top: 50px;
+}
+
+.nc-block .nc-booking-info .nc-cambiar-estado-form .nc-error-block{
+    text-align: left;
+}
+
+.nc-block .nc-booking-info .nc-cambiar-estado{
+    margin-top: 10px;
+    width: 100%;
+}
+
+.nc-block .nc-booking-info .nc-cambiar-estado .nc-cambiar-estado-select{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.nc-block .nc-booking-info .nc-cambiar-estado .nc-cambiar-estado-label{
+    text-transform: uppercase;
+    font-size: 22px;
+    line-height: 30px;
+    margin-right: 10px;
+}
+
+.nc-block .nc-booking-info .nc-cambiar-estado .nc-cambiar-estado-selector{
+    text-transform: uppercase;
+    font-size: 18px;
+    line-height: 26px;
+    width: 40%;
+}
+
+.nc-block .nc-booking-info .nc-cambiar-estado .nc-cambiar-estado-coments-block{
+    width: 100%
+}
+
+.nc-block .nc-booking-info .nc-cambiar-estado .nc-cambiar-estado-coments-block .nc-cambiar-estado-label{
+    width: 100%;
+    display: block;
+}
+
+.nc-block .nc-booking-info .nc-cambiar-estado .nc-cambiar-estado-coments-block .nc-cambiar-estado-comentarios{
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    border-radius: 10px;
+    display: block;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+
 .nc-block .room-booking-form .nc-booking-search{
     margin:auto;
 }
 
 /* Estilos Tablas Disponibilidad */
+
+.nc-block{
+    overflow-x:auto;
+}
 
 .nc-block .nc-ocup-container{
     width: 100%;
@@ -831,6 +921,7 @@ footer .nc-admin-loggin-container a i{
     border-radius: 10px;
     display: flex;
     flex-wrap: wrap;
+    overflow-x:auto;
 }
 
 .nc-block .nc-ocup-container table, th, td {
@@ -950,11 +1041,11 @@ footer .nc-admin-loggin-container a i{
 @media (min-width: 768px){
     /* General */
     .nc-titulo-pagina{
-        margin-top: 100px;
         margin-bottom: 10px;
     }
 
     .main-heading .nc-back-container{
+        margin-top: 100px;
         font-size: 26px;
         line-height: 34px;
     }
@@ -983,6 +1074,12 @@ footer .nc-admin-loggin-container a i{
         padding: 0.5rem 4.5rem;
     }
 
+    .nc-pending-booking-msg{
+        width: 70%;
+    }
+
+    
+
     /* Busqueda Reservas */
     .nc-block .nc-no-results-bookings{
         font-size: 56px;
@@ -1006,12 +1103,12 @@ footer .nc-admin-loggin-container a i{
     }
 
     .nc-block .nc-booking-info .nc-booking-info-header{
-        width: 51%;
+        width: 60%;
         margin: 10px 0px;
     }
 
     .nc-block .nc-booking-info .nc-booking-rooms-container{
-        width: 51%;
+        width: 60%;
         margin: 0px;
     }
 
@@ -1032,7 +1129,8 @@ footer .nc-admin-loggin-container a i{
 
     .nc-block .nc-booking-info .nc-booking-payment-container{
         position: absolute;
-        width: 48%;
+        width: 45%;
+        max-width: 29rem;
         right: 1px;
     }
 
@@ -1048,6 +1146,65 @@ footer .nc-admin-loggin-container a i{
     .nc-block .nc-booking-info .admin-booking-delete-button .nc-btn-extra{
         font-size: 14px;
         line-height: 22px;
+    }
+
+    .nc-block .nc-booking-comments{
+        margin-top: 20px !important;
+        width: 100% !important;
+        
+    }
+
+    .nc-block .nc-booking-info .nc-cambiar-estado-form{
+        margin: 50px auto;
+        padding: 20px;
+    }
+
+    /* Busqueda por fechas*/
+    .nc-block .available-form{
+        margin-bottom: 300px;
+    }
+
+    /* Estilos Reservar Habitacion*/
+    .nc-block .nc-reservar-form{
+        width: 50%;
+        margin-bottom: 300px;
+    }
+
+    /* Reporte Disponibilidad */
+    .nc-block .room-avlb-info{
+        width: 70%;
+    }
+
+    .nc-block .room-booking-form{
+        width: 50%;
+    }
+
+    /* Estilos Huespedes del Dia */
+    .nc-block .nc-guests-list{
+        width: 60%;
+    }
+
+    /* Estilos Editar habitaciones */
+    .nc-block .room-edit-form{
+        width: 70%;
+    }
+
+    .nc-block .room-edit-form .adm-roomtype-container .adm-roomtype-info input{
+        font-size: 18px;
+        line-height: 26px;
+    }
+
+    .nc-block .room-edit-form .adm-roomtype-container .adm-roomtype-rooms .adm-room-info{
+        width: 45%;
+    }
+
+    .nc-block .room-edit-form .adm-roomtype-container .adm-roomtype-rooms .adm-room-info select{
+        width:65%;
+    }
+
+    .admin-room-edit-button{
+       width: 50%;
+       margin: 30px auto;
     }
 
 }
@@ -1084,6 +1241,18 @@ footer .nc-admin-loggin-container a i{
         left:15px
     }
 
+    .nc-pending-booking-msg{
+        width: 100%;
+        font-size: 22px;
+        line-height: 30px;
+        color: rgb(252, 176, 64);
+        font-weight: bold;
+    }
+
+    .nc-pending-booking-msg a{
+        width: 60%;
+    }
+
     /* Busqueda Reservas */
     .nc-block .nc-no-results-bookings{
         font-size: 60px;
@@ -1103,6 +1272,13 @@ footer .nc-admin-loggin-container a i{
     }
 
     /* Info Bookings */
+    .nc-block .nc-booking-info .nc-booking-payment-container{
+        max-width: 32rem;
+    }
+
+    .nc-block  .nc-booking-comments{
+        width: 100% !important
+    }
     .nc-block .nc-booking-info{
         width: 90%;
     }
@@ -1147,33 +1323,139 @@ footer .nc-admin-loggin-container a i{
         line-height: 28px;
     }
 
+    /* Busqueda por fechas*/
+
+    .nc-block .available-form{
+        margin-bottom: 500px;
+    }
+
+    .nc-block .available-form .nc-available-info label{
+        font-size: 34px;
+        line-height: 42px;
+        margin-right: 5px;
+    }
+
+    .nc-block .available-form .nc-available-info input{
+        font-size: 24px;
+        line-height: 32px;
+    }
+
+    /* Estilos Reservar Habitacion*/
+    .nc-block .nc-reservar-form{
+        width: 40%;
+        margin-bottom: 500px;
+    }
+
+    /* Reporte Disponibilidad */
+    .nc-block .room-avlb-info{
+        width: 80%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-bottom: 50px;
+    }
+
+    .nc-block .room-avlb-info .adm-roomtype-container{
+        width: 45%;
+    }
+
+    .nc-block .room-avlb-info .adm-roomtype-container .adm-roomtype-info .adm-roomtype-info-price{
+        font-size: 26px;
+        line-height: 34px;
+    }
+
+    .nc-block .room-avlb-info .adm-roomtype-container .adm-roomtype-info .adm-roomtype-info-quantity{
+        font-size: 30px;
+        line-height: 38px;
+    }
+
+    .nc-block .room-avlb-info .adm-roomtype-container .adm-roomtype-rooms{
+        width: 100%;
+    }
+
+    .nc-block .room-avlb-info .adm-roomtype-container .adm-roomtype-rooms .adm-room-number{
+        width: 20%;
+    }
+
+    .nc-block .room-avlb-info .adm-roomtype-container .adm-roomtype-rooms .adm-room-number label{
+        width:100%;
+        font-size: 24px;
+        line-height: 32px;
+    }
+
+    .nc-block .room-booking-form{
+        width: 50%;
+        margin-bottom: 300px;
+    }
+
+    .nc-block .room-booking-form .adm-booking-input label{
+        font-size: 22px;
+        line-height: 30px;
+    }
+
+    .nc-block .room-booking-form .adm-booking-input input{
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    /* Estilos Huespedes del Dia */
+    .nc-block .nc-guests-list{
+        width: 40%;
+    }
+    
+    /* Estilos Editar habitaciones */
+    .nc-block .room-edit-form .adm-roomtype-container .adm-roomtype-info input{
+        font-size: 22px;
+        line-height: 30px;
+    }
+
+    .nc-block .room-edit-form .adm-roomtype-container .adm-roomtype-rooms .adm-room-info{
+        width: 45%;
+    }
+
+    .nc-block .room-edit-form .adm-roomtype-container .adm-roomtype-rooms .adm-room-info label{
+        font-size: 24px;
+        line-height: 32px;
+        margin-right: 10px;
+    }
+
+    .nc-block .room-edit-form .adm-roomtype-container .adm-roomtype-rooms .adm-room-info select{
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    .admin-room-edit-button .nc-btn-extra{
+       font-size: 30px;
+       line-height: 38px;
+    }
 }
 
 @media (min-width: 1200px){
     /* General */
     .nc-titulo-pagina{
-        margin-bottom: 50px;
+        margin-bottom: 30px;
         font-size: 6rem;
     }
 
     .main-heading .nc-back-container{
-        font-size: 34px;
-        line-height: 42px;
+        font-size: 30px;
+        line-height: 38px;
     }
 
     /* Menu Principal */
     .nc-admin-menu{
-        width: 50%;
+        width: 40%;
+        margin-bottom: 300px;
     }
 
     .nc-admin-menu .nc-button-block{
-        font-size: 28px;
+        font-size: 24px;
         margin: 30px auto;
     }
 
     .nc-admin-menu .nc-button-block .nc-btn-extra{
-        font-size: 36px;
-        line-height: 44px;
+        font-size: 28px;
+        line-height: 36px;
         padding: 0.5rem 6.5rem;
     }
 
@@ -1213,6 +1495,9 @@ footer .nc-admin-loggin-container a i{
     }
 
     /* Info Bookings */
+    .nc-block .nc-booking-info .nc-booking-payment-container{
+        max-width: 33.5rem;
+    }
 
     .nc-block .nc-booking-info .nc-booking-info-header .nc-booking-header-guest .nc-booking-guest-main{
         font-size: 36px;
@@ -1239,5 +1524,90 @@ footer .nc-admin-loggin-container a i{
         line-height: 32px;
     }
 
+    /* Busqueda por fechas*/
+    .nc-block .available-form{
+        margin-bottom: 700px;
+    }
 
+    /* Estilos Reservar Habitacion*/
+    .nc-block .nc-reservar-form{
+        padding: 20px 25px;
+        margin-bottom: 700px;
+    }
+
+    .nc-block .nc-reservar-form .nc-reservar-input label{
+        font-size: 30px;
+        line-height: 38px;
+    }
+
+    .nc-block .nc-reservar-form .nc-reservar-input input{
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    .nc-block .nc-reservar-form .nc-reservar-input select{
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    /* Reporte Ocupacion */
+
+    .nc-block .nc-ocup-container{
+        margin-bottom: 500px
+    }
+    .nc-reporte-ocupacion{
+        max-width: 160rem;
+    }
+
+    /* Estilos Huespedes del Dia */
+    .nc-block .nc-guests-list{
+        width: 80%;
+        justify-content: space-between;
+        margin-bottom: 700px;
+    }
+
+    .nc-block .nc-guests-list .nc-guests-list-guest{
+        width: 45%;
+        font-size: 28px;
+        line-height: 46px;
+    }
+
+    .nc-block .nc-guests-list .nc-guests-list-guest .nc-guests-list-room-num{
+        text-decoration: underline;
+        font-style:oblique;
+        margin-right: 10px;
+    }
+
+    /* Estilos Editar habitaciones */
+    .nc-block .room-edit-form{
+        width: 100%;
+    }
+
+    .nc-block .room-edit-form .adm-roomtype-container .adm-roomtype-info input{
+        width: 20%;
+        font-size: 22px;
+        line-height: 30px;
+    }
+
+    .nc-block .room-edit-form .adm-roomtype-container .adm-roomtype-rooms .adm-room-info{
+        width: 24%;
+        margin-bottom: 20px;
+    }
+
+    .nc-block .room-edit-form .adm-roomtype-container .adm-roomtype-rooms .adm-room-info label{
+        font-size: 30px;
+        line-height: 38px;
+        margin-right: 15px;
+    }
+
+    .nc-block .room-edit-form .adm-roomtype-container .adm-roomtype-rooms .adm-room-info select{
+        width: 65%;
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    .admin-room-edit-button .nc-btn-extra{
+       font-size: 30px;
+       line-height: 38px;
+    }
 }

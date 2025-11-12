@@ -1,11 +1,12 @@
 <%- include('../partials/header',{hojaDeEstilo:"/css/stylesAdmin.css"}) %>
 <div class="hero nc-timbre-tris" id="sector-admin">
-    <div class="container">
+    <div class="container nc-info-booking">
         <div class="main-heading">
-            <h1 class="title-res nc-titulo-pagina"><%= booking.booking_code %></h1>
             <div class="nc-back-container">
                 <a href="/admin/menu"><i class="fas fa-bars"></i>Menu</a>
             </div>
+            <h1 class="title-res nc-titulo-pagina"><%= booking.booking_code %></h1>
+            <h2>(<%= booking.states.state %>)</h2>
             <div class="nc-block">
                 <div class="nc-booking-info">
                     <div class="nc-booking-info-header">
@@ -30,7 +31,8 @@
                         </div>
                     </div>
                     <div class="nc-booking-payment-container">
-                        <% if(booking.formatoArchivo == "pdf"){ %>
+                        <a href="/pagos/<%= booking.payment %>" target="_blank">
+                        <% if(booking.formatoArchivo == "pdf"){ %>                            
                             <div class="imagen-comprobante">
                                 <iframe src="/pagos/<%= booking.payment %>" alt="comprobante" class="comprobante-imagen version-pdf"></iframe>
                             </div>
@@ -39,6 +41,7 @@
                                 <img src="/pagos/<%= booking.payment %>" alt="comprobante" class="comprobante-imagen">
                             </div>     
                         <% } %>
+                        </a>
                     </div>
                     <% if(booking.state_id == 3){ %>
                         <form action="/admin/editarReserva/<%= booking.id %>?_method=PUT" method="POST" class="nc-booking-rooms-container">
@@ -98,6 +101,49 @@
                         </div>
                         <div class="nc-button-block admin-booking-confirmation-button">
                             <input class="btn btn-gradient nc-btn-extra" type="submit" value="CONFIRMAR RESERVA">
+                        </div>
+                    </form>
+                    <div class="nc-booking-rooms-container nc-booking-comments">
+                        <h2>Comentarios</h2>
+                        <% booking.comments.forEach(comment =>{ %>
+                            <article class="nc-booking-comments-container">
+                                <section class="nc-booking-comments-header">
+                                    <label class="nc-booking-comments-date"><%= comment.date %></label>
+                                    <label class="nc-booking-comments-state"><%= comment.states.state %></label>
+                                </section>
+                                <section class="nc-booking-comments-text"><%= comment.comment %></section>
+                            </article>
+                        <% }) %>
+                    </div>
+                    <form action="/admin/forzarEstado/<%= booking.id %>?_method=PUT" method="POST"  class="nc-booking-rooms-container nc-cambiar-estado-form">
+                        <h2>Actualizar Estado</h2>
+                        <div class="nc-cambiar-estado">
+                            <div class="nc-cambiar-estado-select">
+                                <label class="nc-cambiar-estado-label" for="estado" class>Estado</label>
+                                <select name="estado" id="estado" class="nc-cambiar-estado-selector">
+                                    <option class="nc-booking-room-option" value="" selected></option>
+                                    <% estados.forEach(estado =>{ %>
+                                        <option class="nc-booking-room-option" value="<%= estado.id %>" <%= locals.oldInfo && oldInfo.estado && oldInfo.estado == estado.id ? 'selected' : '' %>><%= estado.state %></option>
+                                    <% }) %>   
+                                </select>
+                            </div>
+                            <% if(locals.errors && errors.estado){ %>
+                                <div class="nc-error-block">
+                                    <label class="nc-error-message"><%= errors.estado.msg %></label>   
+                                </div>
+                            <% } %>
+                            <div class="nc-cambiar-estado-coments-block">
+                                <label class="nc-cambiar-estado-label" for="comentarios" class>Comentarios</label>
+                                <textarea maxlength="300" name="comentarios" class="nc-cambiar-estado-comentarios" text="Algo"><%= locals.oldInfo && oldInfo.comentarios ? oldInfo.comentarios : '' %></textarea>
+                            </div>
+                            <% if(locals.errors && errors.comentarios){ %>
+                                <div class="nc-error-block">
+                                    <label class="nc-error-message"><%= errors.comentarios.msg %></label>   
+                                </div>
+                            <% } %>
+                        </div>
+                        <div class="nc-button-block admin-booking-confirmation-button">
+                            <input class="btn btn-gradient nc-btn-extra" type="submit" value="CAMBIAR ESTADO">
                         </div>
                     </form>
                     <form action="/admin/eliminarReserva/<%= booking.id %>?_method=DELETE" method="POST" class="nc-booking-delete">

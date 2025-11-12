@@ -19,6 +19,10 @@ module.exports=function(sequelize, DataTypes){
         State.hasMany(models.Booking,{
             as:'bookings',
             foreignKey:'state_id'
+        }),
+        State.hasMany(models.Comment,{
+            as:'comments',
+            foreignKey:'state_id'
         })    
     }
 
