@@ -2,7 +2,7 @@
 <div class="hero nc-timbre-tris" id="reserva-timbre">
     <div class="container">
         <div class="main-heading">
-            <h1 class="title-res nc-titulo-pagina">Complete la informacion para cada habitación</h1>
+            <h1 class="title-res nc-titulo-pagina">Información Final</h1>
             <form action="/booking/information" class="nc-form nc-final-information-form" method="POST">
                 <div class="nc-room-detail-block">
                     <% if(locals.errors && errors.habitaciones){ %>
@@ -33,7 +33,7 @@
                     <% }) %>
                 </div>
                 <div class="nc-guest-block">
-                    <h2 class="title-res nc-subtitle">Complete su informacion personal</h2>
+                    <h2 class="title-res nc-subtitle">Complete su información personal</h2>
                     <div class="nc-info-block">
                         <div class="input-group">
                             <label for="name" class="input-label">Nombre</label>
@@ -72,7 +72,7 @@
                             <% } %>
                         </div>
                         <div class="input-group">
-                            <label for="phone" class="input-label">Telefono</label>
+                            <label for="phone" class="input-label">Teléfono</label>
                             <input type="number"  class="input <%= locals.errors && errors.phone ? 'nc-input-with-error' : '' %>" name="phone" id="phone" <%=locals.oldInfo && oldInfo.phone ? "value=" + oldInfo.phone : '' %>>
                             <% if(locals.errors && errors.phone){ %>
                                 <div class="nc-error-block">

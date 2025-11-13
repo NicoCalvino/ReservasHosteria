@@ -182,7 +182,12 @@ const controller = {
                 model:db.Comment,
                 as:'comments',
                 include:['states']
-            }]
+            },{
+                model:db.Booking_Room,
+                as:'rooms',
+                paranoid: false
+            }],
+            paranoid: false
         })
 
         if(bookingInstance){
@@ -261,6 +266,8 @@ const controller = {
         let idEstado = req.body.estado
         let comentarios = req.body.comentarios
 
+        let infoEstado = await db.State.findByPk(idEstado)
+
         if(bookingInstance){
             await db.Booking.update({
                 state_id:idEstado
@@ -269,6 +276,16 @@ const controller = {
                     id:idBooking
                 }
             })
+
+            if(infoEstado.state != "Confirmed"){
+                await db.Booking_Room.update({
+                        room_id:null
+                    },{
+                        where:{
+                            booking_id:idBooking
+                        }
+                })
+            }
 
             let fechaComentario = new Date
             await db.Comment.create({
@@ -280,7 +297,7 @@ const controller = {
 
             res.redirect("/admin/verReserva/" + idBooking)
         } else {
-            res.send("HOY UN ERROR")
+            res.send("HAY UN ERROR")
         }
 
     },
@@ -319,10 +336,9 @@ const controller = {
                     }
                 })
 
-
                 return res.render("admin/adminBookingInfo",{booking, estados, errors:errors.mapped(),oldInfo:req.body})
             } else {
-                res.send("HOY UN ERROR")
+                res.send("HAY UN ERROR")
             }
         }
 
@@ -350,6 +366,14 @@ const controller = {
                 where:{
                     id:idBooking
                 }
+            })
+
+            let fechaComentario = new Date
+            await db.Comment.create({
+                comment:"AUTO - La hostería ha confirmado la reserva",
+                date:fechaComentario,
+                state_id:3,
+                booking_id:idBooking
             })
 
             res.redirect("/admin/confirmar")
@@ -396,7 +420,7 @@ const controller = {
 
                 return res.render("admin/adminBookingInfo",{booking, estados, errors:errors.mapped(),oldInfo:req.body})
             } else {
-                res.send("HOY UN ERROR")
+                res.send("HAY UN ERROR")
             }
         }
 
@@ -440,6 +464,14 @@ const controller = {
                 }
             })
 
+            let fechaComentario = new Date
+            await db.Comment.create({
+                comment:"AUTO - Se han hecho cambios en la reserva",
+                date:fechaComentario,
+                state_id:4,
+                booking_id:idBooking
+            })
+
             res.redirect("/admin/menu")
         }
     },
@@ -464,6 +496,14 @@ const controller = {
             where:{
                 booking_id:idBooking
             }
+        })
+
+        let fechaComentario = new Date
+        await db.Comment.create({
+            comment:"AUTO - La reserva fue eliminada",
+            date:fechaComentario,
+            state_id:4,
+            booking_id:idBooking
         })
 
         res.redirect("/admin/menu")
@@ -582,12 +622,26 @@ const controller = {
             })
         }
 
+        let bookingsPendientes = await db.Booking.findAll({
+            where:{
+                state_id:2,
+                check_in: {
+                    [Op.lt]: req.query.check_out
+                },
+                check_out: {
+                    [Op.gt]: req.query.check_in
+                }
+            }
+        })
+
         let infoBusqueda ={
+            check_in:req.query.check_in,
+            check_out:req.query.check_out,
             textoCheckIn: func.fechaATextoCorto(req.query.check_in),
             textoCheckOut: func.fechaATextoCorto(req.query.check_out)
         }
 
-        res.render("admin/adminReporteOcupacion",{infoHabitaciones, infoBusqueda, fechas})
+        res.render("admin/adminReporteOcupacion",{infoHabitaciones, infoBusqueda, fechas, bookingsPendientes})
 
     },
     cargarHuespedesDelDia: async(req,res)=>{ 

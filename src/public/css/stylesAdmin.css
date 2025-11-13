@@ -33,7 +33,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    width: 30%;
+    width: 12rem;
     background-color: rgba(0,0,0,0.5);
     padding: 5px 10px;
     border-radius: 10px;
@@ -72,6 +72,11 @@
 
 .nc-titulo-pagina{
     margin-top: 20px;
+}
+
+.nc-titulo-menu{
+    margin-top: 80px;
+    font-size: 3.5rem;
 }
 
 .nc-pending-booking-msg{
@@ -607,6 +612,20 @@ footer .nc-admin-loggin-container a i{
 
 
 /* Estilos del detalle del Booking */
+.nc-block .nc-reactivate-deleted{
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nc-block .nc-reactivate-deleted a{
+    width: 15rem;;
+    padding: 0px;
+    font-size: 18px;
+    line-height: 34px;
+    justify-content: center;
+}
 
 .nc-block .nc-booking-info .nc-booking-info-header{
     width: 100%;
@@ -798,16 +817,31 @@ footer .nc-admin-loggin-container a i{
 }
 
 .nc-block .nc-booking-info .admin-booking-delete-button{
-    width: 50%;
-    margin: 200px auto 10px auto;
+    width: 70%;
+    margin: 50px auto 10px auto;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
 }
 
+.nc-block .nc-booking-info .admin-booking-delete-button .nc-btn-init-delete{
+    margin-bottom: 20px;
+}
+
+.nc-block .nc-booking-info .admin-booking-delete-button .nc-btn-confirm-delete{
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.nc-block .nc-booking-info .admin-booking-delete-button .nc-btn-confirm-delete.mostrar{
+    visibility: visible;
+    opacity: 1;
+}
+
 .nc-block .nc-booking-info .admin-booking-delete-button .nc-btn-extra{
-    font-size: 14px;
-    line-height: 22px;
+    font-size: 20px;
+    line-height: 28px;
 }
 
 .nc-block .nc-booking-info .nc-booking-rooms-container .nc-error-block{
@@ -911,6 +945,24 @@ footer .nc-admin-loggin-container a i{
 
 .nc-block{
     overflow-x:auto;
+}
+
+.nc-block .nc-bloque-excel{
+    width: 90%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.nc-block .nc-bloque-excel:hover{
+    text-decoration: underline;
+}
+
+.nc-block .nc-bloque-excel i{
+    margin-left: 5px;
+    font-size: 24px;
+    color: rgb(116, 226, 116);
 }
 
 .nc-block .nc-ocup-container{
@@ -1044,6 +1096,11 @@ footer .nc-admin-loggin-container a i{
         margin-bottom: 10px;
     }
 
+    .nc-titulo-menu{
+        margin-top: 100px;
+        font-size: 4.2rem;
+    }
+
     .main-heading .nc-back-container{
         margin-top: 100px;
         font-size: 26px;
@@ -1051,7 +1108,7 @@ footer .nc-admin-loggin-container a i{
     }
 
     .main-heading .nc-back-container a{
-        width: 20%;
+        width: 15rem
     }
 
     .main-heading .nc-back-container a i{
@@ -1110,6 +1167,7 @@ footer .nc-admin-loggin-container a i{
     .nc-block .nc-booking-info .nc-booking-rooms-container{
         width: 60%;
         margin: 0px;
+        margin-bottom: 20px;
     }
 
     .nc-block .nc-booking-info .nc-booking-rooms-container .nc-booking-room h3{
@@ -1139,13 +1197,8 @@ footer .nc-admin-loggin-container a i{
     }
 
     .nc-block .nc-booking-info .admin-booking-delete-button{
-        width: 30%;
-        margin: 200px auto 10px auto;
-    }
-
-    .nc-block .nc-booking-info .admin-booking-delete-button .nc-btn-extra{
-        font-size: 14px;
-        line-height: 22px;
+        width: 50%;
+        margin: 50px auto 10px auto;
     }
 
     .nc-block .nc-booking-comments{
@@ -1272,6 +1325,11 @@ footer .nc-admin-loggin-container a i{
     }
 
     /* Info Bookings */
+    .nc-block .nc-reactivate-deleted{
+        width: 90%;
+        margin: auto;
+    }
+
     .nc-block .nc-booking-info .nc-booking-payment-container{
         max-width: 32rem;
     }
@@ -1524,6 +1582,11 @@ footer .nc-admin-loggin-container a i{
         line-height: 32px;
     }
 
+    .nc-block .nc-booking-info .admin-booking-delete-button{
+        width: 40%;
+        margin: 50px auto 10px auto;
+    }
+
     /* Busqueda por fechas*/
     .nc-block .available-form{
         margin-bottom: 700px;
@@ -1551,6 +1614,13 @@ footer .nc-admin-loggin-container a i{
     }
 
     /* Reporte Ocupacion */
+    .nc-block .nc-bloque-excel{
+        font-size: 24px;
+    }
+
+    .nc-block .nc-bloque-excel i{
+        font-size: 36px;
+    }
 
     .nc-block .nc-ocup-container{
         margin-bottom: 500px

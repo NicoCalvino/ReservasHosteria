@@ -92,22 +92,22 @@ const bankInfoValidation = [
 ]
 
 const searchValidation = [
-    query('check_in').notEmpty().withMessage('Completar fecha de Entrada').custom((value,{req})=>{
+    query('check_in').notEmpty().withMessage('Completar fecha de entrada').custom((value,{req})=>{
         let check_in = req.query.check_in
         let fechaHoy = new Date
 
         if(fechaHoy > func.formateoFecha(check_in)){
-           throw new Error ('La fecha de Entrada no puede ser en el pasado')  
+           throw new Error ('La fecha de entrada no puede ser en el pasado')  
         }
 
         return true
     }),
-    query('check_out').notEmpty().withMessage('Completar fecha de Salida').custom((value,{req})=>{
+    query('check_out').notEmpty().withMessage('Completar fecha de salida').custom((value,{req})=>{
         let check_in = req.query.check_in
         let check_out = req.query.check_out
 
         if(check_in > check_out){
-           throw new Error ('La fecha de Salida no puede ser anterior a la de entrada')  
+           throw new Error ('La fecha de salida no puede ser anterior a la de entrada')  
         }
 
         return true
@@ -115,13 +115,13 @@ const searchValidation = [
 ]
 
 const occupancyValidation = [
-    query('check_in').notEmpty().withMessage('Completar fecha de Entrada'),
-    query('check_out').notEmpty().withMessage('Completar fecha de Salida').custom((value,{req})=>{
+    query('check_in').notEmpty().withMessage('Completar fecha de entrada'),
+    query('check_out').notEmpty().withMessage('Completar fecha de salida').custom((value,{req})=>{
         let check_in = req.query.check_in
         let check_out = req.query.check_out
 
         if(check_in > check_out){
-           throw new Error ('La fecha de Salida no puede ser anterior a la de entrada')  
+           throw new Error ('La fecha de salida no puede ser anterior a la de entrada')  
         }
 
         return true
@@ -182,11 +182,11 @@ const bookingEditValidation = [
                 let cantTotal = Number(cantMayores) + Number(cantMenores)
 
                 if(cantTotal == 0){
-                    throw new Error ('No Puede haber habitaciones Vacias') 
+                    throw new Error ('No puede haber habitaciones vacías') 
                 }
 
                 if(cantTotal > infoHabitacion.room_types.occupancy){
-                    throw new Error ('No Puede Superar la capacidad del Habitacion') 
+                    throw new Error ('No puede superar la capacidad de la habitación') 
                 }
             }
         }
@@ -222,18 +222,18 @@ const roomBookingValidation = [
                 console.log(infoCuarto.room_types.occupancy)
 
             if(habitacion && cantTotal > infoCuarto.room_types.occupancy){
-                throw new Error ('No se puede superar la capacidad dela habitacion')     
+                throw new Error ('No se puede superar la capacidad de la habitación')     
             }
         }
         
         return true
     }),
-    body('habitacion').notEmpty().withMessage('Indicar la habitacion'),
+    body('habitacion').notEmpty().withMessage('Indicar la habitación'),
 ]
 
 const bookingStateValidation = [
-    body('estado').notEmpty().withMessage('Indicar nuevo Estado'),
-    body('comentarios').notEmpty().withMessage('Indicar la razón del cambio de estado'),
+    body('estado').notEmpty().withMessage('Indicar el estado'),
+    body('comentarios').notEmpty().withMessage('Completar los comentarios'),
 ]
 
 router.get("/login", loggedInMiddleware, userCreationMiddleware, adminController.cargaLogIn)

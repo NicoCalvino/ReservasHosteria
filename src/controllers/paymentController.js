@@ -36,7 +36,7 @@ const controller = {
         })
 
         if(guestBooking.length == 0){
-            return res.render("payment/paymentUpload",{mensajePagina:"No se encontro reserva con los datos indicados",oldInfo:req.body})   
+            return res.render("payment/paymentUpload",{mensajePagina:"No se encontró reserva con los datos indicados",oldInfo:req.body})   
         }
 
         await db.Booking.update({
@@ -46,6 +46,14 @@ const controller = {
             where:{
                 id:guestBooking[0].id
             }
+        })
+
+        let fechaComentario = new Date
+        await db.Comment.create({
+            comment:"AUTO - El huésped ha informado un pago",
+            date:fechaComentario,
+            state_id:2,
+            booking_id:guestBooking[0].id
         })
 
         res.render("payment/paymentConfirmation")   

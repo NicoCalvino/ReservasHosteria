@@ -15,7 +15,7 @@ const paymentValidation = [
         let email = req.body.email
 
         if(email.indexOf("@")==-1){
-           throw new Error ('Completar con un mail valido')  
+           throw new Error ('Completar con un mail válido')  
         }
 
         return true 

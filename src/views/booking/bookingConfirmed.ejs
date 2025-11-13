@@ -5,13 +5,13 @@
             <h1 class="title-res nc-titulo-pagina">Su reserva fue registrada</h1>
             <div class="nc-confirmation-block">
                 <div class="nc-booking-code-block">
-                    <h2 class="nc-booking-message">Su codigo de Reserva es</h2>
+                    <h2 class="nc-booking-message">El código de Reserva es</h2>
                     <h2 class="nc-booking-code"><%= infoBooking.booking_code %></h2>
                 </div>
                 <div class="nc-payment-block">
                     <span class="nc-payment-message">El total de su estadía será de $ <%= infoBooking.montoFormateado %></span>
                     <span class="nc-payment-message">Para confirmar su reserva, será necesario abonar una seña de $ <%= infoBooking.montoReservaFormateado %></span>
-                    <span class="nc-payment-message">Puede hacerlo por transferencia bancaria con la siguiente informacion:</span>
+                    <span class="nc-payment-message">Puede hacerlo por transferencia bancaria con la siguiente información:</span>
                     <div class="nc-bank-information">
                         <div class="nc-bankinfo-block">
                             <label class="nc-bankinfo-title">NOMBRE:</label>
@@ -34,9 +34,9 @@
                             <label class="nc-bankinfo-info"><%= infoBcaria.cuit %></label>
                         </div>
                     </div>
-                    <span class="nc-payment-message">Si no se recibe el pago en 3 días la reserva será cancelada</span>
+                    <span class="nc-payment-message">Si no se recibe el pago en 3 días, la reserva será cancelada</span>
                     <div class="nc-payment-link-block">
-                        <span class="nc-payment-message">Para informar un pago hacer click <a href="/payment/upload">AQUI</a></span>
+                        <span class="nc-payment-message">Para informar un pago hacer click <a href="/payment/upload">AQUÍ</a></span>
                     </div>
                 </div>
             </div>

@@ -24,13 +24,13 @@ const searchValidation = [
         let check_in = req.query.check_in
         let check_out = req.query.check_out
 
-        if(check_in > check_out){
-           throw new Error ('La fecha de Salida no puede ser anterior a la de entrada')  
+        if(check_in >= check_out){
+           throw new Error ('La fecha de Salida no puede ser anterior o igual a la de entrada')  
         }
 
         return true
     }),
-    query('people').notEmpty().withMessage('Completar la cantidad de Huespedes').custom((value,{req})=>{
+    query('people').notEmpty().withMessage('Completar la cantidad de huéspedes').custom((value,{req})=>{
         let cantidad = req.query.people
 
         if(cantidad <= 0){

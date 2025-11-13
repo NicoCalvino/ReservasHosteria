@@ -55,10 +55,6 @@ const initialValidation = [
 
         let habLibres = await func.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
 
-        console.log("****************")
-        console.log(habLibres)
-        console.log("****************")
-
         if(habLibres < cant){
             throw new Error ('No hay ' + cant + ' habitaciones triples disponibles') 
         }
@@ -214,7 +210,7 @@ roomSelectionValidation.push(body('habitaciones').custom(async (value,{req})=>{
             }
 
         if(initialPeople.occupancy < totalPeople){
-            throw new Error ('Se asignaron mas personas de las reservadas inicialmente')     
+            throw new Error ('Se asignaron más personas de las reservadas inicialmente')     
         }
         
         if(initialPeople.occupancy > totalPeople){
@@ -232,7 +228,7 @@ const personalInfoValidation = [
         let email = req.body.email
 
         if(email.indexOf("@")==-1){
-           throw new Error ('Completar con un mail valido')  
+           throw new Error ('Completar con un mail válido')  
         }
 
         return true
@@ -247,7 +243,7 @@ const personalInfoValidation = [
 
         return true
     }),
-    body('phone').notEmpty().withMessage('Completar el telefono')
+    body('phone').notEmpty().withMessage('Completar el teléfono')
 ]
 
 const duplicatedBookingValidation = [
@@ -274,7 +270,7 @@ const bookingSearchValidation = [
         let email = req.body.email
 
         if(email.indexOf("@")==-1){
-           throw new Error ('Completar con un mail valido')  
+           throw new Error ('Completar con un mail válido')  
         }
 
         return true 

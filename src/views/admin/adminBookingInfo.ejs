@@ -8,6 +8,11 @@
             <h1 class="title-res nc-titulo-pagina"><%= booking.booking_code %></h1>
             <h2>(<%= booking.states.state %>)</h2>
             <div class="nc-block">
+                <% if(booking.states.state == "Deleted"){ %>
+                    <div class="nc-reactivate-deleted">
+                        <a href="/search/roomSelection?check_in=<%= booking.check_in %>&check_out=<%= booking.check_out %>&people=<%= booking.occupancy %>&rooms=<%= booking.room_count %>" class="btn btn-gradient" type="submit">Reactivar</a>
+                    </div>
+                <% } %>
                 <div class="nc-booking-info">
                     <div class="nc-booking-info-header">
                         <div class="nc-booking-header-guest">
@@ -78,20 +83,22 @@
                             <% } else { %>
                                 <% for(let i = 0; i< booking.rooms.length; i++){ %>     
                                     <h3><%= (i+1) + ' - ' + booking.rooms[i].description %></h3>
-                                    <select name="<%= 'habitacion_' + booking.rooms[i].id %>" class="nc-booking-room-selector">
-                                        <option class="nc-booking-room-option" value="" selected>S/A</option>
-                                        <% booking.rooms[i].opciones.forEach(opcion =>{ %>
-                                            <% if(locals.oldInfo){ %>
-                                                <% if(oldInfo['habitacion_' + booking.rooms[i].id] == opcion.id){ %>
-                                                    <option class="nc-booking-room-option" value="<%= opcion.id %>" selected><%= opcion.number %></option>
+                                    <% if(booking.states.state != "Deleted"){ %>
+                                        <select name="<%= 'habitacion_' + booking.rooms[i].id %>" class="nc-booking-room-selector">
+                                            <option class="nc-booking-room-option" value="" selected>S/A</option>
+                                            <% booking.rooms[i].opciones.forEach(opcion =>{ %>
+                                                <% if(locals.oldInfo){ %>
+                                                    <% if(oldInfo['habitacion_' + booking.rooms[i].id] == opcion.id){ %>
+                                                        <option class="nc-booking-room-option" value="<%= opcion.id %>" selected><%= opcion.number %></option>
+                                                    <% } else { %>
+                                                        <option class="nc-booking-room-option" value="<%= opcion.id %>"><%= opcion.number %></option>
+                                                    <% } %> 
                                                 <% } else { %>
-                                                    <option class="nc-booking-room-option" value="<%= opcion.id %>"><%= opcion.number %></option>
+                                                    <option class="nc-booking-room-option" value="<%= opcion.id %>" <%= booking.rooms[i].room_id && booking.rooms[i].room_id == opcion.id ? 'selected' : '' %>><%= opcion.number %></option>
                                                 <% } %> 
-                                            <% } else { %>
-                                                <option class="nc-booking-room-option" value="<%= opcion.id %>" <%= booking.rooms[i].room_id && booking.rooms[i].room_id == opcion.id ? 'selected' : '' %>><%= opcion.number %></option>
-                                            <% } %> 
-                                        <% }) %>
-                                    </select>
+                                            <% }) %>
+                                        </select>
+                                    <% } %>
                                     <div class="nc-booking-room-guests">
                                         <label>Adultos: <%= booking.rooms[i].adults %></label>
                                         <label>Niños: <%= booking.rooms[i].children %></label>
@@ -99,9 +106,11 @@
                                 <% } %>
                             <% } %>
                         </div>
-                        <div class="nc-button-block admin-booking-confirmation-button">
-                            <input class="btn btn-gradient nc-btn-extra" type="submit" value="CONFIRMAR RESERVA">
-                        </div>
+                        <% if(booking.states.state != "Deleted"){ %>
+                            <div class="nc-button-block admin-booking-confirmation-button">
+                                <input class="btn btn-gradient nc-btn-extra" type="submit" value="CONFIRMAR RESERVA">
+                            </div>
+                        <% } %>
                     </form>
                     <div class="nc-booking-rooms-container nc-booking-comments">
                         <h2>Comentarios</h2>
@@ -115,42 +124,46 @@
                             </article>
                         <% }) %>
                     </div>
-                    <form action="/admin/forzarEstado/<%= booking.id %>?_method=PUT" method="POST"  class="nc-booking-rooms-container nc-cambiar-estado-form">
-                        <h2>Actualizar Estado</h2>
-                        <div class="nc-cambiar-estado">
-                            <div class="nc-cambiar-estado-select">
-                                <label class="nc-cambiar-estado-label" for="estado" class>Estado</label>
-                                <select name="estado" id="estado" class="nc-cambiar-estado-selector">
-                                    <option class="nc-booking-room-option" value="" selected></option>
-                                    <% estados.forEach(estado =>{ %>
-                                        <option class="nc-booking-room-option" value="<%= estado.id %>" <%= locals.oldInfo && oldInfo.estado && oldInfo.estado == estado.id ? 'selected' : '' %>><%= estado.state %></option>
-                                    <% }) %>   
-                                </select>
-                            </div>
-                            <% if(locals.errors && errors.estado){ %>
-                                <div class="nc-error-block">
-                                    <label class="nc-error-message"><%= errors.estado.msg %></label>   
+                    <% if(booking.states.state != "Deleted"){ %>
+                        <form action="/admin/forzarEstado/<%= booking.id %>?_method=PUT" method="POST"  class="nc-booking-rooms-container nc-cambiar-estado-form">
+                            <h2>Agregar Comentarios</h2>
+                            <div class="nc-cambiar-estado">
+                                <div class="nc-cambiar-estado-select">
+                                    <label class="nc-cambiar-estado-label" for="estado" class>Estado</label>
+                                    <select name="estado" id="estado" class="nc-cambiar-estado-selector">
+                                        <option class="nc-booking-room-option" value="" selected></option>
+                                        <option class="nc-booking-room-option" value="<%= booking.states.id %>">Sin Cambio</option>
+                                        <% estados.forEach(estado =>{ %>
+                                            <option class="nc-booking-room-option" value="<%= estado.id %>" <%= locals.oldInfo && oldInfo.estado && oldInfo.estado == estado.id ? 'selected' : '' %>><%= estado.state %></option>
+                                        <% }) %>   
+                                    </select>
                                 </div>
-                            <% } %>
-                            <div class="nc-cambiar-estado-coments-block">
-                                <label class="nc-cambiar-estado-label" for="comentarios" class>Comentarios</label>
-                                <textarea maxlength="300" name="comentarios" class="nc-cambiar-estado-comentarios" text="Algo"><%= locals.oldInfo && oldInfo.comentarios ? oldInfo.comentarios : '' %></textarea>
-                            </div>
-                            <% if(locals.errors && errors.comentarios){ %>
-                                <div class="nc-error-block">
-                                    <label class="nc-error-message"><%= errors.comentarios.msg %></label>   
+                                <% if(locals.errors && errors.estado){ %>
+                                    <div class="nc-error-block">
+                                        <label class="nc-error-message"><%= errors.estado.msg %></label>   
+                                    </div>
+                                <% } %>
+                                <div class="nc-cambiar-estado-coments-block">
+                                    <label class="nc-cambiar-estado-label" for="comentarios" class>Comentarios</label>
+                                    <textarea maxlength="300" name="comentarios" class="nc-cambiar-estado-comentarios" text="Algo"><%= locals.oldInfo && oldInfo.comentarios ? oldInfo.comentarios : '' %></textarea>
                                 </div>
-                            <% } %>
-                        </div>
-                        <div class="nc-button-block admin-booking-confirmation-button">
-                            <input class="btn btn-gradient nc-btn-extra" type="submit" value="CAMBIAR ESTADO">
-                        </div>
-                    </form>
-                    <form action="/admin/eliminarReserva/<%= booking.id %>?_method=DELETE" method="POST" class="nc-booking-delete">
-                        <div class="nc-button-block admin-booking-delete-button">
-                            <input class="btn btn-gradient nc-btn-extra" type="submit" value="ELIMINAR RESERVA">
-                        </div>
-                    </form>
+                                <% if(locals.errors && errors.comentarios){ %>
+                                    <div class="nc-error-block">
+                                        <label class="nc-error-message"><%= errors.comentarios.msg %></label>   
+                                    </div>
+                                <% } %>
+                            </div>
+                            <div class="nc-button-block admin-booking-confirmation-button">
+                                <input class="btn btn-gradient nc-btn-extra" type="submit" value="CAMBIAR ESTADO">
+                            </div>
+                        </form>
+                        <form action="/admin/eliminarReserva/<%= booking.id %>?_method=DELETE" method="POST" class="nc-booking-delete">
+                            <div class="nc-button-block admin-booking-delete-button">
+                                <input class="btn btn-gradient nc-btn-extra nc-btn-init-delete" type="submit" value="ELIMINAR RESERVA">
+                                <input class="btn btn-gradient nc-btn-extra nc-btn-confirm-delete" type="submit" value="¿ELIMINAR?">
+                            </div>
+                        </form>
+                    <% } %>
                 </div>
             </div>
         </div>

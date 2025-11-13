@@ -24,7 +24,7 @@
                         <% } %>
                     </div>
                     <div class="input-group">
-                        <label for="people" class="input-label">Huespedes</label>
+                        <label for="people" class="input-label">Huéspedes</label>
                         <input type="number" class="input <%= locals.errors && errors.people ? 'nc-input-with-error' : '' %>" id="people" name="people" min="0" <%=locals.oldInfo && oldInfo.people ? "value=" + oldInfo.people : '' %>>
                         <% if(locals.errors && errors.people){ %>
                             <div class="nc-error-block">
@@ -49,10 +49,10 @@
             </div>
         </div>
         <div class="nc-payment-link-block">
-            <span class="nc-payment-message">Para informar el pago de una seña, hacer click <a href="/payment/upload">AQUI</a></span>
+            <span class="nc-payment-message">Para informar el pago de una seña, hacer click <a href="/payment/upload">AQUÍ</a></span>
         </div>
         <div class="nc-payment-link-block">
-            <span class="nc-payment-message">Para conocer el estado de su reserva, haga click <a href="/booking/search">AQUI</a></span>
+            <span class="nc-payment-message">Para conocer el estado de su reserva, haga click <a href="/booking/search">AQUÍ</a></span>
         </div>
     </div>
 </div>

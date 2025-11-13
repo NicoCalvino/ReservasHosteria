@@ -140,6 +140,14 @@ const controller = {
                 })
             }
 
+            let fechaComentario = new Date
+            await db.Comment.create({
+                comment:"AUTO - El huésped ha iniciado la reserva",
+                date:fechaComentario,
+                state_id:1,
+                booking_id:booking.id
+            })
+
             req.session.idTemp = false
             req.session.booking = booking.id
             res.redirect("/booking/confirmed")
@@ -172,6 +180,14 @@ const controller = {
             
             return res.redirect("error/booking")
         }
+
+        let fechaComentario = new Date
+        await db.Comment.create({
+            comment:"AUTO - El huésped ha confirmado la reserva",
+            date:fechaComentario,
+            state_id:1,
+            booking_id:idBooking
+        })
 
         infoBooking.montoFormateado = func.conversorNumero(infoBooking.amount)
         infoBooking.montoReservaFormateado = func.conversorNumero(infoBooking.downpayment)
@@ -207,7 +223,7 @@ const controller = {
         })
 
         if(guestBooking.length == 0){
-            return res.render("booking/bookingSearch",{mensajePagina:"No se encontro reserva con los datos indicados",oldInfo:req.body})   
+            return res.render("booking/bookingSearch",{mensajePagina:"No se encontró reserva con los datos indicados",oldInfo:req.body})   
         }
 
         guestBooking[0].montoFormateado = func.conversorNumero(guestBooking[0].amount)
@@ -218,7 +234,7 @@ const controller = {
         switch(guestBooking[0].state_id){
             case 1:
                 guestBooking[0].estado = "Pendiente"
-                guestBooking[0].explicacion = "La seña correspondiente a su reserva no ha sido recibida"
+                guestBooking[0].explicacion = "La seña correspondiente a su reserva aún no ha sido recibida"
                 break
             case 2:
                 guestBooking[0].estado = "Procesando"
@@ -226,7 +242,7 @@ const controller = {
                 break
             case 3:
                 guestBooking[0].estado = "Confirmada"
-                guestBooking[0].explicacion = "Su pago ha sido confirmado y su reserva está confirmada. ¡Lo esperamos!"
+                guestBooking[0].explicacion = "Su pago ha sido verificado y su reserva está confirmada. ¡Lo esperamos!"
                 break
         }
 

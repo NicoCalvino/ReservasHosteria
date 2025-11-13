@@ -37,8 +37,11 @@ module.exports=function(sequelize, DataTypes){
             foreignkey:true,    
         }
     },{
+        createdAt:"created_at",
+        updatedAt:"updated_at",
+        deletedAt:"deleted_at",
         tableName:"booking_rooms",
-        timestamps:false,
+        paranoid: true
     })
 
     Booking_Room.associate = function(models){

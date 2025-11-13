@@ -17,10 +17,16 @@
                         <label class="adm-room-avlb-datoFecha"><%= infoBusqueda.textoCheckOut %></label>
                     </div>
                 </div>
+                <% if(bookingsPendientes.length > 0){ %>
+                    <label>Existen <%= bookingsPendientes.length %> reservas pendientes de confirmar en el período buscado</label>
+                <% } %>
+                <div class="nc-bloque-excel">
+                    <a href="/reports/reporteOcupacion?check_in=<%= infoBusqueda.check_in %>&check_out=<%= infoBusqueda.check_out %>">Descargar a Excel<i class="fas fa-file-excel"></i></a>
+                </div>
                 <div class="nc-ocup-container">
                     <table class="nc-ocup-table">
                         <tr class="nc-ocup-table-row">
-                            <th class="nc-ocup-table-row-header">Habitacion/Dia</th>
+                            <th class="nc-ocup-table-row-header">Habitación/Día</th>
                             <% fechas.forEach(dia =>{ %>
                                 <th class="nc-ocup-table-row-header"><%= dia %></th>   
                             <% }) %>
