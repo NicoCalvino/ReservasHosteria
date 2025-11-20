@@ -25,6 +25,16 @@
                             <span class="nc-payment-message">Para informar su pago haga click <a href="/payment/upload">AQUÍ</a></span>
                         </div>
                     <% } %>
+                    <% if(bookingInfo.antiguedad <= 10){ %>
+                        <form class="nc-regret-block" action="/booking/cancel/<%= bookingInfo.id %>?_method=DELETE" method="POST">
+                            <div class="nc-init-regret-block">
+                                <input class="btn btn-gradient nc-btn-extra nc-btn-regret" type="submit" value="BOTON DE ARREPENTIMIENTO">
+                            </div>
+                            <div class="nc-confirm-regret-block">
+                                <input class="btn btn-gradient nc-btn-extra" type="submit" value="¿CANCELAR SU RESERVA?">
+                            </div>
+                        </form>
+                    <% } %>
                 </div>
             </div>
         </div>

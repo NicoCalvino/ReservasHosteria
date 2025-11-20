@@ -4,6 +4,8 @@ let header = document.querySelector('.header');
 let hamburgerMenu = document.querySelector('.hamburger-menu');
 let botonEliminar = document.querySelector('.nc-btn-init-delete')
 let botonConfEliminar = document.querySelector('.nc-btn-confirm-delete')
+let botonCancelar = document.querySelector('.nc-btn-regret')
+let botonConfCancelar = document.querySelector('.nc-confirm-regret-block')
 
 
 window.addEventListener('scroll',function () {
@@ -15,9 +17,16 @@ hamburgerMenu.addEventListener('click', function() {
   header.classList.toggle('menu-open');
 })
 
-botonEliminar.addEventListener('click', function(event) {
+if(botonEliminar){
+  botonEliminar.addEventListener('click', function(event) {
+    event.preventDefault()
+    botonConfEliminar.classList.toggle('mostrar');
+  })
+}
+
+botonCancelar.addEventListener('click', function(event) {
   event.preventDefault()
-  botonConfEliminar.classList.toggle('mostrar');
+  botonConfCancelar.classList.toggle('mostrar');
 })
 
 /* Prueba de galería */

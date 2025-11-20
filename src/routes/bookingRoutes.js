@@ -269,7 +269,7 @@ const bookingSearchValidation = [
     body('email').notEmpty().withMessage('Completar el mail de reserva').custom(async (value,{req})=>{
         let email = req.body.email
 
-        if(email.indexOf("@")==-1){
+        if(email.indexOf("@")==-1 || email == "solar@solardelacosta.com"){
            throw new Error ('Completar con un mail válido')  
         }
 
@@ -277,12 +277,12 @@ const bookingSearchValidation = [
     })
 ]
 
-
 router.post("/details", activeSessionMiddleware, initialValidation, bookingController.detallesFinales)
 router.post("/information", activeSessionMiddleware, duplicatedBookingValidation, roomSelectionValidation, personalInfoValidation, bookingController.generarReservas)
 router.get("/confirmed", activeSessionMiddleware, bookingController.reservaConfirmada)
 router.get("/search",  bookingController.buscarReserva)
 router.post("/search", bookingSearchValidation, bookingController.resultadosReserva)
+router.delete("/cancel/:idBooking", bookingController.bookingCancel)
 
 
 module.exports=router

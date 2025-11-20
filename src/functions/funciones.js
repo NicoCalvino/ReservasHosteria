@@ -93,6 +93,10 @@ const model = {
         let diasSemana = ["LUNES","MARTES","MIERCOLES","JUEVES","VIERNES"]
         return diasSemana
     },
+    cantNochesSinFormato:function(inicio, fin){
+        let dias = (fin - inicio)/ (1000 * 3600 * 24)
+        return dias
+    },
     cantNoches:function(checkIn, checkOut){
         let fechaIngreso = this.formateoFecha(checkIn)
         let fechaSalida = this.formateoFecha(checkOut)

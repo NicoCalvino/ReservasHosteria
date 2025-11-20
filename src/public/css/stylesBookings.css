@@ -358,6 +358,37 @@
     margin:20px 0px
 }
 
+.nc-confirmation-block .nc-booking-info-block .nc-regret-block{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.nc-confirmation-block .nc-booking-info-block .nc-regret-block div{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.nc-confirmation-block .nc-booking-info-block .nc-regret-block div input{
+    font-size: 18px;
+    line-height: 26px;
+}
+
+.nc-confirmation-block .nc-booking-info-block .nc-regret-block div.nc-confirm-regret-block{
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.nc-confirmation-block .nc-booking-info-block .nc-regret-block div.nc-confirm-regret-block.mostrar{
+    visibility: visible;
+    opacity: 1;
+}
+
 .nc-error-container{
     width: 80%;
     margin:auto;
@@ -566,6 +597,11 @@ footer .nc-admin-loggin-container a i{
     .nc-form .nc-guest-block .nc-subtitle{
         margin: 20px auto;
         font-size: 32px;
+    }
+
+    .nc-confirmation-block .nc-booking-info-block .nc-regret-block div input{
+        font-size: 24px;
+        line-height: 32px;
     }
 
     .nc-form .nc-guest-block .nc-info-block .input-group input{

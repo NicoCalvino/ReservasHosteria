@@ -200,6 +200,7 @@ const controller = {
     },
     resultadosReserva: async(req, res)=>{
         let errors = validationResult(req)
+        let fechaHoy = new Date
         
         if (!errors.isEmpty()){
             return res.render("booking/bookingSearch",{errors:errors.mapped(),oldInfo:req.body})
@@ -230,7 +231,7 @@ const controller = {
         guestBooking[0].montoReservaFormateado = func.conversorNumero(guestBooking[0].downpayment)
         guestBooking[0].check_in_txt = func.fechaATexto(guestBooking[0].check_in)
         guestBooking[0].check_out_txt = func.fechaATexto(guestBooking[0].check_out)
-
+        guestBooking[0].antiguedad = func.cantNochesSinFormato(guestBooking[0].created_at, fechaHoy)
         switch(guestBooking[0].state_id){
             case 1:
                 guestBooking[0].estado = "Pendiente"
@@ -246,7 +247,62 @@ const controller = {
                 break
         }
 
+        req.session.codigoReserva = codigoReserva
+        req.session.emailReserva = emailReserva
+
         res.render("booking/bookingStatus",{bookingInfo:guestBooking[0]})   
+    },
+    bookingCancel: async(req, res)=>{
+        let idBooking = req.params.idBooking
+        
+        if(!req.session.codigoReserva || !req.session.emailReserva){
+            return res.render("error/errorSession",{error:"No se puede continuar"})
+        }
+
+        let bookingSession = req.session.codigoReserva
+        let emailReserva = req.session.emailReserva
+
+        let guestBooking = await db.Booking.findAll({
+            where:{
+                booking_code:bookingSession
+            },
+            include: ['guests']
+        })
+
+        if(guestBooking[0].guests.email != emailReserva){
+            return res.render("error/errorSession",{error:"No se puede continuar"})
+        }
+
+        await db.Booking.update({
+            state_id:4
+        },{
+            where:{
+                id:idBooking
+            }
+        })
+
+        await db.Booking.destroy({
+            where:{
+                id:idBooking
+            }
+        })
+
+        await db.Booking_Room.destroy({
+            where:{
+                booking_id:idBooking
+            }
+        })
+
+        let fechaComentario = new Date
+        await db.Comment.create({
+            comment:"AUTO - La reserva fue cancelada por el usuario",
+            date:fechaComentario,
+            state_id:4,
+            booking_id:idBooking
+        })
+
+        res.render("error/errorSession",{error:"Reserva Cancelada"})
+        
     }
 }
 
