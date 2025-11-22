@@ -25,22 +25,26 @@
       </div>
       <ul class="nav-list">
         <li class="nav-item">
-          <a href="https://www.solardelacosta.com/index.html" class="nav-link">HOME</a>
+          <a href="https://www.solardelacosta.com/index.html" class="nav-link"><%= __('nav.home') %></a>
         </li>
         <li class="nav-item">
-          <a href="/search" class="nav-link">RESERVAS</a>
+          <a href="/" class="nav-link"><%= __('nav.reservas') %></a>
         </li>
         <li class="nav-item">
-          <a href="https://www.solardelacosta.com/habitaciones.html" class="nav-link">HABITACIONES</a>
+          <a href="https://www.solardelacosta.com/habitaciones.html" class="nav-link"><%= __('nav.habitaciones') %></a>
         </li>
         <li class="nav-item">
           <a href="https://www.solardelacosta.com/madryn.html" class="nav-link">MADRYN</a>
         </li>
         <li class="nav-item">
-          <a href="https://www.solardelacosta.com/index.html#contactos" class="nav-link">CONTACTO</a>
+          <a href="https://www.solardelacosta.com/index.html#contactos" class="nav-link"><%= __('nav.contacto') %></a>
         </li>
         <li class="nav-item">
-          <a href="https://www.solardelacosta.com/reservas-en.html" class="nav-link"><img src="/images/uk-en.jpg" alt="english version"></a>
+          <% if(__('idioma')=='es') { %>
+            <a href="/change-lang/en" class="nav-link"><img src="/images/uk-en.jpg" alt="english version"></a>
+          <% } else { %>
+            <a href="/change-lang/es" class="nav-link"><img src="/images/sp-es.jpg" alt="spanish version"></a>
+          <% } %>
         </li>
       </ul>
     </nav>

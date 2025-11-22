@@ -1,12 +1,40 @@
-const path = require("path")
-const fs = require("fs")
 const db = require('../database/models')
 const Op = db.Sequelize.Op
 const func = require('../functions/funciones')
 const {validationResult}=require('express-validator')
-const moment = require('moment')
 
 const controller = {
+    selectorHabitaciones: async(req,res)=>{
+        let errors = validationResult(req)
+
+        if (!errors.isEmpty()){
+            return res.render("search/initialSearch",{errors:errors.mapped(),oldInfo:req.query})
+        }
+
+        let checkIn = req.query.check_in
+        let checkOut = req.query.check_out
+        let personas = req.query.people
+        let qHab = req.query.rooms
+
+        let infoTemp = await db.Temp.create({
+            check_in:checkIn,
+            check_out:checkOut,
+            occupancy:personas,
+            rooms:qHab
+        })
+            req.session.idTemp = infoTemp.id
+
+            infoTemp.check_in_s = checkIn
+            infoTemp.check_out_s = checkOut
+
+        let tiposHab = await func.habitacionesLibres(checkIn, checkOut)
+        
+        if (tiposHab.length==0){
+            return res.render("booking/bookingError")
+        }
+        
+        res.render("search/roomSelection",{tiposHab, qHab, infoTemp, oldInfo:req.query})
+    },
     detallesFinales: async(req,res)=>{
         let idTemp = req.session.idTemp
         let errors = validationResult(req)
@@ -156,6 +184,10 @@ const controller = {
     reservaConfirmada: async(req, res)=>{
         let idBooking = req.session.booking 
 
+        if(!idBooking){
+            return res.redirect("error/booking")
+        }
+
         let infoBooking = await db.Booking.findByPk(idBooking)
         let infoBanco = await db.Bank_Information.findAll()
 
@@ -224,7 +256,7 @@ const controller = {
         })
 
         if(guestBooking.length == 0){
-            return res.render("booking/bookingSearch",{mensajePagina:"No se encontró reserva con los datos indicados",oldInfo:req.body})   
+            return res.render("booking/bookingSearch",{mensajePagina:req.__('errores.reserva_no_encontrada'),oldInfo:req.body})   
         }
 
         guestBooking[0].montoFormateado = func.conversorNumero(guestBooking[0].amount)
@@ -234,16 +266,16 @@ const controller = {
         guestBooking[0].antiguedad = func.cantNochesSinFormato(guestBooking[0].created_at, fechaHoy)
         switch(guestBooking[0].state_id){
             case 1:
-                guestBooking[0].estado = "Pendiente"
-                guestBooking[0].explicacion = "La seña correspondiente a su reserva aún no ha sido recibida"
+                guestBooking[0].estado = req.__('booking_status.pendiente')
+                guestBooking[0].explicacion = req.__('booking_status.msg_pendiente')
                 break
             case 2:
-                guestBooking[0].estado = "Procesando"
-                guestBooking[0].explicacion = "Su pago ha sido recibido y esta siendo revisado por el hotel"
+                guestBooking[0].estado = req.__('booking_status.procesando')
+                guestBooking[0].explicacion = req.__('booking_status.msg_procesando')
                 break
             case 3:
-                guestBooking[0].estado = "Confirmada"
-                guestBooking[0].explicacion = "Su pago ha sido verificado y su reserva está confirmada. ¡Lo esperamos!"
+                guestBooking[0].estado = req.__('booking_status.confirmada')
+                guestBooking[0].explicacion = req.__('booking_status.msg_confirmado')
                 break
         }
 
@@ -256,7 +288,7 @@ const controller = {
         let idBooking = req.params.idBooking
         
         if(!req.session.codigoReserva || !req.session.emailReserva){
-            return res.render("error/errorSession",{error:"No se puede continuar"})
+            return res.render("error/errorSession",{error:req.__('errores.no_continuar')})
         }
 
         let bookingSession = req.session.codigoReserva
@@ -270,7 +302,7 @@ const controller = {
         })
 
         if(guestBooking[0].guests.email != emailReserva){
-            return res.render("error/errorSession",{error:"No se puede continuar"})
+            return res.render("error/errorSession",{error:req.__('errores.no_continuar')})
         }
 
         await db.Booking.update({
@@ -301,7 +333,7 @@ const controller = {
             booking_id:idBooking
         })
 
-        res.render("error/errorSession",{error:"Reserva Cancelada"})
+        res.render("error/errorSession",{error:req.__('booking_cancel.titulo')})
         
     }
 }

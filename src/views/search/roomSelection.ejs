@@ -2,11 +2,11 @@
 <div class="hero nc-timbre-tris" id="reserva-timbre">
     <div class="container">
         <div class="main-heading">
-            <h1 class="title-res nc-titulo-pagina">Reservá tu habitación</h1>
+            <h1 class="title-res nc-titulo-pagina"><%= __('initial_search.titulo') %></h1>
             <div class="nc-booking-block">
-                <form action="/search/roomSelection" class="form" method="GET">
+                <form action="/booking/roomSelection" class="form" method="GET">
                     <div class="input-group">
-                        <label for="check-in" class="input-label">Entrada</label>
+                        <label for="check-in" class="input-label"><%= __('initial_search.entrada') %></label>
                         <input type="date" class="input" id="check-in" name="check_in" value="<%= infoTemp.check_in_s %>">
                         <% if(locals.errors && errors.check_in){ %>
                             <div class="nc-error-block">
@@ -15,7 +15,7 @@
                         <% } %>
                     </div>
                     <div class="input-group">
-                        <label for="check-out" class="input-label">Salida</label>
+                        <label for="check-out" class="input-label"><%= __('initial_search.salida') %></label>
                         <input type="date" class="input" id="check-out"  name="check_out" value="<%= infoTemp.check_out_s %>">
                         <% if(locals.errors && errors.check_out){ %>
                             <div class="nc-error-block">
@@ -24,7 +24,7 @@
                         <% } %>
                     </div>
                     <div class="input-group">
-                        <label for="people" class="input-label">Huéspedes</label>
+                        <label for="people" class="input-label"><%= __('initial_search.huespedes') %></label>
                         <input type="number" class="input" id="people" name="people"  value="<%= infoTemp.occupancy %>">
                         <% if(locals.errors && errors.people){ %>
                             <div class="nc-error-block">
@@ -33,7 +33,7 @@
                         <% } %>
                     </div>
                     <div class="input-group">
-                        <label for="check-out" class="input-label">Habitaciones</label>
+                        <label for="check-out" class="input-label"><%= __('initial_search.habitaciones') %></label>
                         <input type="number" class="input" id="rooms" name="rooms"  value="<%= infoTemp.rooms %>">
                         <% if(locals.errors && errors.rooms){ %>
                             <div class="nc-error-block">
@@ -43,12 +43,12 @@
                     </div>
                     <div class="nc-button-block">
                         <label><i class="fas fa-search"></i></label>
-                        <input class="btn btn-gradient nc-btn-extra" type="submit" value="CONSULTAR">
+                        <input class="btn btn-gradient nc-btn-extra" type="submit" value="<%= __('initial_search.boton') %>">
                     </div>
                 </form>
             </div>
             <form action="/booking/details" class="nc-form" method="POST">
-                <h2 class="title-res nc-subtitle">ELEGIR HABITACIONES</h2>
+                <h2 class="title-res nc-subtitle"><%= __('room_selection.subtitulo') %></h2>
                 <% if(locals.errors && errors.habitaciones){ %>
                     <div class="nc-error-block">
                         <label class="nc-error-message"><%= errors.habitaciones.msg %></label>   
@@ -63,9 +63,9 @@
                                 </div>
                                 <div class="nc-room-info-block">
                                     <label for="<%= tipo.short_name %>" class="nc-room-type"><%= tipo.description %></label>
-                                    <label for="<%= tipo.short_name %>" class="nc-room-price">$ <%= tipo.precioForm %> x noche</label>
+                                    <label for="<%= tipo.short_name %>" class="nc-room-price">$ <%= tipo.precioForm %> <%= __('room_selection.por_noche') %></label>
                                     <div class="hover-container">
-                                        <a class="image-link" href="/images/<%= tipo.picture %>" target="_blank"><i class="fas fa-image"></i>Foto</a>
+                                        <a class="image-link" href="/images/<%= tipo.picture %>" target="_blank"><i class="fas fa-image"></i><%= __('room_selection.foto') %></a>
                                         <img src="/images/<%= tipo.picture %>" alt="Foto Habitacion" class="hover-image">
                                     </div>
                                 </div>
@@ -79,7 +79,7 @@
                     <% }) %>
                 </div>
                 <div class="nc-button-block">
-                    <input class="btn btn-gradient nc-btn-extra" type="submit" value="CONTINUAR">
+                    <input class="btn btn-gradient nc-btn-extra" type="submit" value="<%= __('room_selection.boton') %>">
                     <label><i class="fas fa-arrow-right"></i></label>
                 </div>
             </form>

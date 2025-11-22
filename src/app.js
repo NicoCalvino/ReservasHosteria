@@ -4,10 +4,19 @@ const app = express()
 const session = require('express-session')
 const methodOverride = require("method-override")
 const cookie = require('cookie-parser')
+const i18n = require('i18n')
 
 const PORT = process.env.PORT || 3040
 
-const searchRoutes = require("./routes/searchRoutes")
+i18n.configure({
+    locales:['en','es'],
+    directory:path.join(__dirname,'locales'),
+    cookie:'lang',
+    defaultLocale:'es',
+    objectNotation:true
+})
+
+const mainRoutes = require("./routes/mainRoutes")
 const bookingRoutes = require("./routes/bookingRoutes")
 const paymentRoutes = require("./routes/paymentRoutes")
 const errorRoutes = require("./routes/errorRoutes")
@@ -28,8 +37,10 @@ app.use(methodOverride("_method"))
 app.use(cookie())
 app.use(adminLoggedMiddleware)
 app.use(draftBookingsMiddleware)
+app.use(i18n.init)
 
-app.use("/search", searchRoutes)
+
+app.use("/", mainRoutes)
 app.use("/booking", bookingRoutes)
 app.use("/payment", paymentRoutes)
 app.use("/error", errorRoutes)

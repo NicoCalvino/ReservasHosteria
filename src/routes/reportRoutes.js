@@ -1,9 +1,5 @@
-const path = require("path")
 const express = require ("express")
-const app = express()
-const db = require('../database/models')
 const router = express.Router()
-const func = require("../functions/funciones")
 
 const guestMiddleware = require('../middlewares/guestMiddleware')
 

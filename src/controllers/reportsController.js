@@ -1,10 +1,7 @@
-const path = require("path")
 const db = require('../database/models')
 const func = require('../functions/funciones')
 const ExcelJS = require('exceljs')
 const Op = db.Sequelize.Op
-
-let rutaBase = "reports"
 
 const controller = {
     generateExcel: async (res, titulos, datos ,nombre) =>{

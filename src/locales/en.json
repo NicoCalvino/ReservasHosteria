@@ -1,0 +1,136 @@
+{
+	"idioma": "en",
+	"nav": {
+		"home": "HOME",
+		"reservas": "BOOKING",
+		"habitaciones": "ROOMS",
+		"contacto": "CONTACT"
+	},
+	"foot": {
+		"mensaje": "We are a modern hotel established in 2001, managed by its owners. We are located in the best spot in Puerto Madryn, facing the sea and just 1.5 km from the city center.",
+		"seguinos": "FOLLOW US!"
+	},
+	"initial_search": {
+		"titulo": "BOOK YOUR ROOM",
+		"entrada": "CHECK IN",
+		"salida": "CHECK OUT",
+		"huespedes": "GUESTS",
+		"habitaciones": "ROOMS",
+		"boton": "CHECK AVAILABILITY",
+		"aqui": "HERE",
+		"msg_pago_sena": "To report a deposit payment, click",
+		"msg_estado_reserva": "To check your reservation status, click"
+	},
+	"room_selection": {
+		"subtitulo": "CHOOSE ROOMS",
+		"por_noche": "per night",
+		"foto": "Img",
+		"boton": "CONTINUE"
+	},
+	"booking_details": {
+		"titulo": "FINAL DETAILS",
+		"subtitulo": "FILL IN YOUR PERSONAL DETAILS",
+		"habitacion": "ROOM",
+		"mayores": "ADULTS",
+		"menores": "CHILDREN",
+		"nombre": "Name",
+		"apellido": "Surname",
+		"email": "E-Mail",
+		"rep_email": "Confirm E-Mail",
+		"telefono": "Phone",
+		"boton": "Confirm"
+	},
+	"booking_confirmation": {
+		"titulo": "YOUR RESERVATION HAS BEEN REGISTERED",
+		"subtitulo": "YOUR BOOKING CODE IS",
+		"msg_total": "The total cost of your stay will be",
+		"msg_sena": "To confirm your reservation, the required deposit is ",
+		"msg_instrucciones": "You can pay via bank transfer using the following information:",
+		"nombre": "Name",
+		"cbu": "CBU",
+		"alias": "ALIAS",
+		"banco": "BANK",
+		"cuit": "TAX Id",
+		"msg_limite": "If payment is not received within 3 days, the reservation will be cancelled",
+		"aqui": "HERE",
+		"msg_pago_sena": "To report a payment, click"
+	},
+	"payment_upload": {
+		"titulo": "REPORT DEPOSIT PAYMENT",
+		"codigo": "BOOKING CODE",
+		"email": "BOOKING E-MAIL",
+		"comprobante": "RECEIPT",
+		"boton": "SUBMIT",
+		"msg_olvido": "if you do not remember your booking code or the email address used for the booking, please contact us at (0280) 4208042"
+	},
+	"payment_success": {
+		"titulo": "Thank you!",
+		"msg": "You will be notified once your payment has been confirmed"
+	},
+	"booking_search": {
+		"titulo": "FIND RESERVATION",
+		"codigo": "BOOKING CODE",
+		"email": "BOOKING E-MAIL",
+		"boton": "SEARCH",
+		"msg_olvido": "if you do not remember your booking code or the email address used for the booking, please contact us at (0280) 4208042"
+	},
+	"booking_status": {
+		"titulo": "RESERVATION STATUS",
+		"msg_codigo": "Your Booking Code is",
+		"estado": "Status",
+		"pendiente": "Pending",
+		"procesando": "Processing",
+		"confirmada": "Confirmed",
+		"msg_pendiente": "The deposit for your reservation has not yet been received.",
+		"msg_procesando": "Your payment has been received and is being verified by the hotel.",
+		"msg_confirmado": "Your payment has been verified and your reservation is confirmed. We look forward to welcoming you!",
+		"entrada": "CHECK IN",
+		"salida": "CHECK OUT",
+		"huespedes": "GUESTS",
+		"habitaciones": "ROOMS",
+		"total": "TOTAL AMOUNT",
+		"sena": "DEPOSIT AMOUNT",
+		"aqui": "HERE",
+		"msg_pago_sena": "To report your payment click",
+		"boton": "REGRET BUTTON",
+		"boton_2": "CANCEL BOOKING?"
+	},
+     "booking_cancel":{
+          "titulo":"Reserva Cancelada"
+     },
+     "errores":{
+			"tiempo_agotado":"Your session has expired",
+          	"volver_a_empezar":"To start again, click",
+			"no_continuar":"Unable to proceed",
+			"reserva_no_encontrada":"No reservation found with the provided details",
+			"fecha_de_entrada_vacia":"Please enter a Check-in date",
+			"fecha_de_entrada_invalida":"Check-in date cannot be in the past",
+			"fecha_de_salida_vacia":"Please enter a Check-out date",
+			"fecha_de_salida_invalida":"Check-out date cannot be earlier than or the same as Check-in",
+			"cantidad_huespedes":"Please enter the number of guests",
+			"huespedes_cero":"Number of guests cannot be 0",
+			"cantidad_habitaciones":"Please enter the number of rooms",
+			"habitaciones_cero":"Number of rooms cannot be 0",
+			"habitaciones_invalidas":"Number of guests cannot be lower than the number of rooms",
+			"cantidades_negativas":"Negative numbers are not allowed",
+			"habitaciones_de_mas":"You selected more rooms than requested",
+			"habitaciones_de_menos":"You selected fewer rooms than requested",
+			"habitaciones_cantidad":"There are no %d rooms available of this type",
+			"habitacion_vacia":"The room cannot be left empty",
+			"habitacion_capacidad":"Room capacity cannot be exceeded",
+			"huespedes_de_mas":"You assigned more people than initially booked",
+			"huespedes_de_menos":"You assigned fewer people than initially booked",
+			"nombre":"Please enter your name",
+			"apellido":"Please enter your surname",
+			"mail":"Please enter your e-mail",
+			"mail_invalido":"Please enter a valid e-mail address",
+          	"repetir_email":"Confirm e-mail",
+			"mails_no_coinciden":"E-mail addresses do not match",
+			"telefono":"Please enter your phone number",
+			"reserva_registrada":"Your reservation has already been registered. To book again, please restart the process.",
+			"codigo_reserva":"Please enter the booking code",
+			"mails_reserva":"Please enter the booking e-mail",
+			"comprobante":"You must upload a proof of payment",
+			"formato_comprobante":"The file must be jpg, jpeg, png, pdf, or gif"
+     }
+}

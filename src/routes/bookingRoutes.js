@@ -1,15 +1,60 @@
-const path = require("path")
 const express = require ("express")
-const app = express()
 const db = require('../database/models')
 const func = require('../functions/funciones')
 const router = express.Router()
 const activeSessionMiddleware = require ("../middlewares/activeSessionMiddleware")
+const app = express()
 
 const bookingController = require("../controllers/bookingController")
 
 const {body} = require('express-validator')
-//const {query} = require('express-validator')//
+const {query} = require('express-validator')
+
+const searchValidation = [
+    query('check_in').notEmpty().withMessage((value, { req }) => req.__('errores.fecha_de_entrada_vacia')).custom((value,{req})=>{
+        let check_in = req.query.check_in
+        let fechaHoy = new Date
+
+        if(fechaHoy > func.formateoFecha(check_in)){
+           throw new Error (req.__('errores.fecha_de_entrada_invalida'))  
+        }
+
+        return true
+    }),
+    query('check_out').notEmpty().withMessage((value, { req }) => req.__('errores.fecha_de_salida_vacia')).custom((value,{req})=>{
+        let check_in = req.query.check_in
+        let check_out = req.query.check_out
+
+        if(check_in >= check_out){
+           throw new Error (req.__('errores.fecha_de_salida_invalida'))  
+        }
+
+        return true
+    }),
+    query('people').notEmpty().withMessage((value, { req }) => req.__('errores.cantidad_huespedes')).custom((value,{req})=>{
+        let cantidad = req.query.people
+
+        if(cantidad <= 0){
+           throw new Error (req.__('errores.huespedes_cero'))  
+        }
+
+        return true
+    }),
+    query('rooms').notEmpty().withMessage((value, { req }) => req.__('errores.cantidad_habitaciones')).custom((value,{req})=>{
+        let cantidad = Number(req.query.rooms)
+        let huespedes = Number(req.query.people)
+
+        if(cantidad <= 0){
+           throw new Error (req.__('errores.habitaciones_cero'))  
+        }
+        
+        if(cantidad > huespedes){
+           throw new Error (req.__('errores.habitaciones_invalidas'))  
+        }
+
+        return true
+    }),
+]
 
 const initialValidation = [
     body('habitaciones').custom(async (value,{req})=>{
@@ -23,7 +68,7 @@ const initialValidation = [
         let cantidades = [cantTrip, cantDblvm, cantDblvj, cantHab4, cantSuite]
         for(const cantidad of cantidades){
             if(cantidad<0){
-                throw new Error ('No se pueden elegir cantidades negativas')
+                throw new Error (req.__('errores.cantidades_negativas'))
                 break
             }
         }
@@ -33,10 +78,10 @@ const initialValidation = [
         let infoTemp = await db.Temp.findByPk(idTemp)
 
         if(totalHabitaciones > infoTemp.rooms){
-            throw new Error ('Se eligieron más habitaciones de las solicitadas') 
+            throw new Error (req.__('errores.habitaciones_de_mas')) 
         }
         if(totalHabitaciones < infoTemp.rooms){
-            throw new Error ('Se eligieron menos habitaciones de las solicitadas') 
+            throw new Error (req.__('errores.habitaciones_de_menos')) 
         }
 
         return true
@@ -56,7 +101,7 @@ const initialValidation = [
         let habLibres = await func.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
 
         if(habLibres < cant){
-            throw new Error ('No hay ' + cant + ' habitaciones triples disponibles') 
+            throw new Error (req.__('errores.habitaciones_cantidad', cant))
         }
 
         return true
@@ -76,7 +121,7 @@ const initialValidation = [
         let habLibres = await func.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
 
         if(habLibres < cant){
-            throw new Error ('No hay ' + cant + ' habitaciones dobles vista al mar disponibles') 
+            throw new Error (req.__('errores.habitaciones_cantidad', cant))
         }
 
         return true
@@ -96,7 +141,7 @@ const initialValidation = [
         let habLibres = await func.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
 
         if(habLibres < cant){
-            throw new Error ('No hay ' + cant + ' habitaciones dobles vista al jardin disponibles') 
+            throw new Error (req.__('errores.habitaciones_cantidad', cant))
         }
 
         return true
@@ -116,7 +161,7 @@ const initialValidation = [
         let habLibres = await func.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
 
         if(habLibres < cant){
-            throw new Error ('No hay ' + cant + ' habitaciones de 4 personas disponibles') 
+            throw new Error (req.__('errores.habitaciones_cantidad', cant))
         }
 
         return true
@@ -136,7 +181,7 @@ const initialValidation = [
         let habLibres = await func.disponibilidadTipo(infoTemp.check_in, infoTemp.check_out, roomType[0])
 
         if(habLibres < cant){
-            throw new Error ('No hay ' + cant + ' suites disponibles') 
+            throw new Error (req.__('errores.habitaciones_cantidad', cant))
         }
 
         return true
@@ -178,11 +223,11 @@ for(let i = 0 ; i < 13 ; i++){
                 }
 
                 if(cantTotal == 0){
-                    throw new Error ('La habitación no puede quedar vacía') 
+                    throw new Error (req.__('errores.habitacion_vacia')) 
                 }
 
                 if(cantTotal > capHabitacion){
-                    throw new Error ('No se puede superar la capacidad de la habitación') 
+                    throw new Error (req.__('errores.habitacion_capacidad')) 
                 }
                 
                 return true
@@ -210,11 +255,11 @@ roomSelectionValidation.push(body('habitaciones').custom(async (value,{req})=>{
             }
 
         if(initialPeople.occupancy < totalPeople){
-            throw new Error ('Se asignaron más personas de las reservadas inicialmente')     
+            throw new Error (req.__('errores.huespedes_de_mas'))     
         }
         
         if(initialPeople.occupancy > totalPeople){
-            throw new Error ('Se asignaron menos personas de las reservadas inicialmente')     
+            throw new Error (req.__('errores.huespedes_de_menos'))   
         }
 
         return true
@@ -222,28 +267,28 @@ roomSelectionValidation.push(body('habitaciones').custom(async (value,{req})=>{
 )
 
 const personalInfoValidation = [
-    body('name').notEmpty().withMessage('Completar el nombre'),
-    body('lastname').notEmpty().withMessage('Completar el apellido'),
-    body('email').notEmpty().withMessage('Completar el mail').custom(async (value,{req})=>{
+    body('name').notEmpty().withMessage((value, { req }) => req.__('errores.nombre')),
+    body('lastname').notEmpty().withMessage((value, { req }) => req.__('errores.apellido')),
+    body('email').notEmpty().withMessage((value, { req }) => req.__('errores.mail')).custom(async (value,{req})=>{
         let email = req.body.email
 
         if(email.indexOf("@")==-1){
-           throw new Error ('Completar con un mail válido')  
+           throw new Error (req.__('errores.mail_invalido'))  
         }
 
         return true
     }),
-    body('emailBis').notEmpty().withMessage('Repetir el mail').custom(async (value,{req})=>{
+    body('emailBis').notEmpty().withMessage((value, { req }) => req.__('errores.repetir_email')).custom(async (value,{req})=>{
         let email = req.body.email
         let emailBis = req.body.emailBis
 
         if(email != emailBis){
-           throw new Error ('Los Mails no coinciden')  
+           throw new Error (req.__('errores.mails_no_coinciden'))  
         }
 
         return true
     }),
-    body('phone').notEmpty().withMessage('Completar el teléfono')
+    body('phone').notEmpty().withMessage((value, { req }) => req.__('errores.telefono'))
 ]
 
 const duplicatedBookingValidation = [
@@ -257,7 +302,7 @@ const duplicatedBookingValidation = [
         })
 
         if(reservaExistente.length > 0){
-            throw new Error ('Ya se ha registrado su reserva, si quiere volver a reservar es necesario volver a comenzar el proceso') 
+            throw new Error (req.__('errores.reserva_registrada')) 
         }
         
         return true
@@ -265,18 +310,19 @@ const duplicatedBookingValidation = [
 ]
 
 const bookingSearchValidation = [
-    body('booking_code').notEmpty().withMessage('Completar el código de reserva'),
-    body('email').notEmpty().withMessage('Completar el mail de reserva').custom(async (value,{req})=>{
+    body('booking_code').notEmpty().withMessage((value, { req }) => req.__('errores.codigo_reserva')),
+    body('email').notEmpty().withMessage((value, { req }) => req.__('errores.mails_reserva')).custom(async (value,{req})=>{
         let email = req.body.email
 
         if(email.indexOf("@")==-1 || email == "solar@solardelacosta.com"){
-           throw new Error ('Completar con un mail válido')  
+           throw new Error (req.__('errores.mail_invalido'))  
         }
 
         return true 
     })
 ]
 
+router.get("/roomSelection", searchValidation, bookingController.selectorHabitaciones)
 router.post("/details", activeSessionMiddleware, initialValidation, bookingController.detallesFinales)
 router.post("/information", activeSessionMiddleware, duplicatedBookingValidation, roomSelectionValidation, personalInfoValidation, bookingController.generarReservas)
 router.get("/confirmed", activeSessionMiddleware, bookingController.reservaConfirmada)
@@ -284,5 +330,8 @@ router.get("/search",  bookingController.buscarReserva)
 router.post("/search", bookingSearchValidation, bookingController.resultadosReserva)
 router.delete("/cancel/:idBooking", bookingController.bookingCancel)
 
+router.use((req, res, next) => {
+  res.status(404).render("error/errorSession", {error:req.__('errores.no_continuar')})
+});
 
 module.exports=router

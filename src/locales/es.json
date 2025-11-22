@@ -1,0 +1,136 @@
+{
+	"idioma": "es",
+	"nav": {
+		"home": "HOME",
+		"reservas": "RESERVAS",
+		"habitaciones": "HABITACIONES",
+		"contacto": "CONTACTO"
+	},
+	"foot": {
+		"mensaje": "Somos un hotel moderno nacido en 2001 atendido por sus propios dueños y situado en el mejor lugar de Puerto Madryn, frente al mar y a solo 1.5 km del centro de la ciudad",
+		"seguinos": "SEGUINOS!"
+	},
+	"initial_search": {
+		"titulo": "RESERVÁ TU HABITACIÓN",
+		"entrada": "ENTRADA",
+		"salida": "SALIDA",
+		"huespedes": "HUÉSPEDES",
+		"habitaciones": "HABITACIONES",
+		"boton": "CONSULTAR",
+		"aqui": "AQUI",
+		"msg_pago_sena": "Para informar el pago de una seña, hacer click",
+		"msg_estado_reserva": "Para conocer el estado de su reserva, haga click"
+	},
+	"room_selection": {
+		"subtitulo": "ELEGIR HABITACIONES",
+		"por_noche": "x noche",
+		"foto": "Foto",
+		"boton": "CONTINUAR"
+	},
+	"booking_details": {
+		"titulo": "Información Final",
+		"subtitulo": "Complete su información personal",
+		"habitacion": "HABITACIÓN",
+		"mayores": "MAYORES",
+		"menores": "MENORES",
+		"nombre": "Nombre",
+		"apellido": "Apellido",
+		"email": "E-Mail",
+		"rep_email": "Repetir E-Mail",
+		"telefono": "Teléfono",
+		"boton": "Confirmar"
+	},
+	"booking_confirmation": {
+		"titulo": "Su reserva fue registrada",
+		"subtitulo": "El código de Reserva es",
+		"msg_total": "El total de su estadía será de",
+		"msg_sena": "Para confirmar su reserva, será necesario abonar una seña de",
+		"msg_instrucciones": "Puede hacerlo por transferencia bancaria con la siguiente información:",
+		"nombre": "NOMBRE",
+		"cbu": "CBU",
+		"alias": "ALIAS",
+		"banco": "BANCO",
+		"cuit": "CUIT",
+		"msg_limite": "Si no se recibe el pago en 3 días, la reserva será cancelada",
+		"aqui": "AQUI",
+		"msg_pago_sena": "Para informar un pago hacer click"
+	},
+	"payment_upload": {
+		"titulo": "Informar Seña",
+		"codigo": "Código de Reserva",
+		"email": "E-Mail Reserva",
+		"comprobante": "Comprobante",
+		"boton": "Informar",
+		"msg_olvido": "Si no recuerda su código de reserva o el mail con el que se registró la misma, comuníquese al (0280) 4208042"
+	},
+	"payment_success": {
+		"titulo": "Muchas Gracias",
+		"msg": "Recibirá una notificación cuando su pago sea confirmado"
+	},
+	"booking_search": {
+		"titulo": "Buscar Reserva",
+		"codigo": "Código de Reserva",
+		"email": "E-Mail Reserva",
+		"boton": "Buscar",
+		"msg_olvido": "Si no recuerda su código de reserva o el mail con el que se registró la misma, comuníquese al (0280) 4208042"
+	},
+	"booking_status": {
+		"titulo": "Estado de Reserva",
+		"msg_codigo": "Su código de Reserva es",
+		"estado": "Estado",
+          "pendiente":"Pendiente",
+          "procesando":"Procesando",
+          "confirmada":"Confirmada",
+		"msg_pendiente": "La seña correspondiente a su reserva aún no ha sido recibida",
+		"msg_procesando": "Su pago ha sido recibido y esta siendo revisado por el hotel",
+		"msg_confirmado": "Su pago ha sido verificado y su reserva está confirmada. ¡Lo esperamos!",
+		"entrada": "ENTRADA",
+		"salida": "SALIDA",
+		"huespedes": "HUÉSPEDES",
+		"habitaciones": "HABITACIONES",
+		"total": "Monto Total",
+		"sena": "Monto Seña",
+		"aqui": "AQUI",
+		"msg_pago_sena": "Para informar su pago haga click",
+		"boton": "Boton de Arrepentimiento",
+		"boton_2": "¿Cancelar su reserva?"
+	},
+     "booking_cancel":{
+          "titulo":"Reserva Cancelada"
+     },
+     "errores":{
+          "tiempo_agotado":"su tiempo se ha agotado",
+          "volver_a_empezar":"Para volver a empezar, hacer click",
+          "no_continuar":"No se puede continuar",
+          "reserva_no_encontrada":"No se encontró reserva con los datos indicados",
+          "fecha_de_entrada_vacia":"Completar fecha de Entrada",
+          "fecha_de_entrada_invalida":"La fecha de Entrada no puede ser en el pasado",
+          "fecha_de_salida_vacia":"Completar fecha de Salida",
+          "fecha_de_salida_invalida":"La fecha de Salida no puede ser anterior o igual a la de entrada",
+          "cantidad_huespedes":"Completar la cantidad de huéspedes",
+          "huespedes_cero":"Los Huespedes no pueden ser 0",
+          "cantidad_habitaciones":"Completar la cantidad de habitaciones deseadas",
+          "habitaciones_cero":"Las Habitaciones no puede ser 0",
+          "habitaciones_invalidas":"La cantidad de Huespedes no puede ser menor a la cantidad de habitaciones",
+          "cantidades_negativas":"No se pueden elegir cantidades negativas",
+          "habitaciones_de_mas":"Se eligieron más habitaciones de las solicitadas",
+          "habitaciones_de_menos":"Se eligieron menos habitaciones de las solicitadas",
+          "habitaciones_cantidad":"No hay %d habitaciones disponibles de este tipo",
+          "habitacion_vacia":"La habitación no puede quedar vacía",
+          "habitacion_capacidad":"No se puede superar la capacidad de la habitación",
+          "huespedes_de_mas":"Se asignaron más personas de las reservadas inicialmente",
+          "huespedes_de_menos":"Se asignaron menos personas de las reservadas inicialmente",
+          "nombre":"Completar el nombre",
+          "apellido":"Completar el apellido",
+          "mail":"Completar el mail",
+          "mail_invalido":"Completar con un mail válido",
+          "repetir_email":"Repetir el mail",
+          "mails_no_coinciden":"Los Mails no coinciden",
+          "telefono":"Completar el teléfono",
+          "reserva_registrada":"Ya se ha registrado su reserva, si quiere volver a reservar es necesario volver a comenzar el proceso",
+          "codigo_reserva":"Completar el código de reserva",
+          "mails_reserva":"Completar el mail de reserva",
+          "comprobante":"Es necesario subir un comprobante",
+          "formato_comprobante":"El comprobante debe ser jpg, jpeg, png, pdf o gif"
+     }
+}

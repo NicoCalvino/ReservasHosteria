@@ -1,10 +1,7 @@
-const path = require("path")
-const fs = require("fs")
 const db = require('../database/models')
 const Op = db.Sequelize.Op
-const {validationResult}=require('express-validator')
+const {validationResult} = require('express-validator')
 const func = require('../functions/funciones')
-const searchController = require("./searchController")
 
 const controller = {
     cargaLogIn: async(req,res)=>{

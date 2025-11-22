@@ -2,41 +2,41 @@
 <div class="hero nc-timbre-tris" id="reserva-timbre">
     <div class="container">
         <div class="main-heading">
-            <h1 class="title-res nc-titulo-pagina">Su reserva fue registrada</h1>
+            <h1 class="title-res nc-titulo-pagina"><%= __('booking_confirmation.titulo') %></h1>
             <div class="nc-confirmation-block">
                 <div class="nc-booking-code-block">
-                    <h2 class="nc-booking-message">El código de Reserva es</h2>
+                    <h2 class="nc-booking-message"><%= __('booking_confirmation.subtitulo') %></h2>
                     <h2 class="nc-booking-code"><%= infoBooking.booking_code %></h2>
                 </div>
                 <div class="nc-payment-block">
-                    <span class="nc-payment-message">El total de su estadía será de $ <%= infoBooking.montoFormateado %></span>
-                    <span class="nc-payment-message">Para confirmar su reserva, será necesario abonar una seña de $ <%= infoBooking.montoReservaFormateado %></span>
-                    <span class="nc-payment-message">Puede hacerlo por transferencia bancaria con la siguiente información:</span>
+                    <span class="nc-payment-message"><%= __('booking_confirmation.msg_total') %> $ <%= infoBooking.montoFormateado %></span>
+                    <span class="nc-payment-message"><%= __('booking_confirmation.msg_sena') %> $ <%= infoBooking.montoReservaFormateado %></span>
+                    <span class="nc-payment-message"><%= __('booking_confirmation.msg_instrucciones') %></span>
                     <div class="nc-bank-information">
                         <div class="nc-bankinfo-block">
-                            <label class="nc-bankinfo-title">NOMBRE:</label>
+                            <label class="nc-bankinfo-title"><%= __('booking_confirmation.nombre') %>:</label>
                             <label class="nc-bankinfo-info"><%= infoBcaria.nombre %></label>
                         </div>
                         <div class="nc-bankinfo-block">
-                            <label class="nc-bankinfo-title">CBU:</label>
+                            <label class="nc-bankinfo-title"><%= __('booking_confirmation.cbu') %>:</label>
                             <label class="nc-bankinfo-info"><%= infoBcaria.cbu %></label>
                         </div>
                         <div class="nc-bankinfo-block">
-                            <label class="nc-bankinfo-title">ALIAS:</label>
+                            <label class="nc-bankinfo-title"><%= __('booking_confirmation.alias') %>:</label>
                             <label class="nc-bankinfo-info"><%= infoBcaria.alias %></label>
                         </div>
                         <div class="nc-bankinfo-block">
-                            <label class="nc-bankinfo-title">BANCO:</label>
+                            <label class="nc-bankinfo-title"><%= __('booking_confirmation.banco') %>:</label>
                             <label class="nc-bankinfo-info"><%= infoBcaria.banco %></label>
                         </div>
                         <div class="nc-bankinfo-block">
-                            <label class="nc-bankinfo-title">CUIT:</label>
+                            <label class="nc-bankinfo-title"><%= __('booking_confirmation.cuit') %>:</label>
                             <label class="nc-bankinfo-info"><%= infoBcaria.cuit %></label>
                         </div>
                     </div>
-                    <span class="nc-payment-message">Si no se recibe el pago en 3 días, la reserva será cancelada</span>
+                    <span class="nc-payment-message"><%= __('booking_confirmation.msg_limite') %></span>
                     <div class="nc-payment-link-block">
-                        <span class="nc-payment-message">Para informar un pago hacer click <a href="/payment/upload">AQUÍ</a></span>
+                        <span class="nc-payment-message"><%= __('booking_confirmation.msg_pago_sena') %> <a href="/payment/upload"><%= __('booking_confirmation.aqui') %></a></span>
                     </div>
                 </div>
             </div>

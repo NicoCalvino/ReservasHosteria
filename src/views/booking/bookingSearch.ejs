@@ -2,7 +2,7 @@
 <div class="hero nc-timbre-tris" id="reserva-timbre">
     <div class="container">
         <div class="main-heading">
-            <h1 class="title-res nc-titulo-pagina">Buscar Reserva</h1>
+            <h1 class="title-res nc-titulo-pagina"><%= __('booking_search.titulo') %></h1>
             <% if(locals.mensajePagina ){ %>
                 <div class="nc-error-block">
                     <label class="nc-error-message"><%= mensajePagina %></label>   
@@ -11,7 +11,7 @@
             <div class="nc-block">
                 <form action="/booking/search" class="form nc-payment-form" method="POST">
                     <div class="nc-file-info-div">
-                        <label class="nc-file-info-label" for="booking_code">Código de Reserva</label>
+                        <label class="nc-file-info-label" for="booking_code"><%= __('booking_search.codigo') %></label>
                         <input class="nc-file-input" type="text" id="booking_code" name="booking_code" <%=locals.oldInfo && oldInfo.booking_code ? "value=" + oldInfo.booking_code : '' %>>
                         <% if(locals.errors && errors.booking_code){ %>
                             <div class="nc-error-block">
@@ -20,7 +20,7 @@
                         <% } %>
                     </div>
                     <div class="nc-file-info-div">
-                        <label class="nc-file-info-label" for="email">E-Mail Reserva</label>
+                        <label class="nc-file-info-label" for="email"><%= __('booking_search.email') %></label>
                         <input class="nc-file-input" type="email" id="email" name="email" <%=locals.oldInfo && oldInfo.email ? "value=" + oldInfo.email : '' %>>
                         <% if(locals.errors && errors.email){ %>
                             <div class="nc-error-block">
@@ -29,11 +29,11 @@
                         <% } %>
                     </div>
                     <div class="nc-button-block nc-payment-button">
-                        <input class="btn btn-gradient nc-btn-extra" type="submit" value="BUSCAR">
+                        <input class="btn btn-gradient nc-btn-extra" type="submit" value="<%= __('booking_search.boton') %>">
                     </div>
                 </form>
                 <div class="nc-comunication-block">
-                    <span>Si no recuerda su código de reserva o el mail con el que se registró la misma, comuniquese al (0280) 4208042</span>
+                    <span><%= __('booking_search.msg_olvido') %></span>
                 </div>
             </div>
         </div>

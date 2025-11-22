@@ -1,6 +1,5 @@
 const path = require("path")
 const express = require ("express")
-const app = express()
 const router = express.Router()
 const multer = require('multer')
 const fileUpload = require("../middlewares/multerPagosMiddleware")
@@ -10,25 +9,25 @@ const paymentController = require("../controllers/paymentController")
 const {body} = require('express-validator')
 
 const paymentValidation = [
-    body('booking_code').notEmpty().withMessage('Completar el código de reserva'),
-    body('email').notEmpty().withMessage('Completar el mail de reserva').custom(async (value,{req})=>{
+    body('booking_code').notEmpty().withMessage((value, { req }) => req.__('errores.codigo_reserva')),
+    body('email').notEmpty().withMessage((value, { req }) => req.__('errores.mails_reserva')).custom(async (value,{req})=>{
         let email = req.body.email
 
         if(email.indexOf("@")==-1){
-           throw new Error ('Completar con un mail válido')  
+           throw new Error (req.__('errores.mail_invalido'))  
         }
 
         return true 
     }),
     body('receipt').custom((value,{req})=>{
         if(!req.file){
-            throw new Error('Es necesario subir un comprobante')
+            throw new Error(req.__('errores.comprobante'))
         }
 
         let formatos = ['.JPG','.jpg','.JPEG','.jpeg','.PNG','.png','.GIF','.gif','.pdf','.PDF']
         if(req.file){
         if(!formatos.includes(path.extname(req.file.originalname))){
-            throw new Error('El comprobante debe ser jpg, jpeg, png, pdf o gif')
+            throw new Error(req.__('errores.formato_comprobante'))
             }
         }
         return true
